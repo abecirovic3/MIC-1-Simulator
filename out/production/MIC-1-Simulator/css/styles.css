@@ -1,0 +1,28 @@
+#btnRun {
+    -fx-background-image: url("/img/btnRun.png");
+}
+
+#btnNextFaze {
+    -fx-background-image: url("/img/btnNextFaze.png");
+}
+
+#btnNextClock {
+    -fx-background-image: url("/img/btnNextClock.png");
+}
+
+#btnNewFile {
+    -fx-background-image: url("/img/btnNewFile.png");
+}
+
+#btnSave {
+    -fx-background-image: url("/img/btnSave.png");
+}
+
+#btnOpenFile {
+    -fx-background-image: url("/img/btnOpenFile.png");
+}
+
+.buttons {
+    -fx-background-color: Transparent;
+    -fx-cursor: HAND;
+}
