@@ -26,3 +26,7 @@
     -fx-background-color: Transparent;
     -fx-cursor: HAND;
 }
+
+.toolbar {
+    -fx-graphic-text-gap: 8;
+}

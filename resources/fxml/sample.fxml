@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane maxHeight="960.0" maxWidth="1280.0" minHeight="960.0" minWidth="1280.0" prefHeight="960.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -41,15 +42,23 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <ToolBar prefHeight="40.0" prefWidth="200.0">
+            <ToolBar prefHeight="40.0" prefWidth="200.0" styleClass="toolbar" stylesheets="@../css/styles.css">
               <items>
                 <Button fx:id="btnNewFile" alignment="CENTER" contentDisplay="CENTER" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="buttons" stylesheets="@../css/styles.css" />
+                  <Separator minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnOpenFile" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="buttons" stylesheets="@../css/styles.css" />
+                  <Separator minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnSave" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="buttons" stylesheets="@../css/styles.css" />
+                  <Separator layoutX="235.0" layoutY="10.0" minWidth="5.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnRun" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="buttons" stylesheets="@../css/styles.css" />
+                  <Separator layoutX="244.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnNextFaze" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="buttons" stylesheets="@../css/styles.css" />
+                  <Separator layoutX="253.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnNextClock" layoutX="208.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="buttons" stylesheets="@../css/styles.css" />
               </items>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </ToolBar>
          </children>
       </VBox>
@@ -70,17 +79,34 @@
                            <children>
                               <HBox prefHeight="838.0" prefWidth="1280.0" spacing="5.0">
                                  <children>
-                                    <VBox prefHeight="826.0" prefWidth="272.0" spacing="5.0">
+                                    <VBox prefHeight="827.0" prefWidth="357.0" spacing="5.0">
                                        <children>
                                           <TableView prefHeight="200.0" prefWidth="200.0">
                                             <columns>
                                               <TableColumn prefWidth="75.0" text="Register" />
-                                              <TableColumn prefWidth="196.0" text="Value" />
+                                              <TableColumn prefWidth="281.0" text="Value" />
                                             </columns>
                                           </TableView>
-                                          <TableView layoutX="10.0" layoutY="31.0" prefHeight="67.0" prefWidth="145.0">
+                                          <TableView layoutX="10.0" layoutY="215.0" prefHeight="67.0" prefWidth="145.0">
                                              <columns>
-                                                <TableColumn prefWidth="271.0" text="MIR" />
+                                                <TableColumn prefWidth="356.0" text="MPC" />
+                                             </columns>
+                                          </TableView>
+                                          <TableView layoutX="10.0" layoutY="31.0" prefHeight="117.0" prefWidth="272.0">
+                                             <columns>
+                                                <TableColumn prefWidth="24.0" text="a&#10;m&#10;u&#10;x" />
+                                                <TableColumn prefWidth="37.0" text="c&#10;o&#10;n&#10;d" />
+                                                <TableColumn prefWidth="32.0" text="a&#10;l&#10;u" />
+                                                <TableColumn prefWidth="30.0" text="sh" />
+                                                <TableColumn prefWidth="25.0" text="m&#10;b&#10;r" />
+                                                <TableColumn prefWidth="25.0" text="m&#10;a&#10;r" />
+                                                <TableColumn prefWidth="25.0" text="rd" />
+                                                <TableColumn prefWidth="25.0" text="wr" />
+                                                <TableColumn prefWidth="25.0" text="e&#10;n&#10;c" />
+                                                <TableColumn prefWidth="25.0" text="c" />
+                                                <TableColumn prefWidth="25.0" text="b" />
+                                                <TableColumn prefWidth="25.0" text="a" />
+                                                <TableColumn prefWidth="33.0" text="a&#10;d&#10;r" />
                                              </columns>
                                           </TableView>
                                           <GridPane hgap="5.0" prefHeight="65.0" prefWidth="145.0" vgap="5.0">
@@ -94,12 +120,12 @@
                                              <children>
                                                 <TableView prefHeight="200.0" prefWidth="200.0">
                                                   <columns>
-                                                    <TableColumn prefWidth="133.0" text="MAR" />
+                                                    <TableColumn prefWidth="175.0" text="MAR" />
                                                   </columns>
                                                 </TableView>
                                                 <TableView layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                                    <columns>
-                                                      <TableColumn prefWidth="132.0" text="MBR" />
+                                                      <TableColumn prefWidth="175.0" text="MBR" />
                                                    </columns>
                                                 </TableView>
                                              </children>
@@ -107,17 +133,33 @@
                                                 <Insets />
                                              </VBox.margin>
                                           </GridPane>
-                                          <TableView prefHeight="472.0" prefWidth="145.0">
+                                          <TableView prefHeight="350.0" prefWidth="357.0">
                                             <columns>
                                               <TableColumn prefWidth="75.0" text="Memory" />
-                                              <TableColumn prefWidth="196.0" text="Value" />
+                                              <TableColumn prefWidth="281.0" text="Value" />
                                             </columns>
                                           </TableView>
                                        </children>
                                     </VBox>
+                                    <AnchorPane prefHeight="825.0" prefWidth="908.0">
+                                       <children>
+                                          <ImageView fitHeight="640.0" fitWidth="904.0" layoutX="14.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../img/placeholder.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </AnchorPane>
                                  </children>
                               </HBox>
-                              <ProgressBar prefHeight="36.0" prefWidth="1270.0" progress="0.0" />
+                              <Label prefHeight="16.0" prefWidth="1270.0" style="-fx-background-color: white; -fx-border-color: lightgray;" text="Instruction being executed">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                              </Label>
                            </children>
                         </VBox>
                      </children>
