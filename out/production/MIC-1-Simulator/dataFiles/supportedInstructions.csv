@@ -1,0 +1,23 @@
+LODD,Load directly,ac:=m(x),0000 xxxx xxxx xxxx
+STOD,Store directly,m(x):=ac,0001 xxxx xxxx xxxx
+ADDD,Add directly,ac:=ac+m(x),0010 xxxx xxxx xxxx
+SUBD,Subtract directly,ac:=ac-m(x),0011 xxxx xxxx xxxx
+JPOS,Jump if (ac)>=0,if (ac)>=0 then pc:=x,0100 xxxx xxxx xxxx
+JZER,Jump if (ac)==0,if (ac)==0 then pc:=x,0101 xxxx xxxx xxxx
+JUMP,Unconditional jump,pc:=x,0110 xxxx xxxx xxxx
+LOCO,Load constant,ac:=x (0<=x<4096)),0111 xxxx xxxx xxxx
+LODL,Load locally,ac:=m(sp+x),1000 xxxx xxxx xxxx
+STOL,Store locally,m(sp+x):=ac,1001 xxxx xxxx xxxx
+ADDL,Add locally,ac:=ac+m(sp+x),1010 xxxx xxxx xxxx
+SUBL,Subtract locally,ac:=ac-m(sp+x),1011 xxxx xxxx xxxx
+JNEG,Jump if (ac)<0,if (ac)<0 then pc:=x,1100 xxxx xxxx xxxx
+JNZE,Jump if (ac)!=0,if (ac)!=0 then pc:=x,1101 xxxx xxxx xxxx
+CALL,Procedure call,sp:=sp-1; m(sp):=pc; pc:=x,1110 xxxx xxxx xxxx
+PSHI,Push to stack indirectly,sp:=sp-1; m(sp):=m(ac),1111 0000 00000000
+POPI,Pop from stack indirectly,m(ac):=m(sp); sp:=sp+1,1111 0010 00000000
+PUSH,Push to stack,sp:=sp-1; m(sp):=ac,1111 0100 00000000
+POP,Pop from stack,ac:=m(sp); sp=sp+1,1111 0110 00000000
+RETN,Return from procedure,pc:=m(sp); sp:=sp+1,1111 1000 00000000
+SWAP,Swap contents of ac and sp,tmp:=ac; ac:=sp; sp:=tmp, 1111 1010 00000000
+INSP,Increment sp,sp:=sp+y (0<=y<256),1111 1100 yyyy yyyy
+DESP,decrement sp,sp:=sp-y (0<=y<256),1111 1110 yyyy yyyy
