@@ -99,6 +99,10 @@
                      </children></AnchorPane>
             </content>
           </Tab>
+          <Tab text="Memory">
+          </Tab>
+          <Tab text="Control">
+          </Tab>
           <Tab text="Datapath">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
