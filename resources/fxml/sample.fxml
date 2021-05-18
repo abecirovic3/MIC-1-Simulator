@@ -100,8 +100,56 @@
             </content>
           </Tab>
           <Tab text="Memory">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="854.0" prefWidth="1280.0" spacing="5.0">
+                           <children>
+                              <TableView prefHeight="844.0" prefWidth="803.0">
+                                <columns>
+                                  <TableColumn prefWidth="121.0" text="Address" />
+                                  <TableColumn prefWidth="681.0" text="Value" />
+                                </columns>
+                              </TableView>
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                </AnchorPane>
+              </content>
           </Tab>
           <Tab text="Control">
+              <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <children>
+                          <HBox prefHeight="854.0" prefWidth="1280.0" spacing="5.0">
+                              <children>
+                              <TextArea editable="false" prefHeight="844.0" prefWidth="377.0" text="Microcode" wrapText="true" />
+                              <VBox prefHeight="844.0" prefWidth="891.0" spacing="5.0">
+                                 <children>
+                                    <Label text="Control Memory">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                        <TableView prefHeight="818.0" prefWidth="705.0">
+                                            <columns>
+                                                <TableColumn prefWidth="121.0" text="Address" />
+                                                <TableColumn prefWidth="768.0" text="Value" />
+                                            </columns>
+                                        </TableView>
+                                 </children>
+                              </VBox>
+                              </children>
+                              <padding>
+                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              </padding>
+                          </HBox>
+                      </children>
+                  </AnchorPane>
+              </content>
           </Tab>
           <Tab text="Datapath">
             <content>
@@ -116,12 +164,12 @@
                                           <TableView prefHeight="200.0" prefWidth="200.0">
                                             <columns>
                                               <TableColumn prefWidth="75.0" text="Register" />
-                                              <TableColumn prefWidth="281.0" text="Value" />
+                                              <TableColumn prefWidth="244.0" text="Value" />
                                             </columns>
                                           </TableView>
                                           <TableView layoutX="10.0" layoutY="215.0" prefHeight="67.0" prefWidth="145.0">
                                              <columns>
-                                                <TableColumn prefWidth="356.0" text="MPC" />
+                                                <TableColumn prefWidth="319.0" text="MPC" />
                                              </columns>
                                           </TableView>
                                           <TableView layoutX="10.0" layoutY="31.0" prefHeight="117.0" prefWidth="272.0">
@@ -152,12 +200,12 @@
                                              <children>
                                                 <TableView prefHeight="200.0" prefWidth="200.0">
                                                   <columns>
-                                                    <TableColumn prefWidth="175.0" text="MAR" />
+                                                    <TableColumn prefWidth="157.0" text="MAR" />
                                                   </columns>
                                                 </TableView>
                                                 <TableView layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                                    <columns>
-                                                      <TableColumn prefWidth="175.0" text="MBR" />
+                                                      <TableColumn prefWidth="156.0" text="MBR" />
                                                    </columns>
                                                 </TableView>
                                              </children>
@@ -167,8 +215,8 @@
                                           </GridPane>
                                           <TableView prefHeight="350.0" prefWidth="357.0">
                                             <columns>
-                                              <TableColumn prefWidth="75.0" text="Memory" />
-                                              <TableColumn prefWidth="281.0" text="Value" />
+                                              <TableColumn prefWidth="88.0" text="Mem addr." />
+                                              <TableColumn prefWidth="231.0" text="Value" />
                                             </columns>
                                           </TableView>
                                        </children>
