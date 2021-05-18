@@ -30,7 +30,3 @@
 .toolbar {
     -fx-graphic-text-gap: 8;
 }
-
-.text-input > .scroll-pane:disabled {
-    -fx-opacity: 1;
-}
