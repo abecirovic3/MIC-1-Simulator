@@ -29,7 +29,7 @@ ac:=band(ir,amask); goto 0;
 tir:=lshift(ir+ir); if n then goto 40;
 tir:=lshift(tir); if n then goto 35;
 alu:=tir; if n then goto 33;
-a:=ir+sp; 
+a:=ir+sp;
 mar:=a; rd; goto 7;
 a:=ir+sp;
 mar:=a; mbr:=ac; wr; goto 10;
