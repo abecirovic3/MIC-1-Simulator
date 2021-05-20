@@ -48,4 +48,21 @@ public class FileParser {
 
         return items;
     }
+
+    public String loadMicroCode() {
+        StringBuilder result = new StringBuilder();
+        try {
+            BufferedReader micReader = new BufferedReader(new FileReader("resources/dataFiles/microprogram.txt"));
+            String row;
+            while ((row = micReader.readLine()) != null) {
+                result.append(row + "\n");
+            }
+            micReader.close();
+        } catch (IOException e) {
+            System.out.println("Problems with reading the file!");
+            e.printStackTrace();
+        }
+
+        return result.toString();
+    }
 }
