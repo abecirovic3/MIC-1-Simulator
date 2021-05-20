@@ -10,18 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FileParser {
-    private String filePath;
-
-    public FileParser() {
-    }
-
-    public FileParser(String filePath) {
-        this.filePath = filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
+    
+    public FileParser() {}
 
     public ObservableList<Map<String, Object>> loadSupportedInstructionsTableData() {
         ObservableList<Map<String, Object>> items = FXCollections.<Map<String, Object>>observableArrayList();
