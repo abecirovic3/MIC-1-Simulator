@@ -32,7 +32,7 @@ public class Controller {
 
         supportedInstructionsTable.getItems().addAll(fileParser.loadSupportedInstructionsTableData());
 
-        microcodeArea.setParagraphGraphicFactory(LineNumberFactory.get(microcodeArea));
+        //microcodeArea.setParagraphGraphicFactory(LineNumberFactory.get(microcodeArea));
         microcodeArea.replaceText(fileParser.loadMicroCode());
 
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));

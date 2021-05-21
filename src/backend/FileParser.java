@@ -44,8 +44,15 @@ public class FileParser {
         try {
             BufferedReader micReader = new BufferedReader(new FileReader("resources/dataFiles/microprogram.txt"));
             String row;
+            short i = 0;
+            String padd = "  ";
             while ((row = micReader.readLine()) != null) {
-                result.append(row + "\n");
+                if (i >= 10 && i < 100)
+                    padd = " ";
+                else if (i >= 100)
+                    padd = "";
+                result.append(padd + i + "|  " + row + "\n");
+                i++;
             }
             micReader.close();
         } catch (IOException e) {
