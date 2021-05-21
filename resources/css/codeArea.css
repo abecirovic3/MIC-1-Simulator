@@ -1,0 +1,7 @@
+.code-area {
+    -fx-border-color: lightgray;
+}
+
+.lineno{
+    -fx-background-color: white;
+}
