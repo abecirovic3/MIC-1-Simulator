@@ -8,7 +8,7 @@
 <?import javafx.scene.text.*?>
 <?import org.fxmisc.richtext.*?>
 
-<BorderPane maxHeight="960.0" maxWidth="1280.0" minHeight="960.0" minWidth="1280.0" prefHeight="960.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<BorderPane maxHeight="960.0" maxWidth="1280.0" minHeight="960.0" minWidth="1280.0" prefHeight="960.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -169,9 +169,9 @@
                            <children>
                               <HBox prefHeight="838.0" prefWidth="1280.0" spacing="5.0">
                                  <children>
-                                    <VBox prefHeight="827.0" prefWidth="357.0" spacing="5.0">
+                                    <VBox prefHeight="827.0" prefWidth="357.0" spacing="10.0">
                                        <children>
-                                          <TableView prefHeight="200.0" prefWidth="200.0">
+                                          <TableView prefHeight="274.0" prefWidth="320.0">
                                             <columns>
                                               <TableColumn prefWidth="75.0" text="Register" />
                                               <TableColumn prefWidth="244.0" text="Value" />
@@ -182,23 +182,99 @@
                                                 <TableColumn prefWidth="319.0" text="MPC" />
                                              </columns>
                                           </TableView>
-                                          <TableView layoutX="10.0" layoutY="31.0" prefHeight="117.0" prefWidth="272.0">
-                                             <columns>
-                                                <TableColumn prefWidth="24.0" text="a&#10;m&#10;u&#10;x" />
-                                                <TableColumn prefWidth="37.0" text="c&#10;o&#10;n&#10;d" />
-                                                <TableColumn prefWidth="32.0" text="a&#10;l&#10;u" />
-                                                <TableColumn prefWidth="30.0" text="sh" />
-                                                <TableColumn prefWidth="25.0" text="m&#10;b&#10;r" />
-                                                <TableColumn prefWidth="25.0" text="m&#10;a&#10;r" />
-                                                <TableColumn prefWidth="25.0" text="rd" />
-                                                <TableColumn prefWidth="25.0" text="wr" />
-                                                <TableColumn prefWidth="25.0" text="e&#10;n&#10;c" />
-                                                <TableColumn prefWidth="25.0" text="c" />
-                                                <TableColumn prefWidth="25.0" text="b" />
-                                                <TableColumn prefWidth="25.0" text="a" />
-                                                <TableColumn prefWidth="33.0" text="a&#10;d&#10;r" />
-                                             </columns>
-                                          </TableView>
+                                          <VBox spacing="5.0" style="-fx-border-color: lightgray;">
+                                             <children>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="320.0" text="MIR" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <HBox prefWidth="200.0" spacing="4.0">
+                                                   <children>
+                                                      <TableView maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
+                                                        <columns>
+                                                          <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="AMUX" />
+                                                        </columns>
+                                                      </TableView>
+                                                      <TableView layoutX="10.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
+                                                         <columns>
+                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="COND" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <TableView layoutX="75.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
+                                                         <columns>
+                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="ALU" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <TableView layoutX="140.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
+                                                         <columns>
+                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="SH" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </HBox>
+                                                <HBox layoutX="11.0" layoutY="37.0" prefWidth="200.0" spacing="4.0">
+                                                   <children>
+                                                      <TableView maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
+                                                         <columns>
+                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="MBR" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <TableView layoutX="10.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
+                                                         <columns>
+                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="MAR" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <TableView layoutX="75.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
+                                                         <columns>
+                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="RD" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <TableView layoutX="140.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
+                                                         <columns>
+                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="WR" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </HBox>
+                                                <HBox layoutX="11.0" layoutY="102.0" prefWidth="200.0" spacing="4.0">
+                                                   <children>
+                                                      <TableView maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
+                                                         <columns>
+                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="ENC" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <TableView layoutX="10.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
+                                                         <columns>
+                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="C" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <TableView layoutX="75.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
+                                                         <columns>
+                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="B" />
+                                                         </columns>
+                                                      </TableView>
+                                                      <TableView layoutX="140.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
+                                                         <columns>
+                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="A" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </HBox>
+                                                <HBox layoutX="11.0" layoutY="167.0" prefWidth="200.0" spacing="5.0">
+                                                   <children>
+                                                      <TableView maxHeight="60.0" prefHeight="60.0" prefWidth="320.0">
+                                                         <columns>
+                                                            <TableColumn maxWidth="320.0" minWidth="60.0" prefWidth="320.0" resizable="false" text="ADDRESS" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                             <padding>
+                                                <Insets top="5.0" />
+                                             </padding>
+                                          </VBox>
                                           <GridPane hgap="5.0" prefHeight="65.0" prefWidth="145.0" vgap="5.0">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -223,12 +299,6 @@
                                                 <Insets />
                                              </VBox.margin>
                                           </GridPane>
-                                          <TableView prefHeight="350.0" prefWidth="357.0">
-                                            <columns>
-                                              <TableColumn prefWidth="88.0" text="Mem addr." />
-                                              <TableColumn prefWidth="231.0" text="Value" />
-                                            </columns>
-                                          </TableView>
                                        </children>
                                     </VBox>
                                     <AnchorPane maxHeight="820.0" minHeight="820.0" prefHeight="820.0">

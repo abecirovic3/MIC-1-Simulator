@@ -2,9 +2,8 @@ package sample;
 
 import backend.FileParser;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
@@ -17,11 +16,12 @@ public class Controller {
     public TableColumn<Map, String> instrMeaning;
     public TableColumn<Map, String> instrBinaryCode;
     public TableView<Map> supportedInstructionsTable;
+
     //public TextArea microcodeTextArea;
     public CodeArea codeArea;
     public CodeArea microcodeArea;
 
-    private FileParser fileParser = new FileParser();
+    private final FileParser fileParser = new FileParser();
 
     @FXML
     public void initialize() {

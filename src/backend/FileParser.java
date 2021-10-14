@@ -14,7 +14,7 @@ public class FileParser {
     public FileParser() {}
 
     public ObservableList<Map<String, Object>> loadSupportedInstructionsTableData() {
-        ObservableList<Map<String, Object>> items = FXCollections.<Map<String, Object>>observableArrayList();
+        ObservableList<Map<String, Object>> items = FXCollections.observableArrayList();
 
         try {
             BufferedReader csvReader = new BufferedReader(new FileReader("resources/dataFiles/supportedInstructions.csv"));
