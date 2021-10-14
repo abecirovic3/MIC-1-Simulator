@@ -135,7 +135,7 @@
                       <children>
                           <HBox prefHeight="854.0" prefWidth="1280.0" spacing="5.0">
                               <children>
-                              <CodeArea fx:id="microcodeArea" autoScrollOnDragDesired="false" editable="false" prefHeight="844.0" prefWidth="377.0" style="-fx-border-color: lightgray;" styleClass="lineno" stylesheets="@../css/codeArea.css" wrapText="true">
+                              <CodeArea fx:id="microcodeArea" editable="false" prefHeight="844.0" prefWidth="377.0" style="-fx-border-color: lightgray;" styleClass="lineno" stylesheets="@../css/codeArea.css" wrapText="true">
                               </CodeArea>
                               <VBox prefHeight="844.0" prefWidth="891.0" spacing="5.0">
                                  <children>

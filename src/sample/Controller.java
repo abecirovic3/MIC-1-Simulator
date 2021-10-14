@@ -34,8 +34,13 @@ public class Controller {
 
         //microcodeArea.setParagraphGraphicFactory(LineNumberFactory.get(microcodeArea));
         microcodeArea.replaceText(fileParser.loadMicroCode());
-        microcodeArea.moveTo(0);
+        // Scroll the area to the top
+        microcodeArea.moveTo(0); // this method works with characters...
         microcodeArea.requestFollowCaret();
+
+        // To highlight a line
+        // microcodeArea.moveTo(10,0);
+        // microcodeArea.setLineHighlighterOn(true);
 
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         //codeArea.setContextMenu( new DefaultContextMenu() );
