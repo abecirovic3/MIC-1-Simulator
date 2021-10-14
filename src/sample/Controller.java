@@ -1,13 +1,16 @@
 package sample;
 
 import backend.FileParser;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Controller {
@@ -26,6 +29,16 @@ public class Controller {
     @FXML
     public void initialize() {
         instrMnemonic.setCellValueFactory(new MapValueFactory<>("mnemonic"));
+        // If we want the cells to be editable ...
+        
+//        instrMnemonic.setCellFactory(TextFieldTableCell.forTableColumn());
+//        instrMnemonic.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Map, String>>() {
+//            @Override
+//            public void handle(TableColumn.CellEditEvent<Map, String> event) {
+//                Map<String, Object> row = event.getRowValue();
+//                row.put("mnemonic", event.getNewValue());
+//            }
+//        });
         instrInstruction.setCellValueFactory(new MapValueFactory<>("instruction"));
         instrMeaning.setCellValueFactory(new MapValueFactory<>("meaning"));
         instrBinaryCode.setCellValueFactory(new MapValueFactory<>("binaryCode"));
