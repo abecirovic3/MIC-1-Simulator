@@ -34,6 +34,8 @@ public class Controller {
 
         //microcodeArea.setParagraphGraphicFactory(LineNumberFactory.get(microcodeArea));
         microcodeArea.replaceText(fileParser.loadMicroCode());
+        microcodeArea.moveTo(0);
+        microcodeArea.requestFollowCaret();
 
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         //codeArea.setContextMenu( new DefaultContextMenu() );

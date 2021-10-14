@@ -135,7 +135,7 @@
                       <children>
                           <HBox prefHeight="854.0" prefWidth="1280.0" spacing="5.0">
                               <children>
-                              <CodeArea fx:id="microcodeArea" editable="false" prefHeight="844.0" prefWidth="377.0" style="-fx-border-color: lightgray;" styleClass="lineno" stylesheets="@../css/codeArea.css" wrapText="true">
+                              <CodeArea fx:id="microcodeArea" autoScrollOnDragDesired="false" editable="false" prefHeight="844.0" prefWidth="377.0" style="-fx-border-color: lightgray;" styleClass="lineno" stylesheets="@../css/codeArea.css" wrapText="true">
                               </CodeArea>
                               <VBox prefHeight="844.0" prefWidth="891.0" spacing="5.0">
                                  <children>
@@ -184,92 +184,40 @@
                                           </TableView>
                                           <VBox spacing="5.0" style="-fx-border-color: lightgray;">
                                              <children>
-                                                <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="320.0" text="MIR" textAlignment="CENTER">
+                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="318.0" style="-fx-background-color: linear-gradient(white, lightgray);" text="MIR" textAlignment="CENTER">
                                                    <font>
                                                       <Font name="System Bold" size="13.0" />
                                                    </font>
                                                 </Label>
-                                                <HBox prefWidth="200.0" spacing="4.0">
-                                                   <children>
-                                                      <TableView maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
-                                                        <columns>
-                                                          <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="AMUX" />
-                                                        </columns>
-                                                      </TableView>
-                                                      <TableView layoutX="10.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
-                                                         <columns>
-                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="COND" />
-                                                         </columns>
-                                                      </TableView>
-                                                      <TableView layoutX="75.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
-                                                         <columns>
-                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="ALU" />
-                                                         </columns>
-                                                      </TableView>
-                                                      <TableView layoutX="140.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
-                                                         <columns>
-                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="SH" />
-                                                         </columns>
-                                                      </TableView>
-                                                   </children>
-                                                </HBox>
-                                                <HBox layoutX="11.0" layoutY="37.0" prefWidth="200.0" spacing="4.0">
-                                                   <children>
-                                                      <TableView maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
-                                                         <columns>
-                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="MBR" />
-                                                         </columns>
-                                                      </TableView>
-                                                      <TableView layoutX="10.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
-                                                         <columns>
-                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="MAR" />
-                                                         </columns>
-                                                      </TableView>
-                                                      <TableView layoutX="75.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
-                                                         <columns>
-                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="RD" />
-                                                         </columns>
-                                                      </TableView>
-                                                      <TableView layoutX="140.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
-                                                         <columns>
-                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="WR" />
-                                                         </columns>
-                                                      </TableView>
-                                                   </children>
-                                                </HBox>
-                                                <HBox layoutX="11.0" layoutY="102.0" prefWidth="200.0" spacing="4.0">
-                                                   <children>
-                                                      <TableView maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
-                                                         <columns>
-                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="ENC" />
-                                                         </columns>
-                                                      </TableView>
-                                                      <TableView layoutX="10.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
-                                                         <columns>
-                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="C" />
-                                                         </columns>
-                                                      </TableView>
-                                                      <TableView layoutX="75.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
-                                                         <columns>
-                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="B" />
-                                                         </columns>
-                                                      </TableView>
-                                                      <TableView layoutX="140.0" layoutY="10.0" maxHeight="60.0" prefHeight="60.0" prefWidth="80.0">
-                                                         <columns>
-                                                            <TableColumn maxWidth="80.0" minWidth="60.0" resizable="false" text="A" />
-                                                         </columns>
-                                                      </TableView>
-                                                   </children>
-                                                </HBox>
-                                                <HBox layoutX="11.0" layoutY="167.0" prefWidth="200.0" spacing="5.0">
-                                                   <children>
-                                                      <TableView maxHeight="60.0" prefHeight="60.0" prefWidth="320.0">
-                                                         <columns>
-                                                            <TableColumn maxWidth="320.0" minWidth="60.0" prefWidth="320.0" resizable="false" text="ADDRESS" />
-                                                         </columns>
-                                                      </TableView>
-                                                   </children>
-                                                </HBox>
+                                                <TableView maxWidth="318.0" minWidth="318.0" prefHeight="60.0" prefWidth="318.0">
+                                                  <columns>
+                                                    <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="AMUX" />
+                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="COND" />
+                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="ALU" />
+                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="SH" />
+                                                  </columns>
+                                                </TableView>
+                                                <TableView layoutX="11.0" layoutY="232.0" maxWidth="318.0" minWidth="318.0" prefHeight="60.0" prefWidth="318.0">
+                                                   <columns>
+                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="MBR" />
+                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="MAR" />
+                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="RD" />
+                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="WR" />
+                                                   </columns>
+                                                </TableView>
+                                                <TableView layoutX="11.0" layoutY="232.0" maxWidth="318.0" minWidth="318.0" prefHeight="60.0" prefWidth="318.0">
+                                                   <columns>
+                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="ENC" />
+                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="C" />
+                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="B" />
+                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="A" />
+                                                   </columns>
+                                                </TableView>
+                                                <TableView maxHeight="60.0" prefHeight="60.0" prefWidth="320.0">
+                                                   <columns>
+                                                      <TableColumn maxWidth="320.0" minWidth="60.0" prefWidth="320.0" resizable="false" text="ADDRESS" />
+                                                   </columns>
+                                                </TableView>
                                              </children>
                                              <padding>
                                                 <Insets top="5.0" />
