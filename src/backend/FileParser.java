@@ -62,4 +62,27 @@ public class FileParser {
 
         return result.toString();
     }
+
+    public static Map<String, String> getSupportedInstructionsMap() {
+        Map<String, String> result = new HashMap<>();
+
+        try {
+            BufferedReader csvReader = new BufferedReader(new FileReader("resources/dataFiles/supportedInstructions.csv"));
+            String row;
+            while ((row = csvReader.readLine()) != null) {
+                String[] data = row.split(",");
+                String[] opcodeLine = data[3].split(" ");
+                String opcode = opcodeLine[0]; // get the opcode
+                if (opcode.equals("1111"))     // if the opcode starts with 1111 then the next 4 bits are also included
+                    opcode += opcodeLine[1];
+                result.put(data[0], opcode);
+            }
+            csvReader.close();
+        } catch (IOException e) {
+            System.out.println("Problems with reading the file!");
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }

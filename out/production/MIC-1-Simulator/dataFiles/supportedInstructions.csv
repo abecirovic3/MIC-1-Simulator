@@ -18,6 +18,6 @@ POPI,Pop from stack indirectly,m(ac):=m(sp); sp:=sp+1,1111 0010 00000000
 PUSH,Push to stack,sp:=sp-1; m(sp):=ac,1111 0100 00000000
 POP,Pop from stack,ac:=m(sp); sp=sp+1,1111 0110 00000000
 RETN,Return from procedure,pc:=m(sp); sp:=sp+1,1111 1000 00000000
-SWAP,Swap contents of ac and sp,tmp:=ac; ac:=sp; sp:=tmp, 1111 1010 00000000
+SWAP,Swap contents of ac and sp,tmp:=ac; ac:=sp; sp:=tmp,1111 1010 00000000
 INSP,Increment sp,sp:=sp+y (0<=y<256),1111 1100 yyyy yyyy
 DESP,decrement sp,sp:=sp-y (0<=y<256),1111 1110 yyyy yyyy

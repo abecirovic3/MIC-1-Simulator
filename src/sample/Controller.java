@@ -1,6 +1,8 @@
 package sample;
 
+import backend.CodeParser;
 import backend.FileParser;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -57,5 +59,11 @@ public class Controller {
 
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         //codeArea.setContextMenu( new DefaultContextMenu() );
+    }
+
+    public void runCodeAction(ActionEvent actionEvent) {
+        CodeParser cp = new CodeParser();
+        String res = cp.parseCode(codeArea.getText());
+        System.out.println(res);
     }
 }
