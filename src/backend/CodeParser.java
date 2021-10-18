@@ -93,7 +93,7 @@ public class CodeParser {
         if (blankLinesCounter == codeLines.length)
             return "Error blank code area";
 
-        labels.forEach((k, v) -> System.out.println(k + " " + v));
+//        labels.forEach((k, v) -> System.out.println(k + " " + v));
         return "OK";
     }
 
@@ -140,5 +140,9 @@ public class CodeParser {
     private boolean instructionRequiresArgument(String mnemonic) {
         return !(mnemonic.equals("PSHI") || mnemonic.equals("POPI") || mnemonic.equals("PUSH")
                 || mnemonic.equals("POP") || mnemonic.equals("RETN") || mnemonic.equals("SWAP"));
+    }
+
+    public Map<String, Integer> getLabels() {
+        return labels;
     }
 }
