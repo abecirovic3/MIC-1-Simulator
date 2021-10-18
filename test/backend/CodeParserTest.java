@@ -92,4 +92,26 @@ class CodeParserTest {
         String code = ";Komentar ADDD 123\n     SUBD 1  \n\n LOCO    100    ;linijski komentar\n  labela: ADDD 0\nJNEG labela";
         assertEquals("OK", cp.parseCode(code));
     }
+
+    @Test
+    @DisplayName("Assembled Code Test 2")
+    void checkAssembledCode1() {
+        String code = "ADDD 10\nSTOD 1025\nJUMP 0";
+        cp.parseCode(code);
+        short[] machineCode = cp.getMachineCode();
+        assertEquals(8202, machineCode[0]);   // 0010 0000 0000 1010
+        assertEquals(5121, machineCode[1]);   // 0001 0100 0000 0001
+        assertEquals(24576, machineCode[2]);  // 0110 0000 0000 0000
+    }
+
+    @Test
+    @DisplayName("Assembled Code Test 1")
+    void checkAssembledCode2() {
+        String code = "PSHI\n;Cisto onako neki komentar\nPOPI\nINSP 100";
+        cp.parseCode(code);
+        short[] machineCode = cp.getMachineCode();
+        assertEquals(-4096, machineCode[0]);   // 1111 0000 0000 0000
+        assertEquals(-3584, machineCode[1]);   // 1111 0010 0000 0000
+        assertEquals(-924, machineCode[2]);    // 1111 1100 0110 0100
+    }
 }

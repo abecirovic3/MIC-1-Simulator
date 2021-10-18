@@ -1,4 +1,5 @@
 package backend;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -6,8 +7,13 @@ public class CodeParser {
     private final Map<String, String> supportedInstructions;
     private Map<String, Integer> labels = new HashMap<>();
 
+    // for now let's keep the assembled code here
+    // we'll use 2048 mem locations for code segment
+    private short[] machineCode = new short[2048];
+
     public CodeParser() {
         supportedInstructions = FileParser.getSupportedInstructionsMap();
+        Arrays.fill(machineCode, (short) 0);
     }
 
     public String parseCode(String code) {
@@ -22,6 +28,9 @@ public class CodeParser {
 
         int lineNumber = 1;
         int blankLinesCounter = 0;
+        int memAddress = 0;
+        String opcodeBinaryString;
+        String argumentBinaryString;
 
         for (String line : codeLines) {
             if (line.equals("")) {
@@ -34,6 +43,8 @@ public class CodeParser {
 
             if (!supportedInstructions.containsKey(instructionElements[0].toUpperCase()))
                 return errMessage + lineNumber + ", unknown instruction mnemonic";
+
+            argumentBinaryString = "00000000";
 
             if (instructionRequiresArgument(instructionElements[0])) {
                 if (instructionElements.length < 2)
@@ -56,6 +67,8 @@ public class CodeParser {
                     if (paramValue < 0 || paramValue > boundary)
                         return errMessage + lineNumber + ", argument out of bounds";
 
+                    argumentBinaryString = Integer.toBinaryString(paramValue);
+
                 } catch (NumberFormatException ex) {
                     return errMessage + lineNumber + ", invalid argument";
                 }
@@ -65,11 +78,26 @@ public class CodeParser {
                 return errMessage + lineNumber + ", too many arguments";
             }
 
+            opcodeBinaryString = supportedInstructions.get(instructionElements[0].toUpperCase());
+
+            if (memAddress > 2047)
+                return "Warning: Memory code segment is full, remaining instructions won't be assembled";
+            else
+                addInstructionToAssembledInstructions(memAddress, opcodeBinaryString, argumentBinaryString);
+
             lineNumber++;
+            memAddress++;
         }
         if (blankLinesCounter == codeLines.length)
             return "Error blank code area";
         return "OK";
+    }
+
+    private void addInstructionToAssembledInstructions(int memAddress, String opcodeBinaryString, String argumentBinaryString) {
+        String format = "%" + (16 - opcodeBinaryString.length()) + "s";
+        argumentBinaryString = String.format(format, argumentBinaryString).replace(' ', '0');
+        String binaryInstruction = opcodeBinaryString + argumentBinaryString;
+        machineCode[memAddress] = (short) Integer.parseInt(binaryInstruction, 2);
     }
 
     private boolean instructionIsJump(String mnemonic) {
@@ -119,5 +147,9 @@ public class CodeParser {
 
     public Map<String, Integer> getLabels() {
         return labels;
+    }
+
+    public short[] getMachineCode() {
+        return machineCode;
     }
 }
