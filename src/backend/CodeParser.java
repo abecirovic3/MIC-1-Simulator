@@ -1,5 +1,4 @@
 package backend;
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,36 +22,15 @@ public class CodeParser {
 
         int lineNumber = 1;
         int blankLinesCounter = 0;
-//        int memoryAddress = 0;
 
         for (String line : codeLines) {
-//            line = line.replaceAll(";.*", ""); // remove comments
-//            line = line.trim(); // get rid of all leading and trailing blanks
             if (line.equals("")) {
                 blankLinesCounter++;
                 lineNumber++;
                 continue; // blank rows are allowed
             }
 
-//            line = line.replaceAll(" +", " "); // replace multiple blanks with one
-
             String[] instructionElements = line.split(" ");
-
-            // Check for label
-//            if (instructionElements[0].endsWith(":")) {
-//                String label = instructionElements[0].substring(0, instructionElements[0].length()-1);
-//                if (labels.containsKey(label))
-//                    return errMessage + lineNumber + ", recurring label name";
-//                labels.put(label, memoryAddress);
-//                if (instructionElements.length == 1) {
-//                    blankLinesCounter++;
-//                    lineNumber++;
-//                    continue;
-//                }
-//                // get rid of label
-//                line = line.replace(label + ": ", "");
-//                instructionElements = line.split(" ");
-//            }
 
             if (!supportedInstructions.containsKey(instructionElements[0].toUpperCase()))
                 return errMessage + lineNumber + ", unknown instruction mnemonic";
@@ -88,12 +66,9 @@ public class CodeParser {
             }
 
             lineNumber++;
-//            memoryAddress++;
         }
         if (blankLinesCounter == codeLines.length)
             return "Error blank code area";
-
-//        labels.forEach((k, v) -> System.out.println(k + " " + v));
         return "OK";
     }
 
@@ -123,7 +98,7 @@ public class CodeParser {
                 labels.put(newLabel, memoryAddress);
 
                 // get rid of label
-                // so we don't increment the mem address, bcs this line is only a label
+                // we don't increment the mem address, bcs this line is only a label
                 if (elements.length > 1) {
                     codeLines[i] = codeLines[i].replace(newLabel + ": ", "");
                     i--;    // if there are multiple labels on one line
