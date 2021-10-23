@@ -57,7 +57,7 @@ mar:=sp; wr; goto 10;
 mar:=sp; sp:=sp+(+1); rd;
 rd;
 mar:=ac; wr; goto 10;
-alu:tir; if n then goto 62;
+alu:=tir; if n then goto 62;
 sp:=sp+(-1);
 mar:=sp; mbr:=ac; wr; goto 10;
 mar:=sp; sp:=sp+(+1); rd;

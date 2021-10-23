@@ -5,11 +5,11 @@ import java.util.Map;
 
 public class CodeParser {
     private final Map<String, String> supportedInstructions;
-    private Map<String, Integer> labels = new HashMap<>();
+    private final Map<String, Integer> labels = new HashMap<>();
 
     // for now let's keep the assembled code here
     // we'll use 2048 mem locations for code segment
-    private short[] machineCode = new short[2048];
+    private final short[] machineCode = new short[2048];
 
     public CodeParser() {
         supportedInstructions = FileParser.getSupportedInstructionsMap();
