@@ -1,23 +1,7 @@
 package backend;
 
 public class AMUX {
-    private short ALatchInput, MBRInput, output;
-
-    public short getALatchInput() {
-        return ALatchInput;
-    }
-
-    public void setALatchInput(short ALatchInput) {
-        this.ALatchInput = ALatchInput;
-    }
-
-    public short getMBRInput() {
-        return MBRInput;
-    }
-
-    public void setMBRInput(short MBRInput) {
-        this.MBRInput = MBRInput;
-    }
+    private short output;
 
     public short getOutput() {
         return output;
@@ -25,5 +9,12 @@ public class AMUX {
 
     public void setOutput(short output) {
         this.output = output;
+    }
+
+    public void decideOutput(boolean control, short inputA, short inputB) {
+        if (control)
+            output = inputB;
+        else
+            output = inputA;
     }
 }
