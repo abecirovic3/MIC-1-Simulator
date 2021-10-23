@@ -1,6 +1,6 @@
 package backend;
 
-public class AMUX {
+public class Mux {
     private short output;
 
     public short getOutput() {

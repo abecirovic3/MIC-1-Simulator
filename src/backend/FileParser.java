@@ -85,4 +85,9 @@ public class FileParser {
 
         return result;
     }
+
+    public static int[] getControlMemory() {
+        int[] result = new int[256];
+        return result;
+    }
 }
