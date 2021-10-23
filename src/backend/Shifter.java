@@ -1,16 +1,7 @@
 package backend;
 
 public class Shifter {
-    private short input, output;
-    private byte controlBits;
-
-    public short getInput() {
-        return input;
-    }
-
-    public void setInput(short input) {
-        this.input = input;
-    }
+    private short output;
 
     public short getOutput() {
         return output;
@@ -20,11 +11,11 @@ public class Shifter {
         this.output = output;
     }
 
-    public byte getControlBits() {
-        return controlBits;
-    }
-
-    public void setControlBits(byte controlBits) {
-        this.controlBits = controlBits;
+    public void shift(byte control, short input) {
+        output = input;
+        if (control == 1)
+            output = (short) (output >> 1);
+        else if (control == 2)
+            output = (short) (output << 1);
     }
 }
