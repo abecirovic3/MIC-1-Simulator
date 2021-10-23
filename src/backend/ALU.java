@@ -1,25 +1,8 @@
 package backend;
 
 public class ALU {
-    private short inputA, inputB, output;
-    private byte controlBits;
-    private byte NBit, ZBit;
-
-    public short getInputA() {
-        return inputA;
-    }
-
-    public void setInputA(short inputA) {
-        this.inputA = inputA;
-    }
-
-    public short getInputB() {
-        return inputB;
-    }
-
-    public void setInputB(short inputB) {
-        this.inputB = inputB;
-    }
+    private short output;
+    private boolean NBit, ZBit;
 
     public short getOutput() {
         return output;
@@ -29,27 +12,32 @@ public class ALU {
         this.output = output;
     }
 
-    public byte getControlBits() {
-        return controlBits;
-    }
-
-    public void setControlBits(byte controlBits) {
-        this.controlBits = controlBits;
-    }
-
-    public byte getNBit() {
+    public boolean getNBit() {
         return NBit;
     }
 
-    public void setNBit(byte nBit) {
+    public void setNBit(boolean nBit) {
         this.NBit = nBit;
     }
 
-    public byte getZBit() {
+    public boolean getZBit() {
         return ZBit;
     }
 
-    public void setZBit(byte zBit) {
+    public void setZBit(boolean zBit) {
         this.ZBit = zBit;
+    }
+
+    public void calculate(byte control, short inputA, short inputB) {
+        output = (short) (inputA + inputB); // control is 0
+        if (control == 1)
+            output = (short) (inputA & inputB);
+        else if (control == 2)
+            output = inputA;
+        else if (control == 3)
+            output = (short)~inputA;
+
+        ZBit = output == 0;
+        NBit = output < 0;
     }
 }
