@@ -17,6 +17,11 @@ public class CPU {
 
     public CPU() {
         Arrays.fill(registers, (short)0);
+        registers[2] = 4095; // SP
+        registers[6] = 1;    // +1
+        registers[7] = -1;   // -1
+        registers[8] = 0x0fff; // AMASK
+        registers[9] = 0x00ff; // SMASK
         MPC = 0;
         controlMemory = FileParser.getControlMemory();
         clock = 0;

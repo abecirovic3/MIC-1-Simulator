@@ -88,6 +88,18 @@ public class FileParser {
 
     public static int[] getControlMemory() {
         int[] result = new int[256];
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("resources/dataFiles/controlMemoryINT.txt"));
+            String row;
+            int i = 0;
+            while ((row = bufferedReader.readLine()) != null) {
+                result[i++] = Integer.parseInt(row);
+            }
+            bufferedReader.close();
+        } catch (IOException e) {
+            System.out.println("Problems with reading the file!");
+            e.printStackTrace();
+        }
         return result;
     }
 }
