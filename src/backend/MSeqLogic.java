@@ -1,6 +1,6 @@
 package backend;
 
-public class mSeqLogic {
+public class MSeqLogic {
     private boolean output;
 
     public boolean isOutput() {
@@ -13,5 +13,12 @@ public class mSeqLogic {
 
     public void generateOutput(byte control, boolean n, boolean z) {
         output = control == 3 || control == 1 && n || control == 2 && z;
+    }
+
+    @Override
+    public String toString() {
+        return "MSeqLogic{" +
+                "output=" + output +
+                '}';
     }
 }
