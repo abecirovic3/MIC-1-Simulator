@@ -17,4 +17,11 @@ public class Mux {
         else
             output = inputA;
     }
+
+    @Override
+    public String toString() {
+        return "Mux{" +
+                "output=" + output +
+                '}';
+    }
 }

@@ -18,4 +18,11 @@ public class Shifter {
         else if (control == 2)
             output = (short) (output << 1);
     }
+
+    @Override
+    public String toString() {
+        return "Shifter{" +
+                "output=" + output +
+                '}';
+    }
 }

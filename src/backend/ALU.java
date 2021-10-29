@@ -40,4 +40,13 @@ public class ALU {
         ZBit = output == 0;
         NBit = output < 0;
     }
+
+    @Override
+    public String toString() {
+        return "ALU{" +
+                "output=" + output +
+                ", NBit=" + NBit +
+                ", ZBit=" + ZBit +
+                '}';
+    }
 }
