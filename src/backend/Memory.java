@@ -48,4 +48,8 @@ public class Memory {
     public void write(short address, short value) {
         memory[address] = value;
     }
+
+    public short read(short address) {
+        return memory[address];
+    }
 }
