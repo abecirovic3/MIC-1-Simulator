@@ -7,9 +7,9 @@ public class Register {
     private SimpleStringProperty name;
     private SimpleIntegerProperty value;
 
-    public Register(SimpleStringProperty name, SimpleIntegerProperty value) {
-        this.name = name;
-        this.value = value;
+    public Register(String name, short value) {
+        this.name = new SimpleStringProperty(name);
+        this.value = new SimpleIntegerProperty(value);
     }
 
     public String getName() {
@@ -34,5 +34,13 @@ public class Register {
 
     public void setValue(int value) {
         this.value.set(value);
+    }
+
+    @Override
+    public String toString() {
+        return "Register{" +
+                "name=" + name +
+                ", value=" + value +
+                '}';
     }
 }
