@@ -1,9 +1,13 @@
 package backend;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.Arrays;
 
 public class CPU {
-    private short[] registers = new short[16];
+//    private short[] registers = new short[16];
+    private ObservableList<Register> registers;
     private short ALatch, BLatch;
     private Mux aMux, mMux;
     private ALU alu;
@@ -20,12 +24,30 @@ public class CPU {
     private Memory memory;
 
     public CPU() {
-        Arrays.fill(registers, (short)0);
-        registers[2] = 4095; // SP
-        registers[6] = 1;    // +1
-        registers[7] = -1;   // -1
-        registers[8] = 0x0fff; // AMASK
-        registers[9] = 0x00ff; // SMASK
+//        Arrays.fill(registers, (short)0);
+//        registers[2] = 4095; // SP
+//        registers[6] = 1;    // +1
+//        registers[7] = -1;   // -1
+//        registers[8] = 0x0fff; // AMASK
+//        registers[9] = 0x00ff; // SMASK
+        registers = FXCollections.observableArrayList(
+                new Register("PC", (short)0),
+                new Register("AC", (short)0),
+                new Register("SP", (short)4095),
+                new Register("IR", (short)0),
+                new Register("TIR", (short)0),
+                new Register("0", (short)0),
+                new Register("1", (short)1),
+                new Register("-1", (short)-1),
+                new Register("AMASK", (short)0x0fff),
+                new Register("SMASK", (short)0x00ff),
+                new Register("A", (short)0),
+                new Register("B", (short)0),
+                new Register("C", (short)0),
+                new Register("D", (short)0),
+                new Register("E", (short)0),
+                new Register("F", (short)0)
+        );
         aMux = new Mux();
         mMux = new Mux();
         alu = new ALU();
@@ -50,8 +72,10 @@ public class CPU {
     public void runSecondSubCycle() {
         aDec = (short)getBytesField(8, 0x0000000F);
         bDec = (short)getBytesField(12, 0x0000000F);
-        ALatch = registers[aDec];
-        BLatch = registers[bDec];
+//        ALatch = registers[aDec];
+//        BLatch = registers[bDec];
+        ALatch = (short)registers.get(aDec).getValue();
+        BLatch = (short)registers.get(bDec).getValue();
         incrementer = (byte)(MPC + 1);
         clock = (byte)((clock + 1) % 4);
     }
@@ -78,7 +102,8 @@ public class CPU {
             MBR = shifter.getOutput();
         if (getBitAt(20)) {
             cDec = (short)getBytesField(16, 0x0000000F);
-            registers[cDec] = shifter.getOutput();
+//            registers[cDec] = shifter.getOutput();
+            registers.get(cDec).setValue(shifter.getOutput());
         }
 
         mSeqLogic.generateOutput((byte)getBytesField(29, 0x00000003), alu.getNBit(), alu.getZBit());
@@ -107,9 +132,13 @@ public class CPU {
         System.out.println(this);
     }
 
-    public short[] getRegisters() {
+    public ObservableList<Register> getRegisters() {
         return registers;
     }
+
+    //    public short[] getRegisters() {
+//        return registers;
+//    }
 
     public Memory getMemory() {
         return memory;
@@ -118,7 +147,7 @@ public class CPU {
     @Override
     public String toString() {
         return "CPU{" +
-                "registers=" + Arrays.toString(registers) +
+                "registers=" + registers +
                 ", ALatch=" + ALatch +
                 ", BLatch=" + BLatch +
                 ", aMux=" + aMux +
