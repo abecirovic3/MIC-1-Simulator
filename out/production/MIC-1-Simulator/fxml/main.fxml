@@ -8,7 +8,7 @@
 <?import javafx.scene.text.*?>
 <?import org.fxmisc.richtext.*?>
 
-<BorderPane maxHeight="960.0" maxWidth="1280.0" minHeight="960.0" minWidth="1280.0" prefHeight="960.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<BorderPane stylesheets="@../css/styles.css" maxHeight="960.0" maxWidth="1280.0" minHeight="960.0" minWidth="1280.0" prefHeight="960.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -45,19 +45,19 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <ToolBar prefHeight="40.0" prefWidth="200.0" styleClass="toolbar" stylesheets="@../css/styles.css">
+            <ToolBar prefHeight="40.0" prefWidth="200.0" styleClass="toolbar" >
               <items>
-                <Button fx:id="btnNewFile" alignment="CENTER" contentDisplay="CENTER" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="buttons" stylesheets="@../css/styles.css" />
+                <Button fx:id="btnNewFile" alignment="CENTER" contentDisplay="CENTER" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="buttons"  />
                   <Separator minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
-                <Button fx:id="btnOpenFile" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="buttons" stylesheets="@../css/styles.css" />
+                <Button fx:id="btnOpenFile" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="buttons"  />
                   <Separator minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
-                <Button fx:id="btnSave" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="buttons" stylesheets="@../css/styles.css" />
+                <Button fx:id="btnSave" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="buttons"  />
                   <Separator layoutX="235.0" layoutY="10.0" minWidth="5.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
-                <Button fx:id="btnRun" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#runCodeAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons" stylesheets="@../css/styles.css" />
+                <Button fx:id="btnRun" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#runCodeAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons"  />
                   <Separator layoutX="244.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
-                <Button fx:id="btnNextFaze" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="buttons" stylesheets="@../css/styles.css" />
+                <Button fx:id="btnNextFaze" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="buttons"  />
                   <Separator layoutX="253.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
-                <Button fx:id="btnNextClock" layoutX="208.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#runClockCycleAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons" stylesheets="@../css/styles.css" />
+                <Button fx:id="btnNextClock" layoutX="208.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#runClockCycleAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons"  />
               </items>
                <opaqueInsets>
                   <Insets />
@@ -85,17 +85,17 @@
                                  </styleClass></CodeArea>
                               <VBox prefHeight="843.0" prefWidth="706.0" spacing="5.0">
                                  <children>
-                                    <Label style="-fx-background-color: Transparent;" text="Supported instructions">
+                                    <Label styleClass="transparent-label" text="Supported instructions">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <TableView fx:id="supportedInstructionsTable" editable="true" prefHeight="580.0" prefWidth="706.0" style="-fx-alignment: CENTER;">
+                                    <TableView fx:id="supportedInstructionsTable" editable="true" prefHeight="580.0" prefWidth="706.0" styleClass="center-align">
                                       <columns>
-                                        <TableColumn fx:id="instrMnemonic" prefWidth="91.0" style="-fx-alignment: CENTER;" text="Mnemonic" />
-                                        <TableColumn fx:id="instrInstruction" prefWidth="194.0" style="-fx-alignment: CENTER;" text="Instruction" />
-                                        <TableColumn fx:id="instrMeaning" prefWidth="239.0" style="-fx-alignment: CENTER; -fx-text-alignment: justify;" text="Meaning" />
-                                        <TableColumn fx:id="instrBinaryCode" prefWidth="180.0" style="-fx-alignment: CENTER;" text="Binary code" />
+                                        <TableColumn fx:id="instrMnemonic" prefWidth="91.0" styleClass="center-align" text="Mnemonic" />
+                                        <TableColumn fx:id="instrInstruction" prefWidth="194.0" styleClass="center-align" text="Instruction" />
+                                        <TableColumn fx:id="instrMeaning" prefWidth="239.0" styleClass="center-align" text="Meaning" />
+                                        <TableColumn fx:id="instrBinaryCode" prefWidth="180.0" styleClass="center-align" text="Binary code" />
                                       </columns>
                                     </TableView>
                                     <TextArea editable="false" prefHeight="233.0" prefWidth="706.0" promptText="Console" />
@@ -115,7 +115,7 @@
                       <children>
                           <HBox prefHeight="854.0" prefWidth="1280.0" spacing="5.0">
                               <children>
-                              <CodeArea fx:id="microcodeArea" editable="false" prefHeight="844.0" prefWidth="377.0" style="-fx-border-color: lightgray;" styleClass="lineno" stylesheets="@../css/codeArea.css" wrapText="true">
+                              <CodeArea fx:id="microcodeArea" editable="false" prefHeight="844.0" prefWidth="377.0" styleClass="lineno default-border" stylesheets="@../css/codeArea.css" wrapText="true">
                               </CodeArea>
                               <VBox prefHeight="844.0" prefWidth="891.0" spacing="5.0">
                                  <children>
@@ -178,14 +178,14 @@
                                               <TableColumn fx:id="regValue" prefWidth="244.0" text="Value" />
                                             </columns>
                                           </TableView>
-                                          <VBox layoutX="10.0" layoutY="294.0" style="-fx-border-color: lightgray;">
+                                          <VBox layoutX="10.0" layoutY="294.0" styleClass="default-border">
                                              <children>
-                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="318.0" style="-fx-background-color: linear-gradient(white, lightgray);" text="MPC" textAlignment="CENTER">
+                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="318.0" styleClass="table-label" text="MPC" textAlignment="CENTER">
                                                    <font>
                                                       <Font name="System Bold" size="13.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField prefHeight="40.0" prefWidth="318.0" style="-fx-border-color: lightgray; -fx-background-insets: 0;" />
+                                                <TextField prefHeight="40.0" prefWidth="318.0" styleClass="table-field" />
                                              </children>
                                           </VBox>
                                           <VBox style="-fx-border-color: lightgray;">

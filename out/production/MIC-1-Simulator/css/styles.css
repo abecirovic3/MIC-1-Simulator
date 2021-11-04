@@ -31,23 +31,23 @@
     -fx-graphic-text-gap: 8;
 }
 
-.text-area {
+.transparent-label {
     -fx-background-color: Transparent;
 }
 
-.text-area .scroll-pane {
-    -fx-background-color: transparent;
+.center-align {
+    -fx-alignment: CENTER;
 }
 
-.text-area .scroll-pane .viewport{
-    -fx-background-color: transparent;
+.default-border {
+    -fx-border-color: lightgray;
 }
 
-.text-area .scroll-pane .content{
-    -fx-background-color: transparent;
+.table-label {
+    -fx-background-color: linear-gradient(white, lightgray);
 }
 
-.text-area .scroll-bar:vertical {
-    -fx-pref-width: 1;
-    -fx-opacity: 0;
+.table-field {
+    -fx-border-color: lightgray;
+    -fx-background-insets: 0;
 }
