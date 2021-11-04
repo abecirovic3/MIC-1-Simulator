@@ -80,4 +80,8 @@ public class Controller {
         String res = cp.parseCode(codeArea.getText());
         System.out.println(res);
     }
+
+    public void runClockCycleAction(ActionEvent actionEvent) {
+        cpu.runCycle();
+    }
 }
