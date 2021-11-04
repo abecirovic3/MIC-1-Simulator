@@ -109,27 +109,6 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab text="Memory">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <HBox prefHeight="854.0" prefWidth="1280.0" spacing="5.0">
-                           <children>
-                              <TableView prefHeight="844.0" prefWidth="1277.0">
-                                <columns>
-                                  <TableColumn prefWidth="121.0" text="Address" />
-                                  <TableColumn prefWidth="1148.0" text="Value" />
-                                </columns>
-                              </TableView>
-                           </children>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </HBox>
-                     </children>
-                </AnchorPane>
-              </content>
-          </Tab>
           <Tab text="Control">
               <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -162,6 +141,27 @@
                   </AnchorPane>
               </content>
           </Tab>
+          <Tab text="Memory">
+              <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <children>
+                          <HBox prefHeight="854.0" prefWidth="1280.0" spacing="5.0">
+                              <children>
+                                  <TableView prefHeight="844.0" prefWidth="1277.0">
+                                      <columns>
+                                          <TableColumn prefWidth="121.0" text="Address" />
+                                          <TableColumn prefWidth="1148.0" text="Value" />
+                                      </columns>
+                                  </TableView>
+                              </children>
+                              <padding>
+                                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              </padding>
+                          </HBox>
+                      </children>
+                  </AnchorPane>
+              </content>
+          </Tab>
           <Tab text="Datapath">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -172,82 +172,52 @@
                                  <children>
                                     <VBox prefHeight="827.0" prefWidth="357.0" spacing="10.0">
                                        <children>
-                                          <TableView prefHeight="274.0" prefWidth="320.0">
+                                          <TableView prefHeight="322.0" prefWidth="320.0">
                                             <columns>
                                               <TableColumn prefWidth="75.0" text="Register" />
                                               <TableColumn prefWidth="244.0" text="Value" />
                                             </columns>
                                           </TableView>
-                                          <TableView layoutX="10.0" layoutY="215.0" prefHeight="67.0" prefWidth="145.0">
-                                             <columns>
-                                                <TableColumn prefWidth="319.0" text="MPC" />
-                                             </columns>
-                                          </TableView>
-                                          <VBox spacing="5.0" style="-fx-border-color: lightgray;">
+                                          <VBox layoutX="10.0" layoutY="294.0" style="-fx-border-color: lightgray;">
+                                             <children>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="318.0" style="-fx-background-color: linear-gradient(white, lightgray);" text="MPC" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField prefHeight="40.0" prefWidth="318.0" style="-fx-border-color: lightgray; -fx-background-insets: 0;" />
+                                             </children>
+                                          </VBox>
+                                          <VBox style="-fx-border-color: lightgray;">
                                              <children>
                                                 <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="318.0" style="-fx-background-color: linear-gradient(white, lightgray);" text="MIR" textAlignment="CENTER">
                                                    <font>
                                                       <Font name="System Bold" size="13.0" />
                                                    </font>
                                                 </Label>
-                                                <TableView maxWidth="318.0" minWidth="318.0" prefHeight="60.0" prefWidth="318.0">
-                                                  <columns>
-                                                    <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="AMUX" />
-                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="COND" />
-                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="ALU" />
-                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="SH" />
-                                                  </columns>
-                                                </TableView>
-                                                <TableView layoutX="11.0" layoutY="232.0" maxWidth="318.0" minWidth="318.0" prefHeight="60.0" prefWidth="318.0">
-                                                   <columns>
-                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="MBR" />
-                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="MAR" />
-                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="RD" />
-                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="WR" />
-                                                   </columns>
-                                                </TableView>
-                                                <TableView layoutX="11.0" layoutY="232.0" maxWidth="318.0" minWidth="318.0" prefHeight="60.0" prefWidth="318.0">
-                                                   <columns>
-                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="ENC" />
-                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="C" />
-                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="B" />
-                                                      <TableColumn maxWidth="79.5" minWidth="79.5" prefWidth="79.5" resizable="false" text="A" />
-                                                   </columns>
-                                                </TableView>
-                                                <TableView maxHeight="60.0" prefHeight="60.0" prefWidth="320.0">
-                                                   <columns>
-                                                      <TableColumn maxWidth="320.0" minWidth="60.0" prefWidth="320.0" resizable="false" text="ADDRESS" />
-                                                   </columns>
-                                                </TableView>
+                                                <TextField prefHeight="40.0" prefWidth="318.0" style="-fx-border-color: lightgray; -fx-background-insets: 0;" />
                                              </children>
-                                             <padding>
-                                                <Insets top="5.0" />
-                                             </padding>
                                           </VBox>
-                                          <GridPane hgap="5.0" prefHeight="65.0" prefWidth="145.0" vgap="5.0">
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
+                                          <VBox layoutX="10.0" layoutY="368.0" style="-fx-border-color: lightgray;">
                                              <children>
-                                                <TableView prefHeight="200.0" prefWidth="200.0">
-                                                  <columns>
-                                                    <TableColumn prefWidth="157.0" text="MAR" />
-                                                  </columns>
-                                                </TableView>
-                                                <TableView layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                                   <columns>
-                                                      <TableColumn prefWidth="156.0" text="MBR" />
-                                                   </columns>
-                                                </TableView>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="318.0" style="-fx-background-color: linear-gradient(white, lightgray);" text="MAR" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField prefHeight="40.0" prefWidth="318.0" style="-fx-border-color: lightgray; -fx-background-insets: 0;" />
                                              </children>
-                                             <VBox.margin>
-                                                <Insets />
-                                             </VBox.margin>
-                                          </GridPane>
+                                          </VBox>
+                                          <VBox layoutX="10.0" layoutY="442.0" style="-fx-border-color: lightgray;">
+                                             <children>
+                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="22.0" prefWidth="318.0" style="-fx-background-color: linear-gradient(white, lightgray);" text="MBR" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField prefHeight="40.0" prefWidth="318.0" style="-fx-border-color: lightgray; -fx-background-insets: 0;" />
+                                             </children>
+                                          </VBox>
                                        </children>
                                     </VBox>
                                     <AnchorPane maxHeight="820.0" minHeight="820.0" prefHeight="820.0">
