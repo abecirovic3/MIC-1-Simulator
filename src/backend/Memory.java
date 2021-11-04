@@ -9,7 +9,8 @@ public class Memory {
 
     public Memory() {
         memory = new short[4096];
-        Arrays.fill(memory, (short)0);
+        Arrays.fill(memory, 0, 2048, (short)0x7000); // LOCO 0, act like NOP instr in CODE segment
+        Arrays.fill(memory, 2048, 4096, (short)0);
         address = 0;
         readCounter = 0;
         writeCounter = 0;
