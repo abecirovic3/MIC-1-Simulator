@@ -172,10 +172,10 @@
                                  <children>
                                     <VBox prefHeight="827.0" prefWidth="357.0" spacing="10.0">
                                        <children>
-                                          <TableView prefHeight="322.0" prefWidth="320.0">
+                                          <TableView fx:id="registersTable" prefHeight="322.0" prefWidth="320.0">
                                             <columns>
-                                              <TableColumn prefWidth="75.0" text="Register" />
-                                              <TableColumn prefWidth="244.0" text="Value" />
+                                              <TableColumn fx:id="regName" prefWidth="75.0" text="Register" />
+                                              <TableColumn fx:id="regValue" prefWidth="244.0" text="Value" />
                                             </columns>
                                           </TableView>
                                           <VBox layoutX="10.0" layoutY="294.0" style="-fx-border-color: lightgray;">
