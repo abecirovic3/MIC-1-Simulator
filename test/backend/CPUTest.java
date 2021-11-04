@@ -26,7 +26,8 @@ class CPUTest {
         cpu.runCycle();
         cpu.runCycle();
 
-        assertEquals(12, cpu.getRegisters()[1]);
+//        assertEquals(12, cpu.getRegisters()[1]);
+        assertEquals(12, cpu.getRegisters().get(1).getValue());
     }
 
     @Test
@@ -44,7 +45,8 @@ class CPUTest {
         for (int i = 0; i < 16; i++)
             cpu.runCycle();
 
-        assertEquals(12, cpu.getRegisters()[1]); // accumulator has value 12
+//        assertEquals(12, cpu.getRegisters()[1]); // accumulator has value 12
+        assertEquals(12, cpu.getRegisters().get(1).getValue()); // accumulator has value 12
         assertEquals(12, cpu.getMemory().read((short)1024)); // memory should be written to
     }
 
@@ -63,7 +65,8 @@ class CPUTest {
         for (int i = 0; i < 9; i++)
             cpu.runCycle();
 
-        assertEquals(275, cpu.getRegisters()[1]); // accumulator has value 275 if LODD was successful
+//        assertEquals(275, cpu.getRegisters()[1]); // accumulator has value 275 if LODD was successful
+        assertEquals(275, cpu.getRegisters().get(1).getValue()); // accumulator has value 275 if LODD was successful
     }
 
     @Test
@@ -104,7 +107,8 @@ class CPUTest {
             cpu.runCycle();
 
         // first 72 is loaded in ac then 18 is added
-        assertEquals(90, cpu.getRegisters()[1]);
+//        assertEquals(90, cpu.getRegisters()[1]);
+        assertEquals(90, cpu.getRegisters().get(1).getValue());
     }
 
     @Test
@@ -125,7 +129,8 @@ class CPUTest {
             cpu.runCycle();
 
         // first 72 is loaded in ac then 18 is added
-        assertEquals(20, cpu.getRegisters()[1]);
+//        assertEquals(20, cpu.getRegisters()[1]);
+        assertEquals(20, cpu.getRegisters().get(1).getValue());
     }
 
     @Test
@@ -145,7 +150,8 @@ class CPUTest {
             cpu.runCycle();
 
         // first 72 is loaded in ac then 18 is added
-        assertEquals(5, cpu.getRegisters()[0]);
+//        assertEquals(5, cpu.getRegisters()[0]);
+        assertEquals(5, cpu.getRegisters().get(0).getValue());
     }
 
     @Test
@@ -165,7 +171,8 @@ class CPUTest {
             cpu.runCycle();
 
         // first 72 is loaded in ac then 18 is added
-        assertEquals(4094, cpu.getRegisters()[2]);
+//        assertEquals(4094, cpu.getRegisters()[2]);
+        assertEquals(4094, cpu.getRegisters().get(2).getValue());
         assertEquals(-9, cpu.getMemory().read((short)4094));
     }
 }
