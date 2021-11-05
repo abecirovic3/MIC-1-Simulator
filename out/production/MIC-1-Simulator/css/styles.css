@@ -51,3 +51,14 @@
     -fx-border-color: lightgray;
     -fx-background-insets: 0;
 }
+
+.status-bar {
+    -fx-background-color: white;
+    -fx-border-color: lightgray;
+}
+
+/*
+.table-row-cell {
+    -fx-cell-size: 25px;
+}
+*/
