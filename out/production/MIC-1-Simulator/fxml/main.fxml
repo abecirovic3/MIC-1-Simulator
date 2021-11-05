@@ -205,7 +205,7 @@
                                                       <Font name="System Bold" size="13.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField prefHeight="40.0" prefWidth="318.0" styleClass="table-field" />
+                                                <TextField fx:id="MARField" editable="false" prefHeight="40.0" prefWidth="318.0" styleClass="table-field" text="-" />
                                              </children>
                                           </VBox>
                                           <VBox layoutX="10.0" layoutY="442.0" styleClass="default-border">
@@ -215,7 +215,7 @@
                                                       <Font name="System Bold" size="13.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField prefHeight="40.0" prefWidth="318.0" styleClass="table-field" />
+                                                <TextField fx:id="MBRField" editable="false" prefHeight="40.0" prefWidth="318.0" styleClass="table-field" text="-" />
                                              </children>
                                           </VBox>
                                        </children>

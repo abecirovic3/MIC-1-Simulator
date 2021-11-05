@@ -1,5 +1,6 @@
 package backend;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -12,7 +13,8 @@ public class CPU {
     private Mux aMux, mMux;
     private ALU alu;
     private Shifter shifter;
-    private short MAR, MBR;
+//    private short MAR, MBR;
+    private SimpleIntegerProperty MAR, MBR;
     private byte MPC;
     private int[] controlMemory;
     private int MIR;
@@ -53,6 +55,8 @@ public class CPU {
         alu = new ALU();
         shifter = new Shifter();
         mSeqLogic = new MSeqLogic();
+        MAR = new SimpleIntegerProperty(0);
+        MBR = new SimpleIntegerProperty(0);
         MPC = 0;
         incrementer = 0;
         controlMemory = FileParser.getControlMemory();
@@ -63,9 +67,11 @@ public class CPU {
     public void runFirstSubCycle() {
         MIR = controlMemory[MPC];
         if (memory.isReadReady())
-            MBR = memory.read();
+            MBR.set(memory.read());
+//            MBR = memory.read();
         if (memory.isWriteReady())
-            memory.write(MBR);
+            memory.write((short)MBR.get());
+//            memory.write(MBR);
         clock = (byte)((clock + 1) % 4);
     }
 
@@ -89,17 +95,20 @@ public class CPU {
     }
 
     public void runThirdSubCycle() {
-        aMux.decideOutput(getBitAt(31), ALatch, MBR);
+//        aMux.decideOutput(getBitAt(31), ALatch, MBR);
+        aMux.decideOutput(getBitAt(31), ALatch, (short) MBR.get());
         alu.calculate((byte)getBytesField(27, 0x00000003), aMux.getOutput(), BLatch);
         shifter.shift((byte)getBytesField(25, 0x00000003), alu.getOutput());
         if (getBitAt(23))
-            MAR = (short)(0x0FFF & BLatch);
+            MAR.set(0x0FFF & BLatch);
+//            MAR = (short)(0x0FFF & BLatch);
         clock = (byte)((clock + 1) % 4);
     }
 
     public void runFourthSubCycle() {
         if (getBitAt(24))
-            MBR = shifter.getOutput();
+            MBR.set(shifter.getOutput());
+//            MBR = shifter.getOutput();
         if (getBitAt(20)) {
             cDec = (short)getBytesField(16, 0x0000000F);
 //            registers[cDec] = shifter.getOutput();
@@ -112,12 +121,12 @@ public class CPU {
 
         // Read Write Memory
         if (getBitAt(22)) {
-            memory.setAddress(MAR);
+            memory.setAddress((short) MAR.get());
             memory.incrementReadCounter();
         }
 
         if (getBitAt(21)) {
-            memory.setAddress(MAR);
+            memory.setAddress((short) MAR.get());
             memory.incrementWriteCounter();
         }
 
@@ -142,6 +151,14 @@ public class CPU {
 
     public Memory getMemory() {
         return memory;
+    }
+
+    public SimpleIntegerProperty MARProperty() {
+        return MAR;
+    }
+
+    public SimpleIntegerProperty MBRProperty() {
+        return MBR;
     }
 
     @Override

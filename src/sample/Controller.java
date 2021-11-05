@@ -1,11 +1,14 @@
 package sample;
 
 import backend.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -35,6 +38,9 @@ public class Controller {
     //public TextArea microcodeTextArea;
     public CodeArea codeArea;
     public CodeArea microcodeArea;
+
+    public TextField MARField;
+    public TextField MBRField;
 
     private final FileParser fileParser = new FileParser();
 
@@ -81,6 +87,24 @@ public class Controller {
         memAddress.setCellValueFactory(new PropertyValueFactory<MemoryLine, String>("address"));
         memValue.setCellValueFactory(new PropertyValueFactory<MemoryLine, String>("value"));
         memoryTable.setItems(cpu.getMemory().getMemory());
+
+        // MAR and MBR
+        MARField.setText(cpu.MARProperty().getValue().toString());
+        MBRField.setText(cpu.MBRProperty().getValue().toString());
+
+        cpu.MARProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue o,Object oldVal, Object newVal) {
+                MARField.setText(newVal.toString());
+            }
+        });
+
+        cpu.MBRProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue o,Object oldVal, Object newVal) {
+                MBRField.setText(newVal.toString());
+            }
+        });
     }
 
     public void runCodeAction(ActionEvent actionEvent) {
