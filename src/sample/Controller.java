@@ -1,9 +1,6 @@
 package sample;
 
-import backend.CPU;
-import backend.CodeParser;
-import backend.FileParser;
-import backend.Register;
+import backend.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,9 +22,15 @@ public class Controller {
     public TableColumn<Map, String> instrBinaryCode;
     public TableView<Map> supportedInstructionsTable;
 
+    // Registers Table
     public TableView registersTable;
     public TableColumn regName;
     public TableColumn regValue;
+
+    // Memory Table
+    public TableView memoryTable;
+    public TableColumn memAddress;
+    public TableColumn memValue;
 
     //public TextArea microcodeTextArea;
     public CodeArea codeArea;
@@ -73,6 +76,11 @@ public class Controller {
         regName.setCellValueFactory(new PropertyValueFactory<Register, String>("name"));
         regValue.setCellValueFactory(new PropertyValueFactory<Register, String>("value"));
         registersTable.setItems(cpu.getRegisters());
+
+        // Memory Table
+        memAddress.setCellValueFactory(new PropertyValueFactory<MemoryLine, String>("address"));
+        memValue.setCellValueFactory(new PropertyValueFactory<MemoryLine, String>("value"));
+        memoryTable.setItems(cpu.getMemory().getMemory());
     }
 
     public void runCodeAction(ActionEvent actionEvent) {

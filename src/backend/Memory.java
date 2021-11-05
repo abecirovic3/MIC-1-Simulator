@@ -67,4 +67,8 @@ public class Memory {
 //        return memory[address];
         return (short) memory.get(address).getValue();
     }
+
+    public ObservableList<MemoryLine> getMemory() {
+        return memory;
+    }
 }
