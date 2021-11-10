@@ -18,7 +18,8 @@ public class CPU {
 //    private byte MPC;
     private SimpleIntegerProperty MPC;
     private int[] controlMemory;
-    private int MIR;
+//    private int MIR;
+    private SimpleIntegerProperty MIR;
     private byte incrementer;
     private short aDec, bDec, cDec;
     private MSeqLogic mSeqLogic;
@@ -60,6 +61,7 @@ public class CPU {
         MBR = new SimpleIntegerProperty(0);
 //        MPC = 0;
         MPC = new SimpleIntegerProperty(0);
+        MIR = new SimpleIntegerProperty(0);
         incrementer = 0;
         controlMemory = FileParser.getControlMemory();
         clock = 0;
@@ -67,7 +69,8 @@ public class CPU {
     }
 
     public void runFirstSubCycle() {
-        MIR = controlMemory[MPC.get()];
+//        MIR = controlMemory[MPC.get()];
+        MIR.set(controlMemory[MPC.get()]);
         if (memory.isReadReady())
             MBR.set(memory.read());
 //            MBR = memory.read();
@@ -89,11 +92,11 @@ public class CPU {
     }
 
     private int getBytesField(int shift, int mask) {
-        return (MIR >> shift) & mask;
+        return (MIR.get() >> shift) & mask;
     }
 
     private boolean getBitAt(int position) {
-        return ((MIR >> position) & 1) == 1;
+        return ((MIR.get() >> position) & 1) == 1;
     }
 
     public void runThirdSubCycle() {
@@ -166,6 +169,10 @@ public class CPU {
 
     public SimpleIntegerProperty MPCProperty() {
         return MPC;
+    }
+
+    public SimpleIntegerProperty MIRProperty() {
+        return MIR;
     }
 
     @Override

@@ -42,6 +42,7 @@ public class Controller {
     public TextField MARField;
     public TextField MBRField;
     public TextField MPCField;
+    public TextField MIRField;
 
     private final FileParser fileParser = new FileParser();
 
@@ -92,15 +93,16 @@ public class Controller {
         // MAR and MBR
         MARField.setText(cpu.MARProperty().getValue().toString());
         MBRField.setText(cpu.MBRProperty().getValue().toString());
-
         cpu.MARProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MARField.setText(newVal.toString()));
-
         cpu.MBRProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MBRField.setText(newVal.toString()));
 
         // MPC
         MPCField.setText(cpu.MPCProperty().getValue().toString());
-
         cpu.MPCProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MPCField.setText(newVal.toString()));
+
+        // MIR
+        MIRField.setText(cpu.MIRProperty().getValue().toString());
+        cpu.MIRProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MIRField.setText(newVal.toString()));
     }
 
     public void runCodeAction(ActionEvent actionEvent) {

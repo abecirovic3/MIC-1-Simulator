@@ -195,7 +195,7 @@
                                                       <Font name="System Bold" size="13.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField prefHeight="40.0" prefWidth="318.0" styleClass="table-field" />
+                                                <TextField fx:id="MIRField" prefHeight="40.0" prefWidth="318.0" styleClass="table-field" />
                                              </children>
                                           </VBox>
                                           <VBox layoutX="10.0" layoutY="368.0" styleClass="default-border">
