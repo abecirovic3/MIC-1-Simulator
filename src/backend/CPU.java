@@ -15,7 +15,8 @@ public class CPU {
     private Shifter shifter;
 //    private short MAR, MBR;
     private SimpleIntegerProperty MAR, MBR;
-    private byte MPC;
+//    private byte MPC;
+    private SimpleIntegerProperty MPC;
     private int[] controlMemory;
     private int MIR;
     private byte incrementer;
@@ -57,7 +58,8 @@ public class CPU {
         mSeqLogic = new MSeqLogic();
         MAR = new SimpleIntegerProperty(0);
         MBR = new SimpleIntegerProperty(0);
-        MPC = 0;
+//        MPC = 0;
+        MPC = new SimpleIntegerProperty(0);
         incrementer = 0;
         controlMemory = FileParser.getControlMemory();
         clock = 0;
@@ -65,7 +67,7 @@ public class CPU {
     }
 
     public void runFirstSubCycle() {
-        MIR = controlMemory[MPC];
+        MIR = controlMemory[MPC.get()];
         if (memory.isReadReady())
             MBR.set(memory.read());
 //            MBR = memory.read();
@@ -82,7 +84,7 @@ public class CPU {
 //        BLatch = registers[bDec];
         ALatch = (short)registers.get(aDec).getValue();
         BLatch = (short)registers.get(bDec).getValue();
-        incrementer = (byte)(MPC + 1);
+        incrementer = (byte)(MPC.get() + 1);
         clock = (byte)((clock + 1) % 4);
     }
 
@@ -117,7 +119,8 @@ public class CPU {
 
         mSeqLogic.generateOutput((byte)getBytesField(29, 0x00000003), alu.getNBit(), alu.getZBit());
         mMux.decideOutput(mSeqLogic.isOutput(), incrementer, (short)getBytesField(0, 0x000000FF));
-        MPC = (byte)mMux.getOutput();
+//        MPC = (byte)mMux.getOutput();
+        MPC.set(mMux.getOutput());
 
         // Read Write Memory
         if (getBitAt(22)) {
@@ -159,6 +162,10 @@ public class CPU {
 
     public SimpleIntegerProperty MBRProperty() {
         return MBR;
+    }
+
+    public SimpleIntegerProperty MPCProperty() {
+        return MPC;
     }
 
     @Override

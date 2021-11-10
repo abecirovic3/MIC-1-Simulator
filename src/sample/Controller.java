@@ -41,6 +41,7 @@ public class Controller {
 
     public TextField MARField;
     public TextField MBRField;
+    public TextField MPCField;
 
     private final FileParser fileParser = new FileParser();
 
@@ -92,19 +93,14 @@ public class Controller {
         MARField.setText(cpu.MARProperty().getValue().toString());
         MBRField.setText(cpu.MBRProperty().getValue().toString());
 
-        cpu.MARProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue o,Object oldVal, Object newVal) {
-                MARField.setText(newVal.toString());
-            }
-        });
+        cpu.MARProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MARField.setText(newVal.toString()));
 
-        cpu.MBRProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue o,Object oldVal, Object newVal) {
-                MBRField.setText(newVal.toString());
-            }
-        });
+        cpu.MBRProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MBRField.setText(newVal.toString()));
+
+        // MPC
+        MPCField.setText(cpu.MPCProperty().getValue().toString());
+
+        cpu.MPCProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MPCField.setText(newVal.toString()));
     }
 
     public void runCodeAction(ActionEvent actionEvent) {
