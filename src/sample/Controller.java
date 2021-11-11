@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -38,6 +39,7 @@ public class Controller {
     //public TextArea microcodeTextArea;
     public CodeArea codeArea;
     public CodeArea microcodeArea;
+    public TextArea console;
 
     public TextField MARField;
     public TextField MBRField;
@@ -45,7 +47,7 @@ public class Controller {
     public TextField MIRField;
 
     private final FileParser fileParser = new FileParser();
-
+    private CodeParser codeParser = CodeParser.getInstance();
     private CPU cpu = new CPU();
 
     @FXML
@@ -106,9 +108,14 @@ public class Controller {
     }
 
     public void runCodeAction(ActionEvent actionEvent) {
-        CodeParser cp = new CodeParser();
-        String res = cp.parseCode(codeArea.getText());
-        System.out.println(res);
+        try {
+            short[] machineCode = codeParser.parseCode(codeArea.getText());
+            
+            console.setText("Code assembled successfully");
+            cpu.getMemory().write(machineCode);
+        } catch (CodeParserException e) {
+            console.setText(e.getMessage());
+        }
     }
 
     public void runClockCycleAction(ActionEvent actionEvent) {

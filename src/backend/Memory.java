@@ -63,6 +63,12 @@ public class Memory {
         memory.get(address).setValue(value);
     }
 
+    public void write(short[] codeData) {
+        for (short i = 0; i < codeData.length; i++) {
+            memory.add(i, new MemoryLine(i, codeData[i]));
+        }
+    }
+
     public short read(short address) {
 //        return memory[address];
         return (short) memory.get(address).getValue();
