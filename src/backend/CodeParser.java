@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CodeParser {
+    private final Map<String, String> supportedInstructions;
 
     private static CodeParser instance;
 
@@ -12,16 +13,8 @@ public class CodeParser {
         return instance;
     }
 
-    private final Map<String, String> supportedInstructions;
-//    private final Map<String, Integer> labels = new HashMap<>();
-
-    // for now let's keep the assembled code here
-    // we'll use 2048 mem locations for code segment
-//    private final short[] machineCode = new short[2048];
-
     private CodeParser() {
         supportedInstructions = FileParser.getSupportedInstructionsMap();
-//        Arrays.fill(machineCode, (short) 0);
     }
 
     public short[] parseCode(String code) throws CodeParserException {
@@ -153,12 +146,4 @@ public class CodeParser {
         return !(mnemonic.equals("PSHI") || mnemonic.equals("POPI") || mnemonic.equals("PUSH")
                 || mnemonic.equals("POP") || mnemonic.equals("RETN") || mnemonic.equals("SWAP"));
     }
-
-//    public Map<String, Integer> getLabels() {
-//        return labels;
-//    }
-//
-//    public short[] getMachineCode() {
-//        return machineCode;
-//    }
 }

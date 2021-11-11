@@ -46,7 +46,7 @@ public class Controller {
     public TextField memorySearchField;
     public TextField searchedAddressValueField;
 
-    private final FileParser fileParser = new FileParser();
+//    private final FileParser fileParser = new FileParser();
     private CodeParser codeParser = CodeParser.getInstance();
     private CPU cpu = new CPU();
 
@@ -67,10 +67,10 @@ public class Controller {
         instrMeaning.setCellValueFactory(new MapValueFactory<>("meaning"));
         instrBinaryCode.setCellValueFactory(new MapValueFactory<>("binaryCode"));
 
-        supportedInstructionsTable.getItems().addAll(fileParser.loadSupportedInstructionsTableData());
+        supportedInstructionsTable.getItems().addAll(FileParser.loadSupportedInstructionsTableData());
 
         //microcodeArea.setParagraphGraphicFactory(LineNumberFactory.get(microcodeArea));
-        microcodeArea.replaceText(fileParser.loadMicroCode());
+        microcodeArea.replaceText(FileParser.loadMicroCode());
         // Scroll the area to the top
         microcodeArea.moveTo(0); // this method works with characters...
         microcodeArea.requestFollowCaret();

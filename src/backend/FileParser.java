@@ -10,10 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FileParser {
-    
-    public FileParser() {}
 
-    public ObservableList<Map<String, Object>> loadSupportedInstructionsTableData() {
+    public static ObservableList<Map<String, Object>> loadSupportedInstructionsTableData() {
         ObservableList<Map<String, Object>> items = FXCollections.observableArrayList();
 
         try {
@@ -39,7 +37,7 @@ public class FileParser {
         return items;
     }
 
-    public String loadMicroCode() {
+    public static String loadMicroCode() {
         StringBuilder result = new StringBuilder();
         try {
             BufferedReader micReader = new BufferedReader(new FileReader("resources/dataFiles/microprogram.txt"));
