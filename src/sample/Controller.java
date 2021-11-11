@@ -6,10 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -45,6 +42,9 @@ public class Controller {
     public TextField MBRField;
     public TextField MPCField;
     public TextField MIRField;
+
+    public TextField memorySearchField;
+    public TextField searchedAddressValueField;
 
     private final FileParser fileParser = new FileParser();
     private CodeParser codeParser = CodeParser.getInstance();
@@ -110,7 +110,7 @@ public class Controller {
     public void runCodeAction(ActionEvent actionEvent) {
         try {
             short[] machineCode = codeParser.parseCode(codeArea.getText());
-            
+
             console.setText("Code assembled successfully");
             cpu.getMemory().write(machineCode);
         } catch (CodeParserException e) {
@@ -120,5 +120,18 @@ public class Controller {
 
     public void runClockCycleAction(ActionEvent actionEvent) {
         cpu.runCycle();
+    }
+
+    public void searchMemoryAction(ActionEvent actionEvent) {
+        try {
+            String addressString = memorySearchField.getText();
+            int address = Integer.parseInt(addressString);
+            if (address >= 0 && address <= 4095) {
+                searchedAddressValueField.setText(String.valueOf(cpu.getMemory().read((short) address)));
+            }
+        } catch (NumberFormatException e) {
+            // TODO
+            // style for bad search input
+        }
     }
 }
