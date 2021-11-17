@@ -4,6 +4,7 @@ Features to be implemented:
 - Next subcycle
 - Datapath component tooltips
 - Datapath active component colours
+- Memory read/write validation
 - Register and Memory table edit
 - Input validation
 - Search button styling
