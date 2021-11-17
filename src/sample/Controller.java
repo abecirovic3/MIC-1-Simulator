@@ -149,6 +149,7 @@ public class Controller {
 
     public void runClockCycleAction(ActionEvent actionEvent) {
         cpu.runCycle();
+        updateToolTips();
     }
 
     public void searchMemoryAction(ActionEvent actionEvent) {
@@ -166,5 +167,12 @@ public class Controller {
 
     public void runSubClockCycleAction(ActionEvent actionEvent) {
         cpu.runSubCycle();
+        updateToolTips();
+    }
+
+    private void updateToolTips() {
+        for (ImageView img : toolTips.keySet()) {
+            toolTips.get(img).getKey().setText(toolTips.get(img).getValue().apply(img.getId()));
+        }
     }
 }

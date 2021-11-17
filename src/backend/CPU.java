@@ -192,133 +192,151 @@ public class CPU {
                 '}';
     }
 
-//    public String getRegistersToolTipText() {
-//        return "Registers";
-//    }
-//
-//    public String getALatchToolTipText() {
-//        return "ALatch";
-//    }
-//
-//    public String getBLatchToolTipText() {
-//        return "BLatch";
-//    }
-//
-//    public String getMARToolTipText() {
-//        return "MAR";
-//    }
-//
-//    public String getMBRToolTipText() {
-//        return "MBR";
-//    }
-//
-//    public String getAMUXToolTipText() {
-//        return "AMUX";
-//    }
-//
-//    public String getALUToolTipText() {
-//        return "A: " + ALatch + "\nB: " + BLatch + "\nOut: " + alu.toString();
-//    }
-//
-//    public String getShifterToolTipText() {
-//        return "Shifter";
-//    }
-//
-//    public String getMSeqLogicToolTipText() {
-//        return "MSeqLogic";
-//    }
-//
-//    public String getMIRToolTipText() {
-//        return "MIR";
-//    }
-//
-//    public String getControlMemoryToolTipText() {
-//        return "Control Memory";
-//    }
-//
-//    public String getMPCToolTipText() {
-//        return "MPC";
-//    }
-//
-//    public String getIncrementerToolTipText() {
-//        return "Incrementer";
-//    }
-//
-//    public String getMMUXToolTipText() {
-//        return "MMUX";
-//    }
-//
-//    public String getClockToolTipText() {
-//        return "Clock";
-//    }
-//
-//    public String getADecToolTipText() {
-//        return "ADec";
-//    }
-//
-//    public String getBDecToolTipText() {
-//        return "BDec";
-//    }
-//
-//    public String getCDecToolTipText() {
-//        return "CDec";
-//    }
+//    MIR bytes fields
+    public int getAddressBytes() {
+        return getBytesField(0, 0x000000FF);
+    }
+
+    public int getABytes() {
+        return getBytesField(8, 0x0000000F);
+    }
+
+    public int getBBytes() {
+        return getBytesField(12, 0x0000000F);
+    }
+
+    public int getCBytes() {
+        return getBytesField(16, 0x0000000F);
+    }
+
+    public int getENCBytes() {
+        return getBytesField(20, 0x00000001);
+    }
+
+    public int getWRBytes() {
+        return getBytesField(21, 0x00000001);
+    }
+
+    public int getRDBytes() {
+        return getBytesField(22, 0x00000001);
+    }
+
+    public int getMARBytes() {
+        return getBytesField(23, 0x00000001);
+    }
+
+    public int getMBRBytes() {
+        return getBytesField(24, 0x00000001);
+    }
+
+    public int getShifterBytes() {
+        return getBytesField(25, 0x00000003);
+    }
+
+    public int getALUBytes() {
+        return getBytesField(27, 0x00000003);
+    }
+
+    public int getCONDBytes() {
+        return getBytesField(29, 0x00000003);
+    }
+
+    public int getAMuxBytes() {
+        return getBytesField(31, 0x00000001);
+    }
+
 
     public String getComponentToolTip(String component) {
         if (component.equals("registersImg"))
-            return "Registers";
+            return "A: " + registers.get(getABytes()).getName() + "\n" +
+                    "B: " + registers.get(getBBytes()).getName() + "\n" +
+                    "C: " + registers.get(getCBytes()).getName();
 
         if (component.equals("aluImg"))
-            return "ALU";
+            return "A: " + aMux.getOutput() + "\nB: " + BLatch + "\n" + alu.toString();
 
         if (component.equals("amuxImg"))
-            return "AMUX";
+            return "0: " + ALatch + "\n1: " + MBR.get() + "\nout: " + aMux.getOutput();
 
         if (component.equals("aLatchImg"))
-            return "ALatch";
+            return "Data: " + ALatch;
 
         if (component.equals("bLatchImg"))
-            return "BLatch";
+            return "Data: " + BLatch;
 
         if (component.equals("aDecImg"))
-            return "aDec";
+            return "out: " + getDecoderOutput(getABytes());
 
         if (component.equals("bDecImg"))
-            return "bDec";
+            return "out: " + getDecoderOutput(getBBytes());
 
         if (component.equals("cDecImg"))
-            return "cDec";
+            return "out: " + getDecoderOutput(getCBytes());
 
         if (component.equals("clockImg"))
-            return "CLOCK";
+            return "clk: " + clock;
 
         if (component.equals("shifterImg"))
-            return "Shifter";
+            return "in: " + alu.getOutput() + "\nout: " + shifter.getOutput();
 
         if (component.equals("marImg"))
-            return "MAR";
+            return "Value: " + MAR.get();
 
         if (component.equals("mbrImg"))
-            return "MBR";
+            return "Value: " + MBR.get();
 
         if (component.equals("mMuxImg"))
-            return "MMux";
+            return "0: " + incrementer + "\n1: " + getAddressBytes() + "\nout: " + mMux.getOutput();
 
         if (component.equals("mpcImg"))
-            return "MPC";
+            return "Value: " + MPC.get();
 
         if (component.equals("incImg"))
-            return "Incrementer";
+            return "Value: " + incrementer;
 
         if (component.equals("controlImg"))
-            return "Control";
+            return "Address: " + MPC.get() + "\nValue: " + controlMemory[MPC.get()];
 
         if (component.equals("mirImg"))
-            return "MIR";
+            return "AMUX: " + getBytesString(1, getAMuxBytes()) +
+                    "\nCOND: " + getBytesString(2, getCONDBytes()) +
+                    "\nALU: " + getBytesString(2, getALUBytes()) +
+                    "\nShifter: " + getBytesString(2, getShifterBytes()) +
+                    "\nMBR: " + getBytesString(1, getMBRBytes()) +
+                    "\nMAR: " + getBytesString(1, getMARBytes()) +
+                    "\nRD: " + getBytesString(1, getRDBytes()) +
+                    "\nWR: " + getBytesString(1, getWRBytes()) +
+                    "\nENC: " + getBytesString(1, getENCBytes()) +
+                    "\nC: " + getBytesString(4, getCBytes()) +
+                    "\nB: " + getBytesString(4, getBBytes()) +
+                    "\nA: " + getBytesString(4, getABytes()) +
+                    "\nAddress: " + getBytesString(8, getAddressBytes());
 
         if (component.equals("mSeqLogicImg"))
-            return "MSeqLogic";
+            return "L: " + getBitAt(30) +
+                    "\nR: " + getBitAt(29) +
+                    "\nN: " + alu.getNBit() +
+                    "\nZ: " + alu.getZBit() +
+                    "\nout: " + mSeqLogic.isOutput();
 
         return "Unknown";
+    }
+
+    private String getBytesString(int length, int value) {
+        String result = Integer.toBinaryString(value);
+        while (result.length() < length)
+            result = "0" + result;
+        return result;
+    }
+
+    private String getDecoderOutput(int position) {
+        String result = "";
+        for (int i = 0; i < 16; i++) {
+            if (i == position)
+                result = "1" + result;
+            else
+                result = "0" + result;
+        }
+        return result;
     }
 }
