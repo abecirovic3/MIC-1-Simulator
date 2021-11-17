@@ -114,11 +114,28 @@ public class CPU {
         clock = (byte)((clock + 1) % 4);
     }
 
+    public void runSubCycle() {
+        if (clock == 0)
+            runFirstSubCycle();
+        else if (clock == 1)
+            runSecondSubCycle();
+        else if (clock == 2)
+            runThirdSubCycle();
+        else
+            runFourthSubCycle();
+    }
+
     public void runCycle() {
-        runFirstSubCycle();
-        runSecondSubCycle();
-        runThirdSubCycle();
-        runFourthSubCycle();
+        byte del = clock;
+        for (byte i = 0; i < 4 - del; i++) {
+            System.out.println("Prosao");
+            runSubCycle();
+        }
+
+//        runFirstSubCycle();
+//        runSecondSubCycle();
+//        runThirdSubCycle();
+//        runFourthSubCycle();
         System.out.println(this);
     }
 
