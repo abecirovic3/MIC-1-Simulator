@@ -33,7 +33,25 @@ class CPUTest {
     }
 
     @Test
-    @DisplayName("LOCO and ADDD")
+    @DisplayName("First CPU Run with subcycle")
+    void runOneInstructionBySubCycles() {
+        String code = "LOCO 12";
+        assertDoesNotThrow(()->{cp.parseCode(code);});
+
+        try {
+            short[] machineCode = cp.parseCode(code);
+            CPU cpu = new CPU();
+            cpu.getMemory().write((short)0, machineCode[0]);
+            for (int i = 0; i < 28; i++)
+                cpu.runSubCycle();
+            assertEquals(12, cpu.getRegisters().get(1).getValue());
+        } catch (CodeParserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @DisplayName("LOCO and STOD")
     void storeConstant() {
         String code = "LOCO 12\nSTOD 1024\n";
         assertDoesNotThrow(()->{cp.parseCode(code);});
@@ -45,6 +63,27 @@ class CPUTest {
             cpu.getMemory().write((short)1, machineCode[1]);
             for (int i = 0; i < 16; i++)
                 cpu.runCycle();
+
+            assertEquals(12, cpu.getRegisters().get(1).getValue()); // accumulator has value 12
+            assertEquals(12, cpu.getMemory().read((short)1024)); // memory should be written to
+        } catch (CodeParserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @DisplayName("LOCO and STOD with subcycles")
+    void storeConstantBySubCycles() {
+        String code = "LOCO 12\nSTOD 1024\n";
+        assertDoesNotThrow(()->{cp.parseCode(code);});
+
+        try {
+            short[] machineCode = cp.parseCode(code);
+            CPU cpu = new CPU();
+            cpu.getMemory().write((short)0, machineCode[0]);
+            cpu.getMemory().write((short)1, machineCode[1]);
+            for (int i = 0; i < 64; i++)
+                cpu.runSubCycle();
 
             assertEquals(12, cpu.getRegisters().get(1).getValue()); // accumulator has value 12
             assertEquals(12, cpu.getMemory().read((short)1024)); // memory should be written to
@@ -188,6 +227,65 @@ class CPUTest {
             // SP decreases and -9 is pushed to SP mem loc
             assertEquals(4094, cpu.getRegisters().get(2).getValue());
             assertEquals(-9, cpu.getMemory().read((short) 4094));
+        } catch (CodeParserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @DisplayName("Run subcycle and Run cycle mix 1")
+    void runSubCycleRunCycleMix1() {
+        String code = "LOCO 12";
+        assertDoesNotThrow(()->{cp.parseCode(code);});
+
+        try {
+            short[] machineCode = cp.parseCode(code);
+            CPU cpu = new CPU();
+            cpu.getMemory().write((short)0, machineCode[0]);
+            cpu.runSubCycle();
+            cpu.runSubCycle();
+            cpu.runCycle(); // should finish the first machine clock cycle
+            for (int i = 0; i < 8; i++) // should do 2 machine clock cycles
+                cpu.runSubCycle();
+            cpu.runCycle();
+            cpu.runSubCycle();
+            cpu.runCycle(); // should finish the 5th machine clock cycle
+            cpu.runSubCycle();
+            cpu.runSubCycle();
+            cpu.runSubCycle();
+            cpu.runCycle(); // should finish the 6th machine clock cylcle
+            cpu.runCycle();
+            assertEquals(12, cpu.getRegisters().get(1).getValue());
+        } catch (CodeParserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @DisplayName("Run subcycle and Run cycle mix 2")
+    void runSubCycleRunCycleMix2() {
+        String code = "LOCO 12";
+        assertDoesNotThrow(()->{cp.parseCode(code);});
+
+        try {
+            short[] machineCode = cp.parseCode(code);
+            CPU cpu = new CPU();
+            cpu.getMemory().write((short)0, machineCode[0]);
+            cpu.runCycle(); // first machine cycle
+            cpu.runSubCycle();
+            cpu.runSubCycle();
+            cpu.runCycle(); // should finish the second machine clock cycle
+            for (int i = 0; i < 8; i++) // should do 2 machine clock cycles
+                cpu.runSubCycle();
+            cpu.runSubCycle();
+            cpu.runCycle();     // should finish the 5th machine clock cycle
+            cpu.runSubCycle();
+            cpu.runCycle(); // should finish the 6th machine clock cycle
+            cpu.runSubCycle();
+            cpu.runSubCycle();
+            cpu.runSubCycle();
+            cpu.runCycle(); // should finish the 7th machine clock cycle
+            assertEquals(12, cpu.getRegisters().get(1).getValue());
         } catch (CodeParserException e) {
             e.printStackTrace();
         }
