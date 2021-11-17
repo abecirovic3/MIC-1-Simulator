@@ -134,4 +134,8 @@ public class Controller {
             // style for bad search input
         }
     }
+
+    public void runSubClockCycleAction(ActionEvent actionEvent) {
+        cpu.runSubCycle();
+    }
 }
