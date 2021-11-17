@@ -1,7 +1,6 @@
 # MIC-1-Simulator
 
 Features to be implemented:
-- Next subcycle
 - Datapath component tooltips
 - Datapath active component colours
 - Memory read/write validation
@@ -13,6 +12,7 @@ Features to be implemented:
 - Clock cycle and subcycle GUI counters
 - Instruction highlighting
 - Change of displaying number formats
+- Other tooltips
 - New file
 - Save file
 - Load file

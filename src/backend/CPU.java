@@ -115,6 +115,7 @@ public class CPU {
     }
 
     public void runSubCycle() {
+        System.out.println("RUN subcycle");
         if (clock == 0)
             runFirstSubCycle();
         else if (clock == 1)
