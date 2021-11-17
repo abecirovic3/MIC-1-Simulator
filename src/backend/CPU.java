@@ -42,6 +42,8 @@ public class CPU {
         );
         aMux = new Mux();
         mMux = new Mux();
+        ALatch = 0;
+        BLatch = 0;
         alu = new ALU();
         shifter = new Shifter();
         mSeqLogic = new MSeqLogic();
@@ -132,11 +134,6 @@ public class CPU {
             System.out.println("Prosao");
             runSubCycle();
         }
-
-//        runFirstSubCycle();
-//        runSecondSubCycle();
-//        runThirdSubCycle();
-//        runFourthSubCycle();
         System.out.println(this);
     }
 
@@ -193,5 +190,135 @@ public class CPU {
                 ", mSeqLogic=" + mSeqLogic +
                 ", clock=" + clock +
                 '}';
+    }
+
+//    public String getRegistersToolTipText() {
+//        return "Registers";
+//    }
+//
+//    public String getALatchToolTipText() {
+//        return "ALatch";
+//    }
+//
+//    public String getBLatchToolTipText() {
+//        return "BLatch";
+//    }
+//
+//    public String getMARToolTipText() {
+//        return "MAR";
+//    }
+//
+//    public String getMBRToolTipText() {
+//        return "MBR";
+//    }
+//
+//    public String getAMUXToolTipText() {
+//        return "AMUX";
+//    }
+//
+//    public String getALUToolTipText() {
+//        return "A: " + ALatch + "\nB: " + BLatch + "\nOut: " + alu.toString();
+//    }
+//
+//    public String getShifterToolTipText() {
+//        return "Shifter";
+//    }
+//
+//    public String getMSeqLogicToolTipText() {
+//        return "MSeqLogic";
+//    }
+//
+//    public String getMIRToolTipText() {
+//        return "MIR";
+//    }
+//
+//    public String getControlMemoryToolTipText() {
+//        return "Control Memory";
+//    }
+//
+//    public String getMPCToolTipText() {
+//        return "MPC";
+//    }
+//
+//    public String getIncrementerToolTipText() {
+//        return "Incrementer";
+//    }
+//
+//    public String getMMUXToolTipText() {
+//        return "MMUX";
+//    }
+//
+//    public String getClockToolTipText() {
+//        return "Clock";
+//    }
+//
+//    public String getADecToolTipText() {
+//        return "ADec";
+//    }
+//
+//    public String getBDecToolTipText() {
+//        return "BDec";
+//    }
+//
+//    public String getCDecToolTipText() {
+//        return "CDec";
+//    }
+
+    public String getComponentToolTip(String component) {
+        if (component.equals("registersImg"))
+            return "Registers";
+
+        if (component.equals("aluImg"))
+            return "ALU";
+
+        if (component.equals("amuxImg"))
+            return "AMUX";
+
+        if (component.equals("aLatchImg"))
+            return "ALatch";
+
+        if (component.equals("bLatchImg"))
+            return "BLatch";
+
+        if (component.equals("aDecImg"))
+            return "aDec";
+
+        if (component.equals("bDecImg"))
+            return "bDec";
+
+        if (component.equals("cDecImg"))
+            return "cDec";
+
+        if (component.equals("clockImg"))
+            return "CLOCK";
+
+        if (component.equals("shifterImg"))
+            return "Shifter";
+
+        if (component.equals("marImg"))
+            return "MAR";
+
+        if (component.equals("mbrImg"))
+            return "MBR";
+
+        if (component.equals("mMuxImg"))
+            return "MMux";
+
+        if (component.equals("mpcImg"))
+            return "MPC";
+
+        if (component.equals("incImg"))
+            return "Incrementer";
+
+        if (component.equals("controlImg"))
+            return "Control";
+
+        if (component.equals("mirImg"))
+            return "MIR";
+
+        if (component.equals("mSeqLogicImg"))
+            return "MSeqLogic";
+
+        return "Unknown";
     }
 }

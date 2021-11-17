@@ -6,15 +6,20 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.util.Pair;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 public class Controller {
     public TableColumn<Map, String> instrMnemonic;
@@ -46,7 +51,12 @@ public class Controller {
     public TextField memorySearchField;
     public TextField searchedAddressValueField;
 
-//    private final FileParser fileParser = new FileParser();
+    // tooltips
+//    public ImageView registersImg;
+//    public ImageView aluImg;
+    public AnchorPane dataPathPane;
+    private Map<ImageView, Pair<Tooltip, Function<String, String>>> toolTips = new HashMap<>();
+
     private CodeParser codeParser = CodeParser.getInstance();
     private CPU cpu = new CPU();
 
@@ -105,6 +115,25 @@ public class Controller {
         // MIR
         MIRField.setText(cpu.MIRProperty().getValue().toString());
         cpu.MIRProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MIRField.setText(newVal.toString()));
+
+        // tooltips
+        bindTooltips();
+//        Tooltip tt = new Tooltip();
+//        toolTips.put(tt, cpu::getALUToolTipText);
+//        Tooltip.install(aluImg, tt);
+//        for (Tooltip tooltip : toolTips.keySet()) {
+//            tooltip.setText(toolTips.get(tooltip).get());
+//        }
+    }
+
+    private void bindTooltips() {
+        for (Node img : dataPathPane.getChildren()) {
+            if (img.getId().equals("placeHolderImg")) continue;
+            Tooltip tooltip = new Tooltip();
+            Tooltip.install(img, tooltip);
+            toolTips.put((ImageView) img, new Pair<>(tooltip, cpu::getComponentToolTip));
+            tooltip.setText(cpu.getComponentToolTip(img.getId()));
+        }
     }
 
     public void runCodeAction(ActionEvent actionEvent) {
