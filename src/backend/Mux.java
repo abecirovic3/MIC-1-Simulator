@@ -1,7 +1,7 @@
 package backend;
 
 public class Mux {
-    private short output;
+    private short output = 0;
 
     public short getOutput() {
         return output;

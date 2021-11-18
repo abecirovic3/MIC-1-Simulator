@@ -15,6 +15,10 @@ public class MSeqLogic {
         output = control == 3 || control == 1 && n || control == 2 && z;
     }
 
+    public boolean generateTempOutput(byte control, boolean n, boolean z) {
+        return control == 3 || control == 1 && n || control == 2 && z;
+    }
+
     @Override
     public String toString() {
         return "MSeqLogic{" +

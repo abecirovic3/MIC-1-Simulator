@@ -1,6 +1,8 @@
 package sample;
 
 import backend.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -13,10 +15,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import javafx.util.Pair;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -52,9 +56,8 @@ public class Controller {
     public TextField searchedAddressValueField;
 
     // tooltips
-//    public ImageView registersImg;
-//    public ImageView aluImg;
     public AnchorPane dataPathPane;
+    public ImageView registersImg;
     private Map<ImageView, Pair<Tooltip, Function<String, String>>> toolTips = new HashMap<>();
 
     private CodeParser codeParser = CodeParser.getInstance();
@@ -118,12 +121,6 @@ public class Controller {
 
         // tooltips
         bindTooltips();
-//        Tooltip tt = new Tooltip();
-//        toolTips.put(tt, cpu::getALUToolTipText);
-//        Tooltip.install(aluImg, tt);
-//        for (Tooltip tooltip : toolTips.keySet()) {
-//            tooltip.setText(toolTips.get(tooltip).get());
-//        }
     }
 
     private void bindTooltips() {
@@ -131,6 +128,7 @@ public class Controller {
             if (img.getId().equals("placeHolderImg")) continue;
             Tooltip tooltip = new Tooltip();
             Tooltip.install(img, tooltip);
+            tooltip.setShowDuration(new Duration(60000));
             toolTips.put((ImageView) img, new Pair<>(tooltip, cpu::getComponentToolTip));
             tooltip.setText(cpu.getComponentToolTip(img.getId()));
         }

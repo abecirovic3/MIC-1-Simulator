@@ -93,7 +93,6 @@ public class CPU {
 
         if (getBitAt(20)) {
             cDec = (short)getBytesField(16, 0x0000000F);
-
             registers.get(cDec).setValue(shifter.getOutput());
         }
 
@@ -245,39 +244,170 @@ public class CPU {
         return getBytesField(31, 0x00000001);
     }
 
+    public String getRegistersToolTip() {
+        String result = "A: /\nB: /\nC: /";
+        if (clock >= 1) {
+            result = "A: " + registers.get(getABytes()).getName() + "\n" +
+                    "B: " + registers.get(getBBytes()).getName();
+            if (getENCBytes() == 1 && clock >= 3)
+                result +=  "\nC: " + registers.get(getCBytes()).getName();
+            else
+                result += "\nC: /";
+        }
+        return result;
+    }
+
+    public String getALatchToolTip() {
+        String result = "data: /";
+        if (clock >= 2)
+            result = "data: " + ALatch;
+        return result;
+    }
+
+    public String getBLatchToolTip() {
+        String result = "data: /";
+        if (clock >= 2)
+            result = "data: " + BLatch;
+        return result;
+    }
+
+    public String getAmuxToolTip() {
+        String inp0 = "0: /";
+        String inp1 = "1: /";
+        String out = "out: /";
+        if (clock >= 2) {
+            inp0 = "0: " + ALatch;
+            inp1 = "1: " + MBR.get();
+        }
+        if (clock >= 3)
+            out = "out: " + aMux.getOutput();
+
+        return inp0 + "\n" + inp1 + "\n" + out;
+    }
+
+    public String getAluToolTip() {
+        String a = "A: /";
+        String b = "B: /";
+        if (clock >= 2)
+            b = "B: " + BLatch;
+        if (clock >= 3) {
+            return  "A: " + aMux.getOutput() + "\n" + b + "\n" + alu.toString();
+        }
+        return a + "\n" + b + "\nout: /\nN: /\nZ: /";
+    }
+
+    public String getShifterToolTip() {
+        String result = "in: /\nout: /";
+        if (clock >= 3)
+            result = "in: " + alu.getOutput() + "\nout: " + shifter.getOutput();
+        return result;
+    }
+
+    public String getADecToolTip() {
+        String in = "in: /";
+        String out = "out: /";
+        if (clock >= 1) {
+            in = "in: " + getABytes();
+            out = "out: " + getDecoderOutput(getABytes());
+        }
+        return in + "\n" + out;
+    }
+
+    public String getBDecToolTip() {
+        String in = "in: /";
+        String out = "out: /";
+        if (clock >= 1) {
+            in = "in: " + getBBytes();
+            out = "out: " + getDecoderOutput(getBBytes());
+        }
+        return in + "\n" + out;
+    }
+
+    public String getCDecToolTip() {
+        String in = "in: /";
+        String out = "out: /";
+        String en = "en: /";
+        if (clock >= 1) {
+            en = "en: " + getENCBytes();
+            in = "in: " + getCBytes();
+        }
+        if (clock >= 3)
+            if (getENCBytes() == 1)
+                out = "out: " + getDecoderOutput(getCBytes());
+            else
+                out = "out: " + "0000000000000000";
+        return in + "\n" + out + "\n" + en;
+    }
+
+    public String getIncrementerToolTip() {
+        if (clock >= 2)
+            return "value: " + incrementer;
+        return "value: /";
+    }
+
+    public String getMMuxToolTip() {
+        String inp0 = "0: /";
+        String inp1 = "1: /";
+        String out = "out: " + mMux.getOutput();
+        if (clock != 0)
+            out = "out: /";
+        if (clock >= 1)
+            inp1 = "1: " + getAddressBytes();
+        if (clock >= 2)
+            inp0 = "0: " + incrementer;
+        return inp0 + "\n" + inp1 + "\n" + out;
+    }
+
+    public String getMSeqLogicToolTip() {
+        String l = "L: /";
+        String r = "R: /";
+        String n = "N: /";
+        String z = "Z: /";
+        String out = "out: /";
+        if (clock >= 1) {
+            l = "L: " + getBitAt(30);
+            r = "R: " + getBitAt(29);
+        }
+
+        if (clock >= 3) {
+            n = "N: " + alu.getNBit();
+            z = "Z: " + alu.getZBit();
+            out = "out -> " + mSeqLogic.generateTempOutput((byte)getCONDBytes(), alu.getNBit(), alu.getZBit());
+        }
+
+        return l + "\n" + r + "\n" + n + "\n" + z + "\n" + out;
+    }
 
     public String getComponentToolTip(String component) {
         if (component.equals("registersImg"))
-            return "A: " + registers.get(getABytes()).getName() + "\n" +
-                    "B: " + registers.get(getBBytes()).getName() + "\n" +
-                    "C: " + registers.get(getCBytes()).getName();
+            return getRegistersToolTip();
 
         if (component.equals("aluImg"))
-            return "A: " + aMux.getOutput() + "\nB: " + BLatch + "\n" + alu.toString();
+            return getAluToolTip();
 
         if (component.equals("amuxImg"))
-            return "0: " + ALatch + "\n1: " + MBR.get() + "\nout: " + aMux.getOutput();
+            return getAmuxToolTip();
 
         if (component.equals("aLatchImg"))
-            return "Data: " + ALatch;
+            return getALatchToolTip();
 
         if (component.equals("bLatchImg"))
-            return "Data: " + BLatch;
+            return getBLatchToolTip();
 
         if (component.equals("aDecImg"))
-            return "out: " + getDecoderOutput(getABytes());
+            return getADecToolTip();
 
         if (component.equals("bDecImg"))
-            return "out: " + getDecoderOutput(getBBytes());
+            return getBDecToolTip();
 
         if (component.equals("cDecImg"))
-            return "out: " + getDecoderOutput(getCBytes());
+            return getCDecToolTip();
 
         if (component.equals("clockImg"))
-            return "clk: " + clock;
+            return "clk: " + (clock + 1);
 
         if (component.equals("shifterImg"))
-            return "in: " + alu.getOutput() + "\nout: " + shifter.getOutput();
+            return getShifterToolTip();
 
         if (component.equals("marImg"))
             return "Value: " + MAR.get();
@@ -286,13 +416,13 @@ public class CPU {
             return "Value: " + MBR.get();
 
         if (component.equals("mMuxImg"))
-            return "0: " + incrementer + "\n1: " + getAddressBytes() + "\nout: " + mMux.getOutput();
+            return getMMuxToolTip();
 
         if (component.equals("mpcImg"))
             return "Value: " + MPC.get();
 
         if (component.equals("incImg"))
-            return "Value: " + incrementer;
+            return getIncrementerToolTip();
 
         if (component.equals("controlImg"))
             return "Address: " + MPC.get() + "\nValue: " + controlMemory[MPC.get()];
@@ -313,11 +443,7 @@ public class CPU {
                     "\nAddress: " + getBytesString(8, getAddressBytes());
 
         if (component.equals("mSeqLogicImg"))
-            return "L: " + getBitAt(30) +
-                    "\nR: " + getBitAt(29) +
-                    "\nN: " + alu.getNBit() +
-                    "\nZ: " + alu.getZBit() +
-                    "\nout: " + mSeqLogic.isOutput();
+            return getMSeqLogicToolTip();
 
         return "Unknown";
     }
