@@ -247,7 +247,7 @@ public class CPU {
         if (isWholeCycleDone() || clock.get() >= 1) {
             result = "A: " + registers.get(getABytes()).getName() + "\n" +
                     "B: " + registers.get(getBBytes()).getName();
-            if (getENCBytes() == 1 && clock.get() >= 3)
+            if (isWholeCycleDone() || getENCBytes() == 1 && clock.get() >= 3)
                 result +=  "\nC: " + registers.get(getCBytes()).getName();
             else
                 result += "\nC: /";
@@ -373,9 +373,29 @@ public class CPU {
         }
 
         if (isWholeCycleDone())
-            out = "out -> " + mSeqLogic.isOutput();
+            out = "out: " + mSeqLogic.isOutput();
 
         return l + "\n" + r + "\n" + n + "\n" + z + "\n" + out;
+    }
+
+    public String getMIRToolTip() {
+
+        String result =  "AMUX: /\nCOND: /\nALU: /\nShifter: /\nMBR: /\nMAR: /\nRD: /\nWR: /\nENC: /\nC: /\nB: /\nA: /\nAddress: /";
+        if (isWholeCycleDone() || clock.get() >= 1)
+            result =  "AMUX: " + getBytesString(1, getAMuxBytes()) +
+                    "\nCOND: " + getBytesString(2, getCONDBytes()) +
+                    "\nALU: " + getBytesString(2, getALUBytes()) +
+                    "\nShifter: " + getBytesString(2, getShifterBytes()) +
+                    "\nMBR: " + getBytesString(1, getMBRBytes()) +
+                    "\nMAR: " + getBytesString(1, getMARBytes()) +
+                    "\nRD: " + getBytesString(1, getRDBytes()) +
+                    "\nWR: " + getBytesString(1, getWRBytes()) +
+                    "\nENC: " + getBytesString(1, getENCBytes()) +
+                    "\nC: " + getBytesString(4, getCBytes()) +
+                    "\nB: " + getBytesString(4, getBBytes()) +
+                    "\nA: " + getBytesString(4, getABytes()) +
+                    "\nAddress: " + getBytesString(8, getAddressBytes());
+        return result;
     }
 
     public String getComponentToolTip(String component) {
@@ -428,19 +448,7 @@ public class CPU {
             return "Address: " + MPC.get() + "\nValue: " + controlMemory[MPC.get()];
 
         if (component.equals("mirImg"))
-            return "AMUX: " + getBytesString(1, getAMuxBytes()) +
-                    "\nCOND: " + getBytesString(2, getCONDBytes()) +
-                    "\nALU: " + getBytesString(2, getALUBytes()) +
-                    "\nShifter: " + getBytesString(2, getShifterBytes()) +
-                    "\nMBR: " + getBytesString(1, getMBRBytes()) +
-                    "\nMAR: " + getBytesString(1, getMARBytes()) +
-                    "\nRD: " + getBytesString(1, getRDBytes()) +
-                    "\nWR: " + getBytesString(1, getWRBytes()) +
-                    "\nENC: " + getBytesString(1, getENCBytes()) +
-                    "\nC: " + getBytesString(4, getCBytes()) +
-                    "\nB: " + getBytesString(4, getBBytes()) +
-                    "\nA: " + getBytesString(4, getABytes()) +
-                    "\nAddress: " + getBytesString(8, getAddressBytes());
+            return getMIRToolTip();
 
         if (component.equals("mSeqLogicImg"))
             return getMSeqLogicToolTip();
