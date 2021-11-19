@@ -238,9 +238,13 @@ public class CPU {
         return getBytesField(31, 0x00000001);
     }
 
+    private boolean isWholeCycleDone() {
+        return clockCounter.get() > 0 && clock.get() == 0;
+    }
+
     public String getRegistersToolTip() {
         String result = "A: /\nB: /\nC: /";
-        if (clock.get() >= 1) {
+        if (isWholeCycleDone() || clock.get() >= 1) {
             result = "A: " + registers.get(getABytes()).getName() + "\n" +
                     "B: " + registers.get(getBBytes()).getName();
             if (getENCBytes() == 1 && clock.get() >= 3)
@@ -253,14 +257,14 @@ public class CPU {
 
     public String getALatchToolTip() {
         String result = "data: /";
-        if (clock.get() >= 2)
+        if (isWholeCycleDone() || clock.get() >= 2)
             result = "data: " + ALatch;
         return result;
     }
 
     public String getBLatchToolTip() {
         String result = "data: /";
-        if (clock.get() >= 2)
+        if (isWholeCycleDone() || clock.get() >= 2)
             result = "data: " + BLatch;
         return result;
     }
@@ -269,11 +273,11 @@ public class CPU {
         String inp0 = "0: /";
         String inp1 = "1: /";
         String out = "out: /";
-        if (clock.get() >= 2) {
+        if (isWholeCycleDone() || clock.get() >= 2) {
             inp0 = "0: " + ALatch;
             inp1 = "1: " + MBR.get();
         }
-        if (clock.get() >= 3)
+        if (isWholeCycleDone() || clock.get() >= 3)
             out = "out: " + aMux.getOutput();
 
         return inp0 + "\n" + inp1 + "\n" + out;
@@ -282,9 +286,9 @@ public class CPU {
     public String getAluToolTip() {
         String a = "A: /";
         String b = "B: /";
-        if (clock.get() >= 2)
+        if (isWholeCycleDone() || clock.get() >= 2)
             b = "B: " + BLatch;
-        if (clock.get() >= 3) {
+        if (isWholeCycleDone() || clock.get() >= 3) {
             return  "A: " + aMux.getOutput() + "\n" + b + "\n" + alu.toString();
         }
         return a + "\n" + b + "\nout: /\nN: /\nZ: /";
@@ -292,7 +296,7 @@ public class CPU {
 
     public String getShifterToolTip() {
         String result = "in: /\nout: /";
-        if (clock.get() >= 3)
+        if (isWholeCycleDone() || clock.get() >= 3)
             result = "in: " + alu.getOutput() + "\nout: " + shifter.getOutput();
         return result;
     }
@@ -300,7 +304,7 @@ public class CPU {
     public String getADecToolTip() {
         String in = "in: /";
         String out = "out: /";
-        if (clock.get() >= 1) {
+        if (isWholeCycleDone() || clock.get() >= 1) {
             in = "in: " + getABytes();
             out = "out: " + getDecoderOutput(getABytes());
         }
@@ -310,7 +314,7 @@ public class CPU {
     public String getBDecToolTip() {
         String in = "in: /";
         String out = "out: /";
-        if (clock.get() >= 1) {
+        if (isWholeCycleDone() || clock.get() >= 1) {
             in = "in: " + getBBytes();
             out = "out: " + getDecoderOutput(getBBytes());
         }
@@ -321,11 +325,11 @@ public class CPU {
         String in = "in: /";
         String out = "out: /";
         String en = "en: /";
-        if (clock.get() >= 1) {
+        if (isWholeCycleDone() || clock.get() >= 1) {
             en = "en: " + getENCBytes();
             in = "in: " + getCBytes();
         }
-        if (clock.get() >= 3)
+        if (isWholeCycleDone() || clock.get() >= 3)
             if (getENCBytes() == 1)
                 out = "out: " + getDecoderOutput(getCBytes());
             else
@@ -334,7 +338,7 @@ public class CPU {
     }
 
     public String getIncrementerToolTip() {
-        if (clock.get() >= 2)
+        if (isWholeCycleDone() || clock.get() >= 2)
             return "value: " + incrementer;
         return "value: /";
     }
@@ -342,12 +346,12 @@ public class CPU {
     public String getMMuxToolTip() {
         String inp0 = "0: /";
         String inp1 = "1: /";
-        String out = "out: " + mMux.getOutput();
-        if (clock.get() != 0)
-            out = "out: /";
-        if (clock.get() >= 1)
+        String out = "out: /";
+        if (isWholeCycleDone())
+            out = "out: " + mMux.getOutput();
+        if (isWholeCycleDone() || clock.get() >= 1)
             inp1 = "1: " + getAddressBytes();
-        if (clock.get() >= 2)
+        if (isWholeCycleDone() || clock.get() >= 2)
             inp0 = "0: " + incrementer;
         return inp0 + "\n" + inp1 + "\n" + out;
     }
@@ -358,16 +362,18 @@ public class CPU {
         String n = "N: /";
         String z = "Z: /";
         String out = "out: /";
-        if (clock.get() >= 1) {
+        if (isWholeCycleDone() || clock.get() >= 1) {
             l = "L: " + getBitAt(30);
             r = "R: " + getBitAt(29);
         }
 
-        if (clock.get() >= 3) {
+        if (isWholeCycleDone() || clock.get() >= 3) {
             n = "N: " + alu.getNBit();
             z = "Z: " + alu.getZBit();
-            out = "out -> " + mSeqLogic.generateTempOutput((byte)getCONDBytes(), alu.getNBit(), alu.getZBit());
         }
+
+        if (isWholeCycleDone())
+            out = "out -> " + mSeqLogic.isOutput();
 
         return l + "\n" + r + "\n" + n + "\n" + z + "\n" + out;
     }

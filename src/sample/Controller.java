@@ -115,6 +115,7 @@ public class Controller {
         cpu.MARProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MARField.setText(newVal.toString()));
         cpu.MBRProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MBRField.setText(newVal.toString()));
 
+        // clock grid
         clockLab.setText(cpu.clockCounterProperty().getValue().toString());
         subcycleLab.setText(cpu.clockProperty().getValue().toString());
         cpu.clockCounterProperty().addListener((ChangeListener) (o, oldVal, newVal) -> clockLab.setText(newVal.toString()));
