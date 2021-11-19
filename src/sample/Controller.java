@@ -112,22 +112,22 @@ public class Controller {
         // MAR and MBR
         MARField.setText(cpu.MARProperty().getValue().toString());
         MBRField.setText(cpu.MBRProperty().getValue().toString());
-        cpu.MARProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MARField.setText(newVal.toString()));
-        cpu.MBRProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MBRField.setText(newVal.toString()));
+        cpu.MARProperty().addListener((o, oldVal, newVal) -> MARField.setText(newVal.toString()));
+        cpu.MBRProperty().addListener((o, oldVal, newVal) -> MBRField.setText(newVal.toString()));
 
         // clock grid
-        clockLab.setText(cpu.clockCounterProperty().getValue().toString());
-        subcycleLab.setText(cpu.clockProperty().getValue().toString());
-        cpu.clockCounterProperty().addListener((ChangeListener) (o, oldVal, newVal) -> clockLab.setText(newVal.toString()));
-        cpu.clockProperty().addListener((ChangeListener) (o, oldVal, newVal) -> subcycleLab.setText(newVal.toString()));
+        clockLab.setText(String.valueOf(cpu.clockCounterProperty().get()));
+        subcycleLab.setText(String.valueOf(cpu.clockProperty().get() + 1));
+        cpu.clockCounterProperty().addListener((o, oldVal, newVal) -> clockLab.setText(newVal.toString()));
+        cpu.clockProperty().addListener((o, oldVal, newVal) -> subcycleLab.setText(String.valueOf((Integer) newVal + 1)));
 
         // MPC
         MPCField.setText(cpu.MPCProperty().getValue().toString());
-        cpu.MPCProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MPCField.setText(newVal.toString()));
+        cpu.MPCProperty().addListener((o, oldVal, newVal) -> MPCField.setText(newVal.toString()));
 
         // MIR
         MIRField.setText(cpu.MIRProperty().getValue().toString());
-        cpu.MIRProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MIRField.setText(newVal.toString()));
+        cpu.MIRProperty().addListener((o, oldVal, newVal) -> MIRField.setText(newVal.toString()));
 
         // tooltips
         bindTooltips();
