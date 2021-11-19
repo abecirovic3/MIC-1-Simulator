@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import org.fxmisc.richtext.CodeArea;
@@ -54,6 +55,9 @@ public class Controller {
 
     public TextField memorySearchField;
     public TextField searchedAddressValueField;
+
+    public Label clockLab;
+    public Label subcycleLab;
 
     // tooltips
     public AnchorPane dataPathPane;
@@ -111,6 +115,11 @@ public class Controller {
         cpu.MARProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MARField.setText(newVal.toString()));
         cpu.MBRProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MBRField.setText(newVal.toString()));
 
+        clockLab.setText(cpu.clockCounterProperty().getValue().toString());
+        subcycleLab.setText(cpu.clockProperty().getValue().toString());
+        cpu.clockCounterProperty().addListener((ChangeListener) (o, oldVal, newVal) -> clockLab.setText(newVal.toString()));
+        cpu.clockProperty().addListener((ChangeListener) (o, oldVal, newVal) -> subcycleLab.setText(newVal.toString()));
+
         // MPC
         MPCField.setText(cpu.MPCProperty().getValue().toString());
         cpu.MPCProperty().addListener((ChangeListener) (o, oldVal, newVal) -> MPCField.setText(newVal.toString()));
@@ -125,7 +134,7 @@ public class Controller {
 
     private void bindTooltips() {
         for (Node img : dataPathPane.getChildren()) {
-            if (img.getId().equals("placeHolderImg")) continue;
+            if (img.getId().equals("placeHolderImg") || img.getId().equals("clockGrid")) continue;
             Tooltip tooltip = new Tooltip();
             Tooltip.install(img, tooltip);
             tooltip.setShowDuration(new Duration(60000));

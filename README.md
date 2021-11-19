@@ -9,7 +9,6 @@ Features to be implemented:
 - Search button styling
 - Instruction being executed bar
 - Control Memory table
-- Clock cycle and subcycle GUI counters
 - Instruction highlighting
 - Change of displaying number formats
 - Other tooltips

@@ -56,8 +56,8 @@ public class CPU {
         incrementer = 0;
         controlMemory = FileParser.getControlMemory();
 //        clock = 0;
-        clock.set(0);
-        clockCounter.set(0);
+        clock = new SimpleIntegerProperty(0);
+        clockCounter = new SimpleIntegerProperty(0);
         memory = new Memory();
     }
 
