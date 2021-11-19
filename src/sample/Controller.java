@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -34,14 +35,14 @@ public class Controller {
     public TableView<Map> supportedInstructionsTable;
 
     // Registers Table
-    public TableView registersTable;
-    public TableColumn regName;
-    public TableColumn regValue;
+    public TableView<Register> registersTable;
+    public TableColumn<Register, String> regName;
+    public TableColumn<Register, String> regValue;
 
     // Memory Table
-    public TableView memoryTable;
-    public TableColumn memAddress;
-    public TableColumn memValue;
+    public TableView<MemoryLine> memoryTable;
+    public TableColumn<MemoryLine, String> memAddress;
+    public TableColumn<MemoryLine, String> memValue;
 
     //public TextArea microcodeTextArea;
     public CodeArea codeArea;
@@ -100,13 +101,13 @@ public class Controller {
         //codeArea.setContextMenu( new DefaultContextMenu() );
 
         // Registers Table
-        regName.setCellValueFactory(new PropertyValueFactory<Register, String>("name"));
-        regValue.setCellValueFactory(new PropertyValueFactory<Register, String>("value"));
+        regName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        regValue.setCellValueFactory(new PropertyValueFactory<>("value"));
         registersTable.setItems(cpu.getRegisters());
 
         // Memory Table
-        memAddress.setCellValueFactory(new PropertyValueFactory<MemoryLine, String>("address"));
-        memValue.setCellValueFactory(new PropertyValueFactory<MemoryLine, String>("value"));
+        memAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        memValue.setCellValueFactory(new PropertyValueFactory<>("value"));
         memoryTable.setItems(cpu.getMemory().getMemory());
 
         // MAR and MBR

@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class FileParser {
 
-    public static ObservableList<Map<String, Object>> loadSupportedInstructionsTableData() {
-        ObservableList<Map<String, Object>> items = FXCollections.observableArrayList();
+    public static ObservableList<Map<String, String>> loadSupportedInstructionsTableData() {
+        ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
 
         try {
             BufferedReader csvReader = new BufferedReader(new FileReader("resources/dataFiles/supportedInstructions.csv"));
@@ -20,7 +20,7 @@ public class FileParser {
             while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(",");
 
-                Map<String, Object> rawData = new HashMap<>();
+                Map<String, String> rawData = new HashMap<>();
                 rawData.put("mnemonic", data[0]);
                 rawData.put("instruction" , data[1]);
                 rawData.put("meaning", data[2]);
