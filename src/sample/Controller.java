@@ -139,6 +139,7 @@ public class Controller {
             Tooltip tooltip = new Tooltip();
             Tooltip.install(img, tooltip);
             tooltip.setShowDuration(new Duration(60000));
+            tooltip.setShowDelay(new Duration(250));
             toolTips.put((ImageView) img, new Pair<>(tooltip, cpu::getComponentToolTip));
             tooltip.setText(cpu.getComponentToolTip(img.getId()));
         }
