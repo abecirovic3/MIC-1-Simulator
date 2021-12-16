@@ -1,28 +1,19 @@
 package sample;
 
 import backend.*;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -44,7 +35,6 @@ public class Controller {
     public TableColumn<MemoryLine, String> memAddress;
     public TableColumn<MemoryLine, String> memValue;
 
-    //public TextArea microcodeTextArea;
     public CodeArea codeArea;
     public CodeArea microcodeArea;
     public TextArea console;
@@ -60,7 +50,6 @@ public class Controller {
     public Label clockLab;
     public Label subcycleLab;
 
-    // tooltips
     public AnchorPane dataPathPane;
     public ImageView registersImg;
     private Map<ImageView, Pair<Tooltip, Function<String, String>>> toolTips = new HashMap<>();
@@ -70,68 +59,73 @@ public class Controller {
 
     @FXML
     public void initialize() {
-        instrMnemonic.setCellValueFactory(new MapValueFactory<>("mnemonic"));
-        // If we want the cells to be editable ...
-        
-//        instrMnemonic.setCellFactory(TextFieldTableCell.forTableColumn());
-//        instrMnemonic.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Map, String>>() {
-//            @Override
-//            public void handle(TableColumn.CellEditEvent<Map, String> event) {
-//                Map<String, Object> row = event.getRowValue();
-//                row.put("mnemonic", event.getNewValue());
-//            }
-//        });
-        instrInstruction.setCellValueFactory(new MapValueFactory<>("instruction"));
-        instrMeaning.setCellValueFactory(new MapValueFactory<>("meaning"));
-        instrBinaryCode.setCellValueFactory(new MapValueFactory<>("binaryCode"));
+        initializeSupportedInstructionsTable();
+        initializeMicrocodeArea();
+        initializeCodeArea();
+        initializeRegistersTable();
+        initializeMemoryTable();
+        initializeMARAndMBRFields();
+        initializeClockGrid();
+        initializeMPCField();
+        initializeMIRField();
+        bindTooltips();
+    }
 
-        supportedInstructionsTable.getItems().addAll(FileParser.loadSupportedInstructionsTableData());
-
-        //microcodeArea.setParagraphGraphicFactory(LineNumberFactory.get(microcodeArea));
-        microcodeArea.replaceText(FileParser.loadMicroCode());
-        // Scroll the area to the top
-        microcodeArea.moveTo(0); // this method works with characters...
-        microcodeArea.requestFollowCaret();
-
-        // To highlight a line
-        // microcodeArea.moveTo(10,0);
-        // microcodeArea.setLineHighlighterOn(true);
-
+    private void initializeCodeArea() {
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
-        //codeArea.setContextMenu( new DefaultContextMenu() );
+    }
 
-        // Registers Table
-        regName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        regValue.setCellValueFactory(new PropertyValueFactory<>("value"));
-        registersTable.setItems(cpu.getRegisters());
+    private void initializeMIRField() {
+        MIRField.setText(cpu.MIRProperty().getValue().toString());
+        cpu.MIRProperty().addListener((o, oldVal, newVal) -> MIRField.setText(newVal.toString()));
+    }
 
-        // Memory Table
-        memAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-        memValue.setCellValueFactory(new PropertyValueFactory<>("value"));
-        memoryTable.setItems(cpu.getMemory().getMemory());
+    private void initializeMPCField() {
+        MPCField.setText(cpu.MPCProperty().getValue().toString());
+        cpu.MPCProperty().addListener((o, oldVal, newVal) -> MPCField.setText(newVal.toString()));
+    }
 
-        // MAR and MBR
+    private void initializeClockGrid() {
+        clockLab.setText(String.valueOf(cpu.clockCounterProperty().get()));
+        subcycleLab.setText(String.valueOf(cpu.clockProperty().get() + 1));
+        cpu.clockCounterProperty().addListener((o, oldVal, newVal) -> clockLab.setText(newVal.toString()));
+        cpu.clockProperty().addListener(
+                (o, oldVal, newVal) -> subcycleLab.setText(String.valueOf((Integer) newVal + 1))
+        );
+    }
+
+    private void initializeMARAndMBRFields() {
         MARField.setText(cpu.MARProperty().getValue().toString());
         MBRField.setText(cpu.MBRProperty().getValue().toString());
         cpu.MARProperty().addListener((o, oldVal, newVal) -> MARField.setText(newVal.toString()));
         cpu.MBRProperty().addListener((o, oldVal, newVal) -> MBRField.setText(newVal.toString()));
+    }
 
-        // clock grid
-        clockLab.setText(String.valueOf(cpu.clockCounterProperty().get()));
-        subcycleLab.setText(String.valueOf(cpu.clockProperty().get() + 1));
-        cpu.clockCounterProperty().addListener((o, oldVal, newVal) -> clockLab.setText(newVal.toString()));
-        cpu.clockProperty().addListener((o, oldVal, newVal) -> subcycleLab.setText(String.valueOf((Integer) newVal + 1)));
+    private void initializeMemoryTable() {
+        memAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        memValue.setCellValueFactory(new PropertyValueFactory<>("value"));
+        memoryTable.setItems(cpu.getMemory().getMemory());
+    }
 
-        // MPC
-        MPCField.setText(cpu.MPCProperty().getValue().toString());
-        cpu.MPCProperty().addListener((o, oldVal, newVal) -> MPCField.setText(newVal.toString()));
+    private void initializeRegistersTable() {
+        regName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        regValue.setCellValueFactory(new PropertyValueFactory<>("value"));
+        registersTable.setItems(cpu.getRegisters());
+    }
 
-        // MIR
-        MIRField.setText(cpu.MIRProperty().getValue().toString());
-        cpu.MIRProperty().addListener((o, oldVal, newVal) -> MIRField.setText(newVal.toString()));
+    private void initializeMicrocodeArea() {
+        microcodeArea.replaceText(FileParser.loadMicroCode());
+        // Scroll the area to the top
+        microcodeArea.moveTo(0); // this method works with characters...
+        microcodeArea.requestFollowCaret();
+    }
 
-        // tooltips
-        bindTooltips();
+    private void initializeSupportedInstructionsTable() {
+        instrMnemonic.setCellValueFactory(new MapValueFactory<>("mnemonic"));
+        instrInstruction.setCellValueFactory(new MapValueFactory<>("instruction"));
+        instrMeaning.setCellValueFactory(new MapValueFactory<>("meaning"));
+        instrBinaryCode.setCellValueFactory(new MapValueFactory<>("binaryCode"));
+        supportedInstructionsTable.getItems().addAll(FileParser.loadSupportedInstructionsTableData());
     }
 
     private void bindTooltips() {
@@ -149,7 +143,6 @@ public class Controller {
     public void runCodeAction(ActionEvent actionEvent) {
         try {
             short[] machineCode = codeParser.parseCode(codeArea.getText());
-
             console.setText("Code assembled successfully");
             cpu.getMemory().write(machineCode);
         } catch (CodeParserException e) {
@@ -162,6 +155,17 @@ public class Controller {
         updateToolTips();
     }
 
+    public void runSubClockCycleAction(ActionEvent actionEvent) {
+        cpu.runSubCycle();
+        updateToolTips();
+    }
+
+    private void updateToolTips() {
+        for (ImageView img : toolTips.keySet()) {
+            toolTips.get(img).getKey().setText(toolTips.get(img).getValue().apply(img.getId()));
+        }
+    }
+
     public void searchMemoryAction(ActionEvent actionEvent) {
         try {
             String addressString = memorySearchField.getText();
@@ -172,17 +176,6 @@ public class Controller {
         } catch (NumberFormatException e) {
             // TODO
             // style for bad search input
-        }
-    }
-
-    public void runSubClockCycleAction(ActionEvent actionEvent) {
-        cpu.runSubCycle();
-        updateToolTips();
-    }
-
-    private void updateToolTips() {
-        for (ImageView img : toolTips.keySet()) {
-            toolTips.get(img).getKey().setText(toolTips.get(img).getValue().apply(img.getId()));
         }
     }
 }

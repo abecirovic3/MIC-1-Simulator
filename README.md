@@ -15,3 +15,6 @@ Features to be implemented:
 - Save file
 - Load file
 - Translation
+
+Features to be edited:
+- Memory table style
