@@ -240,6 +240,7 @@ public class Controller {
     public void runClockCycleAction() {
         cpu.runCycle();
         updateToolTips();
+        updateImgColors();
     }
 
     public void runSubClockCycleAction() {
