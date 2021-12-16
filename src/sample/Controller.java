@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
@@ -14,6 +15,8 @@ import javafx.util.Pair;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -54,6 +57,9 @@ public class Controller {
     public ImageView registersImg;
     private Map<ImageView, Pair<Tooltip, Function<String, String>>> toolTips = new HashMap<>();
 
+    private Map<ImageView, Pair<Image, Image>> dataPathImages = new HashMap<>();
+    private Map<String, Pair<String, String>> dataPathImagePaths = new HashMap<>();
+
     private CodeParser codeParser = CodeParser.getInstance();
     private CPU cpu = new CPU();
 
@@ -69,6 +75,85 @@ public class Controller {
         initializeMPCField();
         initializeMIRField();
         bindTooltips();
+        bindImageViews();
+    }
+
+    private void bindImageViews() {
+        String imgPath = "file:resources/img/datapath/";
+        for (Node img : dataPathPane.getChildren()) {
+            if (img.getId().equals("registersImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"reg.png"), new Image(imgPath+"reg_active.png")));
+            }
+            else if (img.getId().equals("aluImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"alu.png"), new Image(imgPath+"alu_active.png")));
+            }
+            else if (img.getId().equals("amuxImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"amux.png"), new Image(imgPath+"amux_active.png")));
+            }
+            else if (img.getId().equals("aLatchImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"a-latch.png"), new Image(imgPath+"a-latch_active.png")));
+            }
+            else if (img.getId().equals("bLatchImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"b-latch.png"), new Image(imgPath+"b-latch_active.png")));
+            }
+            else if (img.getId().equals("aDecImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"a-dec.png"), new Image(imgPath+"a-dec_active.png")));
+            }
+            else if (img.getId().equals("bDecImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"b-dec.png"), new Image(imgPath+"a-dec_active.png")));
+            }
+            else if (img.getId().equals("cDecImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"c-dec.png"), new Image(imgPath+"c-dec_active.png")));
+            }
+            else if (img.getId().equals("clockImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"clock.png"), new Image(imgPath+"clock_active.png")));
+            }
+            else if (img.getId().equals("shifterImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"shifter.png"), new Image(imgPath+"shifter_active.png")));
+            }
+            else if (img.getId().equals("marImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"mar.png"), new Image(imgPath+"mar_active.png")));
+            }
+            else if (img.getId().equals("mbrImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"mbr.png"), new Image(imgPath+"mbr_active.png")));
+            }
+            else if (img.getId().equals("mMuxImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"mmux.png"), new Image(imgPath+"mmux_active.png")));
+            }
+            else if (img.getId().equals("mpcImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"mpc.png"), new Image(imgPath+"mpc_active.png")));
+            }
+            else if (img.getId().equals("incImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"incr.png"), new Image(imgPath+"incr_active.png")));
+            }
+            else if (img.getId().equals("controlImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"control.png"), new Image(imgPath+"control_active.png")));
+            }
+            else if (img.getId().equals("mirImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"mir.png"), new Image(imgPath+"mir_active.png")));
+            }
+            else if (img.getId().equals("mSeqLogicImg")) {
+                dataPathImages.put((ImageView) img,
+                        new Pair<>(new Image(imgPath+"m-seq.png"), new Image(imgPath+"m-seq_active.png")));
+            }
+        }
     }
 
     private void initializeCodeArea() {
@@ -140,7 +225,7 @@ public class Controller {
         }
     }
 
-    public void runCodeAction(ActionEvent actionEvent) {
+    public void runCodeAction() {
         try {
             short[] machineCode = codeParser.parseCode(codeArea.getText());
             console.setText("Code assembled successfully");
@@ -150,14 +235,24 @@ public class Controller {
         }
     }
 
-    public void runClockCycleAction(ActionEvent actionEvent) {
+    public void runClockCycleAction() {
         cpu.runCycle();
         updateToolTips();
     }
 
-    public void runSubClockCycleAction(ActionEvent actionEvent) {
+    public void runSubClockCycleAction() {
         cpu.runSubCycle();
         updateToolTips();
+        updateImgColors();
+    }
+
+    private void updateImgColors() {
+        for (ImageView img : dataPathImages.keySet()) {
+            if (cpu.getComponentImg(img.getId()))
+                img.setImage(dataPathImages.get(img).getValue());
+            else
+                img.setImage(dataPathImages.get(img).getKey());
+        }
     }
 
     private void updateToolTips() {
@@ -166,7 +261,7 @@ public class Controller {
         }
     }
 
-    public void searchMemoryAction(ActionEvent actionEvent) {
+    public void searchMemoryAction() {
         try {
             String addressString = memorySearchField.getText();
             int address = Integer.parseInt(addressString);

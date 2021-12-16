@@ -20,6 +20,7 @@ public class CPU {
 //    private byte clock;
     private SimpleIntegerProperty clock;
     private SimpleIntegerProperty clockCounter;
+    private boolean memoryReadDone;
 
     private Memory memory;
 
@@ -59,12 +60,15 @@ public class CPU {
         clock = new SimpleIntegerProperty(0);
         clockCounter = new SimpleIntegerProperty(0);
         memory = new Memory();
+        memoryReadDone = false;
     }
 
     public void runFirstSubCycle() {
         MIR.set(controlMemory[MPC.get()]);
-        if (memory.isReadReady())
+        if (memory.isReadReady()) {
             MBR.set(memory.read());
+            memoryReadDone = true;
+        }
 
         if (memory.isWriteReady())
             memory.write((short)MBR.get());
@@ -122,6 +126,8 @@ public class CPU {
 //        clock = (byte)((clock + 1) % 4);
         clock.set((clock.get() + 1) % 4);
         clockCounter.set(clockCounter.get() + 1);
+
+        memoryReadDone = false;
     }
 
     public void runSubCycle() {
@@ -455,6 +461,74 @@ public class CPU {
 
         return "Unknown";
     }
+
+    public boolean getComponentImg(String component) {
+        if (component.equals("registersImg"))
+            return getRegistersImg();
+
+        if (component.equals("aluImg"))
+            return clock.get() == 3;
+
+        if (component.equals("amuxImg"))
+            return clock.get() == 3;
+
+        if (component.equals("aLatchImg"))
+            return clock.get() == 2;
+
+        if (component.equals("bLatchImg"))
+            return clock.get() == 2;
+
+        if (component.equals("aDecImg"))
+            return clock.get() == 2;
+
+        if (component.equals("bDecImg"))
+            return clock.get() == 2;
+
+        if (component.equals("cDecImg"))
+            return getCDecImg();
+
+        // TODO clock should be different
+        if (component.equals("clockImg"))
+            return !(clockCounter.get() == 0 && clock.get() == 0);
+
+        if (component.equals("shifterImg"))
+            return clock.get() == 3;
+
+        if (component.equals("marImg"))
+            return clock.get() == 3 && getMARBytes() == 1;
+
+        if (component.equals("mbrImg"))
+            return clock.get() == 1 && memoryReadDone || isWholeCycleDone() && getMBRBytes() == 1;
+
+//        if (component.equals("mMuxImg"))
+//            return getMMuxToolTip();
+//
+        if (component.equals("mpcImg"))
+            return clock.get() == 1;
+
+//        if (component.equals("incImg"))
+//            return getIncrementerToolTip();
+//
+        if (component.equals("controlImg"))
+            return clock.get() == 1;
+
+        if (component.equals("mirImg"))
+            return clock.get() == 1;
+//
+//        if (component.equals("mSeqLogicImg"))
+//            return getMSeqLogicToolTip();
+
+        return false;
+    }
+
+    private boolean getCDecImg() {
+        return isWholeCycleDone() && getENCBytes() == 1;
+    }
+
+    public boolean getRegistersImg() {
+        return clock.get() == 2 || getCDecImg();
+    }
+
 
     private String getBytesString(int length, int value) {
         StringBuilder result = new StringBuilder(Integer.toBinaryString(value));
