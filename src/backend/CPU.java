@@ -17,7 +17,6 @@ public class CPU {
     private byte incrementer;
     private short aDec, bDec, cDec;
     private MSeqLogic mSeqLogic;
-//    private byte clock;
     private SimpleIntegerProperty clock;
     private SimpleIntegerProperty clockCounter;
     private boolean memoryReadDone;
@@ -56,7 +55,6 @@ public class CPU {
         MIR = new SimpleIntegerProperty(0);
         incrementer = 0;
         controlMemory = FileParser.getControlMemory();
-//        clock = 0;
         clock = new SimpleIntegerProperty(0);
         clockCounter = new SimpleIntegerProperty(0);
         memory = new Memory();
@@ -73,7 +71,6 @@ public class CPU {
         if (memory.isWriteReady())
             memory.write((short)MBR.get());
 
-//        clock = (byte)((clock + 1) % 4);
         clock.set((clock.get() + 1) % 4);
     }
 
@@ -83,7 +80,6 @@ public class CPU {
         ALatch = (short)registers.get(aDec).getValue();
         BLatch = (short)registers.get(bDec).getValue();
         incrementer = (byte)(MPC.get() + 1);
-//        clock = (byte)((clock + 1) % 4);
         clock.set((clock.get() + 1) % 4);
     }
 
@@ -94,7 +90,6 @@ public class CPU {
         if (getBitAt(23))
             MAR.set(0x0FFF & BLatch);
 
-//        clock = (byte)((clock + 1) % 4);
         clock.set((clock.get() + 1) % 4);
     }
 
@@ -123,7 +118,6 @@ public class CPU {
             memory.incrementWriteCounter();
         }
 
-//        clock = (byte)((clock + 1) % 4);
         clock.set((clock.get() + 1) % 4);
         clockCounter.set(clockCounter.get() + 1);
 
@@ -145,7 +139,6 @@ public class CPU {
     public void runCycle() {
         int del = clock.get();
         for (int i = 0; i < 4 - del; i++) {
-//            System.out.println("Prosao");
             runSubCycle();
         }
         System.out.println(this);
