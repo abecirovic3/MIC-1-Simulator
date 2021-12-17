@@ -172,7 +172,6 @@ public class CPU {
     }
 
     public void runSubCycle() {
-        System.out.println("RUN subcycle");
         if (clock.get() == 0)
             runFirstSubCycle();
         else if (clock.get() == 1)
@@ -188,7 +187,6 @@ public class CPU {
         for (int i = 0; i < 4 - del; i++) {
             runSubCycle();
         }
-        System.out.println(this);
     }
 
     private int getBytesField(int shift, int mask) {
