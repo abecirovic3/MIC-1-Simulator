@@ -83,6 +83,79 @@ public class Controller {
         });
     }
 
+    private void initializeCodeArea() {
+        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
+    }
+
+    private void initializeMIRField() {
+        MIRField.setText(cpu.MIRProperty().getValue().toString());
+        cpu.MIRProperty().addListener((o, oldVal, newVal) -> MIRField.setText(newVal.toString()));
+    }
+
+    private void initializeMPCField() {
+        MPCField.setText(cpu.MPCProperty().getValue().toString());
+        cpu.MPCProperty().addListener((o, oldVal, newVal) -> {
+            MPCField.setText(newVal.toString());
+            microcodeArea.moveTo(newVal.intValue(), 0);
+        });
+    }
+
+    private void initializeClockGrid() {
+        clockLab.setText(String.valueOf(cpu.clockCounterProperty().get()));
+        subcycleLab.setText(String.valueOf(cpu.clockProperty().get() + 1));
+        cpu.clockCounterProperty().addListener((o, oldVal, newVal) -> clockLab.setText(newVal.toString()));
+        cpu.clockProperty().addListener(
+                (o, oldVal, newVal) -> subcycleLab.setText(String.valueOf((Integer) newVal + 1))
+        );
+    }
+
+    private void initializeMARAndMBRFields() {
+        MARField.setText(cpu.MARProperty().getValue().toString());
+        MBRField.setText(cpu.MBRProperty().getValue().toString());
+        cpu.MARProperty().addListener((o, oldVal, newVal) -> MARField.setText(newVal.toString()));
+        cpu.MBRProperty().addListener((o, oldVal, newVal) -> MBRField.setText(newVal.toString()));
+    }
+
+    private void initializeMemoryTable() {
+        memAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        memValue.setCellValueFactory(new PropertyValueFactory<>("value"));
+        memoryTable.setItems(cpu.getMemory().getMemory());
+    }
+
+    private void initializeRegistersTable() {
+        regName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        regValue.setCellValueFactory(new PropertyValueFactory<>("value"));
+        registersTable.setItems(cpu.getRegisters());
+    }
+
+    private void initializeMicrocodeArea() {
+        microcodeArea.replaceText(FileParser.loadMicroCode());
+        // Scroll the area to the top
+        microcodeArea.moveTo(0,0); // this method works with characters...
+        microcodeArea.requestFollowCaret();
+
+    }
+
+    private void initializeSupportedInstructionsTable() {
+        instrMnemonic.setCellValueFactory(new MapValueFactory<>("mnemonic"));
+        instrInstruction.setCellValueFactory(new MapValueFactory<>("instruction"));
+        instrMeaning.setCellValueFactory(new MapValueFactory<>("meaning"));
+        instrBinaryCode.setCellValueFactory(new MapValueFactory<>("binaryCode"));
+        supportedInstructionsTable.getItems().addAll(FileParser.loadSupportedInstructionsTableData());
+    }
+
+    private void bindTooltips() {
+        for (Node img : dataPathPane.getChildren()) {
+            if (img.getId().equals("placeHolderImg") || img.getId().equals("clockGrid")) continue;
+            Tooltip tooltip = new Tooltip();
+            Tooltip.install(img, tooltip);
+            tooltip.setShowDuration(new Duration(60000));
+            tooltip.setShowDelay(new Duration(250));
+            toolTips.put((ImageView) img, new Pair<>(tooltip, cpu::getComponentToolTip));
+            tooltip.setText(cpu.getComponentToolTip(img.getId()));
+        }
+    }
+
     private void bindImageViews() {
         String imgPath = "/img/datapath/";
         // This code shouldn't throw NPE bcs the resources are present
@@ -189,81 +262,14 @@ public class Controller {
         }
     }
 
-    private void initializeCodeArea() {
-        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
-    }
-
-    private void initializeMIRField() {
-        MIRField.setText(cpu.MIRProperty().getValue().toString());
-        cpu.MIRProperty().addListener((o, oldVal, newVal) -> MIRField.setText(newVal.toString()));
-    }
-
-    private void initializeMPCField() {
-        MPCField.setText(cpu.MPCProperty().getValue().toString());
-        cpu.MPCProperty().addListener((o, oldVal, newVal) -> MPCField.setText(newVal.toString()));
-    }
-
-    private void initializeClockGrid() {
-        clockLab.setText(String.valueOf(cpu.clockCounterProperty().get()));
-        subcycleLab.setText(String.valueOf(cpu.clockProperty().get() + 1));
-        cpu.clockCounterProperty().addListener((o, oldVal, newVal) -> clockLab.setText(newVal.toString()));
-        cpu.clockProperty().addListener(
-                (o, oldVal, newVal) -> subcycleLab.setText(String.valueOf((Integer) newVal + 1))
-        );
-    }
-
-    private void initializeMARAndMBRFields() {
-        MARField.setText(cpu.MARProperty().getValue().toString());
-        MBRField.setText(cpu.MBRProperty().getValue().toString());
-        cpu.MARProperty().addListener((o, oldVal, newVal) -> MARField.setText(newVal.toString()));
-        cpu.MBRProperty().addListener((o, oldVal, newVal) -> MBRField.setText(newVal.toString()));
-    }
-
-    private void initializeMemoryTable() {
-        memAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-        memValue.setCellValueFactory(new PropertyValueFactory<>("value"));
-        memoryTable.setItems(cpu.getMemory().getMemory());
-    }
-
-    private void initializeRegistersTable() {
-        regName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        regValue.setCellValueFactory(new PropertyValueFactory<>("value"));
-        registersTable.setItems(cpu.getRegisters());
-    }
-
-    private void initializeMicrocodeArea() {
-        microcodeArea.replaceText(FileParser.loadMicroCode());
-        // Scroll the area to the top
-        microcodeArea.moveTo(0); // this method works with characters...
-        microcodeArea.requestFollowCaret();
-    }
-
-    private void initializeSupportedInstructionsTable() {
-        instrMnemonic.setCellValueFactory(new MapValueFactory<>("mnemonic"));
-        instrInstruction.setCellValueFactory(new MapValueFactory<>("instruction"));
-        instrMeaning.setCellValueFactory(new MapValueFactory<>("meaning"));
-        instrBinaryCode.setCellValueFactory(new MapValueFactory<>("binaryCode"));
-        supportedInstructionsTable.getItems().addAll(FileParser.loadSupportedInstructionsTableData());
-    }
-
-    private void bindTooltips() {
-        for (Node img : dataPathPane.getChildren()) {
-            if (img.getId().equals("placeHolderImg") || img.getId().equals("clockGrid")) continue;
-            Tooltip tooltip = new Tooltip();
-            Tooltip.install(img, tooltip);
-            tooltip.setShowDuration(new Duration(60000));
-            tooltip.setShowDelay(new Duration(250));
-            toolTips.put((ImageView) img, new Pair<>(tooltip, cpu::getComponentToolTip));
-            tooltip.setText(cpu.getComponentToolTip(img.getId()));
-        }
-    }
-
     public void runCodeAction() {
         try {
             short[] machineCode = codeParser.parseCode(codeArea.getText());
             console.setText("Code assembled successfully");
             cpu.setCPUInitial();
             cpu.getMemory().write(machineCode);
+            microcodeArea.moveTo(0, 0);
+            microcodeArea.setLineHighlighterOn(true);
             updateToolTips();
             updateImgColors();
         } catch (CodeParserException e) {
