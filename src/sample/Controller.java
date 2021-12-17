@@ -289,13 +289,15 @@ public class Controller {
     public void searchMemoryAction() {
         try {
             String addressString = memorySearchField.getText();
+            if (addressString.isEmpty())
+                return;
             int address = Integer.parseInt(addressString);
-            if (address >= 0 && address <= 4095) {
-                searchedAddressValueField.setText(String.valueOf(cpu.getMemory().read((short) address)));
-            }
+            if (address < 0 || address > 4095)
+                throw new NumberFormatException("out of bounds");
+            searchedAddressValueField.setText(String.valueOf(cpu.getMemory().read((short) address)));
+            memorySearchField.setStyle(null);
         } catch (NumberFormatException e) {
-            // TODO
-            // style for bad search input
+            memorySearchField.setStyle("-fx-border-color: red;");
         }
     }
 }
