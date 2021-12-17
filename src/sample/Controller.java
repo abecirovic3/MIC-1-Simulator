@@ -64,6 +64,8 @@ public class Controller {
     private CodeParser codeParser = CodeParser.getInstance();
     private CPU cpu = new CPU();
 
+    private int codeAreaLineCounter = -1;
+
     @FXML
     public void initialize() {
         initializeSupportedInstructionsTable();
@@ -270,6 +272,7 @@ public class Controller {
             cpu.getMemory().write(machineCode);
             microcodeArea.moveTo(0, 0);
             microcodeArea.setLineHighlighterOn(true);
+            codeArea.setDisable(true);
             updateToolTips();
             updateImgColors();
         } catch (CodeParserException e) {
