@@ -253,7 +253,10 @@ public class Controller {
         try {
             short[] machineCode = codeParser.parseCode(codeArea.getText());
             console.setText("Code assembled successfully");
+            cpu.setCPUInitial();
             cpu.getMemory().write(machineCode);
+            updateToolTips();
+            updateImgColors();
         } catch (CodeParserException e) {
             console.setText(e.getMessage());
         }
