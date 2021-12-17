@@ -1,6 +1,8 @@
 package sample;
 
 import backend.*;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -14,6 +16,7 @@ import javafx.util.Pair;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -50,6 +53,8 @@ public class Controller {
     public Label clockLab;
     public Label subcycleLab;
 
+    public Tab memoryTab;
+
     public AnchorPane dataPathPane;
     public ImageView registersImg;
     private Map<ImageView, Pair<Tooltip, Function<String, String>>> toolTips = new HashMap<>();
@@ -72,6 +77,10 @@ public class Controller {
         initializeMIRField();
         bindTooltips();
         bindImageViews();
+        memoryTab.setOnSelectionChanged(event -> {
+            memorySearchField.setText("");
+            searchedAddressValueField.setText("");
+        });
     }
 
     private void bindImageViews() {

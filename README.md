@@ -1,7 +1,6 @@
 # MIC-1-Simulator
 
 Features to be implemented:
-- Memory read/write validation
 - Register and Memory table edit
 - Input validation
 - Search button styling
@@ -16,4 +15,3 @@ Features to be implemented:
 - Translation
 
 Features to be edited:
-- Memory table style

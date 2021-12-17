@@ -160,11 +160,11 @@
                   </AnchorPane>
               </content>
           </Tab>
-          <Tab text="Memory">
+          <Tab fx:id="memoryTab" text="Memory">
               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0">
                       <children>
-                        <VBox spacing="5.0">
+                        <VBox prefHeight="860.0" spacing="5.0">
                            <children>
                               <HBox spacing="5.0">
                                  <children>
@@ -173,10 +173,10 @@
                                     <TextField fx:id="searchedAddressValueField" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="251.0" />
                                  </children>
                               </HBox>
-                                  <TableView fx:id="memoryTable" prefHeight="844.0" prefWidth="1277.0">
+                                  <TableView fx:id="memoryTable" prefHeight="819.0" prefWidth="1270.0">
                                       <columns>
-                                          <TableColumn fx:id="memAddress" prefWidth="121.0" text="Address" />
-                                          <TableColumn fx:id="memValue" prefWidth="1148.0" text="Value" />
+                                          <TableColumn fx:id="memAddress" prefWidth="120.0" resizable="false" text="Address" />
+                                          <TableColumn fx:id="memValue" prefWidth="1134.0" resizable="false" text="Value" />
                                       </columns>
                                   </TableView>
                            </children>
