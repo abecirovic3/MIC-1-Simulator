@@ -1,8 +1,8 @@
 package backend;
 
 public class ALU {
-    private short output;
-    private boolean NBit, ZBit;
+    private short output = 0;
+    private boolean NBit = false, ZBit = false;
 
     public short getOutput() {
         return output;

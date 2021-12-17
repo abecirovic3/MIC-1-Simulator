@@ -11,9 +11,20 @@ public class Memory {
     public Memory() {
         memory = FXCollections.observableArrayList();
         for (short i = 0; i < 2048; i++)
-            memory.add(new MemoryLine(i,(short)0x7000));    // LOCO, acts like NOP inst in CODE segment
+            memory.add(new MemoryLine(i,(short) 0x7000));    // LOCO, acts like NOP inst in CODE segment
         for (short i = 2048; i < 4096; i++)
-            memory.add(new MemoryLine(i, (short)0));
+            memory.add(new MemoryLine(i, (short) 0));
+
+        address = 0;
+        readCounter = 0;
+        writeCounter = 0;
+    }
+
+    public void setMemoryInitial() {
+        for (short i = 0; i < 2048; i++)
+            memory.get(i).setValue((short) 0x7000);
+        for (short i = 2048; i < 4096; i++)
+            memory.get(i).setValue((short) 0);
 
         address = 0;
         readCounter = 0;

@@ -1,7 +1,7 @@
 package backend;
 
 public class MSeqLogic {
-    private boolean output;
+    private boolean output = false;
 
     public boolean isOutput() {
         return output;

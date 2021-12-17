@@ -31,7 +31,7 @@ public class CPU {
                 new Register("IR", (short)0),
                 new Register("TIR", (short)0),
                 new Register("0", (short)0),
-                new Register("1", (short)1),
+                new Register("+1", (short)1),
                 new Register("-1", (short)-1),
                 new Register("AMASK", (short)0x0fff),
                 new Register("SMASK", (short)0x00ff),
@@ -55,10 +55,57 @@ public class CPU {
         MIR = new SimpleIntegerProperty(0);
         incrementer = 0;
         controlMemory = FileParser.getControlMemory();
+        aDec = 0;
+        bDec = 0;
+        cDec = 0;
         clock = new SimpleIntegerProperty(0);
         clockCounter = new SimpleIntegerProperty(0);
         memory = new Memory();
         memoryReadDone = false;
+    }
+
+    public void setCPUInitial() {
+        setRegistersInitial();
+        ALatch = 0;
+        BLatch = 0;
+        aMux.setOutput((short) 0);
+        mMux.setOutput((short) 0);
+        alu.setOutput((short) 0);
+        alu.setNBit(false);
+        alu.setZBit(false);
+        shifter.setOutput((short) 0);
+        MAR.set(0);
+        MBR.set(0);
+        MPC.set(0);
+        MIR.set(0);
+        incrementer = 0;
+        aDec = 0;
+        bDec = 0;
+        cDec = 0;
+        mSeqLogic.setOutput(false);
+        clock.set(0);
+        clockCounter.set(0);
+        memoryReadDone = false;
+        memory.setMemoryInitial();
+    }
+
+    private void setRegistersInitial() {
+        registers.get(0).setValue(0);
+        registers.get(1).setValue(0);
+        registers.get(2).setValue(4095);
+        registers.get(3).setValue(0);
+        registers.get(4).setValue(0);
+        registers.get(5).setValue(0);
+        registers.get(6).setValue(1);
+        registers.get(7).setValue(-1);
+        registers.get(8).setValue(0x0fff);
+        registers.get(9).setValue(0x00ff);
+        registers.get(10).setValue(0);
+        registers.get(11).setValue(0);
+        registers.get(12).setValue(0);
+        registers.get(13).setValue(0);
+        registers.get(14).setValue(0);
+        registers.get(15).setValue(0);
     }
 
     public void runFirstSubCycle() {
