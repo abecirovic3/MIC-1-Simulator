@@ -1,7 +1,6 @@
 package sample;
 
 import backend.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -15,10 +14,7 @@ import javafx.util.Pair;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -79,82 +75,108 @@ public class Controller {
     }
 
     private void bindImageViews() {
-        String imgPath = "file:resources/img/datapath/";
-        for (Node img : dataPathPane.getChildren()) {
-            if (img.getId().equals("registersImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"reg.png"), new Image(imgPath+"reg_active.png")});
+        String imgPath = "/img/datapath/";
+        // This code shouldn't throw NPE bcs the resources are present
+        // Warnings are ignored bcs the fix with Objects.requireNonNull method doesn't really do much
+        // except that it throws NPE instead of Image constructor
+        // I'll leave one warning unsuppressed for future reference
+        try {
+            for (Node img : dataPathPane.getChildren()) {
+                if (img.getId().equals("registersImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "reg.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "reg_active.png"))});
+                } else if (img.getId().equals("aluImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "alu.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "alu_active.png"))});
+                } else if (img.getId().equals("amuxImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "amux.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "amux_active.png"))});
+                } else if (img.getId().equals("aLatchImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "a-latch.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "a-latch_active.png"))});
+                } else if (img.getId().equals("bLatchImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "b-latch.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "b-latch_active.png"))});
+                } else if (img.getId().equals("aDecImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "a-dec.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "a-dec_active.png"))});
+                } else if (img.getId().equals("bDecImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "b-dec.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "a-dec_active.png"))});
+                } else if (img.getId().equals("cDecImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "c-dec.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "c-dec_active.png"))});
+                } else if (img.getId().equals("clockImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "clock.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "clock_active_1.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "clock_active_2.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "clock_active_3.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "clock_active_4.png"))});
+                } else if (img.getId().equals("shifterImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "shifter.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "shifter_active.png"))});
+                } else if (img.getId().equals("marImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "mar.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "mar_active.png"))});
+                } else if (img.getId().equals("mbrImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "mbr.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "mbr_active.png"))});
+                } else if (img.getId().equals("mMuxImg")) {
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(imgPath + "mmux.png"), new Image(imgPath + "mmux_active.png")});
+                } else if (img.getId().equals("mpcImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "mpc.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "mpc_active.png"))});
+                } else if (img.getId().equals("incImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "incr.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "incr_active.png"))});
+                } else if (img.getId().equals("controlImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "control.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "control_active.png"))});
+                } else if (img.getId().equals("mirImg")) {
+                    //noinspection ConstantConditions
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "mir.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "mir_active.png"))});
+                } else if (img.getId().equals("mSeqLogicImg")) {
+                    dataPathImages.put((ImageView) img,
+                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "m-seq.png")),
+                                    new Image(getClass().getResourceAsStream(imgPath + "m-seq_active.png"))});
+                }
             }
-            else if (img.getId().equals("aluImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"alu.png"), new Image(imgPath+"alu_active.png")});
-            }
-            else if (img.getId().equals("amuxImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"amux.png"), new Image(imgPath+"amux_active.png")});
-            }
-            else if (img.getId().equals("aLatchImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"a-latch.png"), new Image(imgPath+"a-latch_active.png")});
-            }
-            else if (img.getId().equals("bLatchImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"b-latch.png"), new Image(imgPath+"b-latch_active.png")});
-            }
-            else if (img.getId().equals("aDecImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"a-dec.png"), new Image(imgPath+"a-dec_active.png")});
-            }
-            else if (img.getId().equals("bDecImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"b-dec.png"), new Image(imgPath+"a-dec_active.png")});
-            }
-            else if (img.getId().equals("cDecImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"c-dec.png"), new Image(imgPath+"c-dec_active.png")});
-            }
-            else if (img.getId().equals("clockImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"clock.png"), new Image(imgPath+"clock_active_1.png"),
-                        new Image(imgPath+"clock_active_2.png"), new Image(imgPath+"clock_active_3.png"),
-                                new Image(imgPath+"clock_active_4.png")});
-            }
-            else if (img.getId().equals("shifterImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"shifter.png"), new Image(imgPath+"shifter_active.png")});
-            }
-            else if (img.getId().equals("marImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"mar.png"), new Image(imgPath+"mar_active.png")});
-            }
-            else if (img.getId().equals("mbrImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"mbr.png"), new Image(imgPath+"mbr_active.png")});
-            }
-            else if (img.getId().equals("mMuxImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"mmux.png"), new Image(imgPath+"mmux_active.png")});
-            }
-            else if (img.getId().equals("mpcImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"mpc.png"), new Image(imgPath+"mpc_active.png")});
-            }
-            else if (img.getId().equals("incImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"incr.png"), new Image(imgPath+"incr_active.png")});
-            }
-            else if (img.getId().equals("controlImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"control.png"), new Image(imgPath+"control_active.png")});
-            }
-            else if (img.getId().equals("mirImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"mir.png"), new Image(imgPath+"mir_active.png")});
-            }
-            else if (img.getId().equals("mSeqLogicImg")) {
-                dataPathImages.put((ImageView) img,
-                        new Image[]{new Image(imgPath+"m-seq.png"), new Image(imgPath+"m-seq_active.png")});
-            }
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException in bindImageViews method");
+            e.printStackTrace();
         }
     }
 

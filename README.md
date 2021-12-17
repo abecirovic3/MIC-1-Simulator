@@ -1,7 +1,6 @@
 # MIC-1-Simulator
 
 Features to be implemented:
-- Datapath active component colours
 - Memory read/write validation
 - Register and Memory table edit
 - Input validation
