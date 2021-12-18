@@ -123,7 +123,7 @@ public class CodeParser {
             if (elements.length >= 1 && elements[0].endsWith(":")) {
                 String newLabel = elements[0].substring(0, elements[0].length()-1);
                 if (labels.containsKey(newLabel))   // recurring label
-                    throw new CodeParserException("Error on line number " + String.valueOf(i+1) + ", recurring label name");
+                    throw new CodeParserException("Error on line number " + (i + 1) + ", recurring label name");
 
                 labels.put(newLabel, memoryAddress);
 
