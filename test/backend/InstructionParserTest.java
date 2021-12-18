@@ -96,4 +96,15 @@ class InstructionParserTest {
     void getInstructionStringTest6() {
         assertEquals("POP", ip.getInstructionString((short) 0b1111011000000000));
     }
+
+    @Test
+    void instructionIsSupportedTest() {
+        assertTrue(ip.instructionIsSupported("addD"));
+        assertTrue(ip.instructionIsSupported("loco"));
+        assertTrue(ip.instructionIsSupported("juMP"));
+        assertFalse(ip.instructionIsSupported("saberi"));
+        assertFalse(ip.instructionIsSupported("add"));
+        assertFalse(ip.instructionIsSupported("SUB"));
+        assertFalse(ip.instructionIsSupported("MuL"));
+    }
 }
