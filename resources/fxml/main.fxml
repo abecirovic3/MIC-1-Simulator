@@ -369,7 +369,7 @@
                                     </AnchorPane>
                                  </children>
                               </HBox>
-                              <Label prefHeight="32.0" prefWidth="1270.0" styleClass="status-bar" text="Instruction being executed">
+                              <Label fx:id="instructionStatusLabel" prefHeight="32.0" prefWidth="1270.0" styleClass="status-bar" >
                                  <padding>
                                     <Insets left="5.0" />
                                  </padding>

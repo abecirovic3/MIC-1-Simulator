@@ -16,6 +16,7 @@ import javafx.util.Pair;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
+import java.sql.SQLOutput;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,6 +53,7 @@ public class Controller {
 
     public Label clockLab;
     public Label subcycleLab;
+    public Label instructionStatusLabel;
 
     public Tab memoryTab;
 
@@ -62,6 +64,7 @@ public class Controller {
     private Map<ImageView, Image[]> dataPathImages = new HashMap<>();
 
     private CodeParser codeParser = CodeParser.getInstance();
+    private InstructionParser instructionParser = InstructionParser.getInstance();
     private CPU cpu = new CPU();
 
     private int codeAreaLineCounter = -1;
@@ -99,6 +102,14 @@ public class Controller {
         cpu.MPCProperty().addListener((o, oldVal, newVal) -> {
             MPCField.setText(newVal.toString());
             microcodeArea.moveTo(newVal.intValue(), 0);
+            if (newVal.intValue() <= 2) {
+                instructionStatusLabel.setText("Fetching instruction...");
+            }
+            if (newVal.intValue() == 3) {
+                instructionStatusLabel.
+                        setText("Fetched instruction: " +
+                                instructionParser.getInstructionString((short) cpu.MBRProperty().get()));
+            }
         });
     }
 
