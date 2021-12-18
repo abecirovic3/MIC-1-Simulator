@@ -111,9 +111,9 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <HBox prefHeight="853.0" prefWidth="1280.0" spacing="5.0">
+                        <HBox prefHeight="860.0" prefWidth="1280.0" spacing="5.0">
                            <children>
-                              <CodeArea fx:id="codeArea" prefHeight="843.0" prefWidth="560.0" stylesheets="@../css/codeArea.css">
+                              <CodeArea fx:id="codeArea" prefHeight="850.0" prefWidth="560.0" stylesheets="@../css/codeArea.css">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
@@ -121,7 +121,7 @@
                                     <String fx:value="code-area" />
                                     <String fx:value="lineno" />
                                  </styleClass></CodeArea>
-                              <VBox prefHeight="843.0" prefWidth="706.0" spacing="5.0">
+                              <VBox prefHeight="850.0" prefWidth="706.0" spacing="5.0">
                                  <children>
                                     <Label styleClass="transparent-label" text="Supported instructions">
                                        <font>
@@ -136,7 +136,7 @@
                                         <TableColumn fx:id="instrBinaryCode" editable="false" prefWidth="180.0" resizable="false" styleClass="center-align" text="Binary code" />
                                       </columns>
                                     </TableView>
-                                    <TextArea fx:id="console" editable="false" prefHeight="233.0" prefWidth="706.0" promptText="Console" />
+                                    <TextArea fx:id="console" editable="false" prefHeight="239.0" prefWidth="706.0" promptText="Console" />
                                  </children>
                               </VBox>
                            </children>
@@ -155,14 +155,14 @@
                               <children>
                               <CodeArea fx:id="microcodeArea" editable="false" prefHeight="850.0" prefWidth="377.0" styleClass="lineno default-border" stylesheets="@../css/codeArea.css" wrapText="true">
                               </CodeArea>
-                              <VBox prefHeight="844.0" prefWidth="891.0" spacing="5.0">
+                              <VBox prefHeight="850.0" prefWidth="891.0" spacing="5.0">
                                  <children>
                                     <Label text="Control Memory">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                        <TableView prefHeight="818.0" prefWidth="705.0">
+                                        <TableView prefHeight="824.0" prefWidth="705.0">
                                             <columns>
                                                 <TableColumn prefWidth="121.0" text="Address" />
                                                 <TableColumn prefWidth="768.0" text="Value" />
