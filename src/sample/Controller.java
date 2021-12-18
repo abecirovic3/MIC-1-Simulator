@@ -110,9 +110,9 @@ public class Controller {
         MPCField.setText(cpu.MPCProperty().getValue().toString());
         cpu.MPCProperty().addListener((o, oldVal, newVal) -> {
             MPCField.setText(newVal.toString());
-            if (newVal.intValue() > 50)
+            if (newVal.intValue() > 50 && microcodeArea.getEstimatedScrollY() < 50)
                 microcodeArea.scrollYToPixel(850);
-            else if (newVal.intValue() <= 50)
+            else if (newVal.intValue() <= 50 && microcodeArea.getEstimatedScrollY() > 50)
                 microcodeArea.scrollYToPixel(0);
             microcodeArea.moveTo(newVal.intValue(), 0);
             if (newVal.intValue() <= 2) {
@@ -373,7 +373,5 @@ public class Controller {
         tabPane.getSelectionModel().select(codeTab);
         microcodeArea.setLineHighlighterOn(false);
         microcodeArea.setLineHighlighterFill(Paint.valueOf("FFFFFF"));
-
-        // TODO try to disable microCodeHighlighter
     }
 }
