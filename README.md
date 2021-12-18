@@ -3,13 +3,9 @@
 Features to be implemented:
 - Register and Memory table edit
 - Input validation
-- Search button styling
-- Instruction being executed bar
 - Control Memory table
-- Instruction highlighting
 - Change of displaying number formats
-- Other tooltips
-- New file
+- Other tooltips (partly done)
 - Save file
 - Load file
 - Translation
