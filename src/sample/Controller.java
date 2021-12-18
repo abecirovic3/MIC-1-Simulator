@@ -1,6 +1,7 @@
 package sample;
 
 import backend.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -359,9 +360,11 @@ public class Controller {
     }
 
     private void reinitialiseAppState() {
-        codeArea.setEditable(true);
-        codeArea.clear();
-        codeArea.moveTo(0);
+        Platform.runLater(() -> {
+            codeArea.setEditable(true);
+            codeArea.moveTo(0,0);
+            codeArea.clear();
+        });
         console.setText("");
         btnRun.setDisable(false);
         btnNextClock.setDisable(true);
@@ -371,7 +374,6 @@ public class Controller {
         updateToolTips();
         updateImgColors();
         tabPane.getSelectionModel().select(codeTab);
-        microcodeArea.setLineHighlighterOn(false);
         microcodeArea.setLineHighlighterFill(Paint.valueOf("FFFFFF"));
     }
 }
