@@ -1,6 +1,7 @@
 package sample;
 
 import backend.*;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import org.fxmisc.richtext.CodeArea;
@@ -20,6 +22,7 @@ import java.sql.SQLOutput;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 public class Controller {
@@ -55,6 +58,12 @@ public class Controller {
     public Label subcycleLab;
     public Label instructionStatusLabel;
 
+    public Button btnRun;
+    public Button btnNextSubClock;
+    public Button btnNextClock;
+
+    public TabPane tabPane;
+    public Tab codeTab;
     public Tab memoryTab;
 
     public AnchorPane dataPathPane;
@@ -101,6 +110,10 @@ public class Controller {
         MPCField.setText(cpu.MPCProperty().getValue().toString());
         cpu.MPCProperty().addListener((o, oldVal, newVal) -> {
             MPCField.setText(newVal.toString());
+            if (newVal.intValue() > 50)
+                microcodeArea.scrollYToPixel(850);
+            else if (newVal.intValue() <= 50)
+                microcodeArea.scrollYToPixel(0);
             microcodeArea.moveTo(newVal.intValue(), 0);
             if (newVal.intValue() <= 2) {
                 instructionStatusLabel.setText("Fetching instruction...");
@@ -146,7 +159,8 @@ public class Controller {
         // Scroll the area to the top
         microcodeArea.moveTo(0,0); // this method works with characters...
         microcodeArea.requestFollowCaret();
-
+        microcodeArea.setLineHighlighterOn(true);
+        microcodeArea.setLineHighlighterFill(Paint.valueOf("FFFFFF"));
     }
 
     private void initializeSupportedInstructionsTable() {
@@ -282,8 +296,11 @@ public class Controller {
             cpu.setCPUInitial();
             cpu.getMemory().write(machineCode);
             microcodeArea.moveTo(0, 0);
-            microcodeArea.setLineHighlighterOn(true);
-            codeArea.setDisable(true);
+            microcodeArea.setLineHighlighterFill(Paint.valueOf("ADFF2F"));
+            codeArea.setEditable(false);
+            btnRun.setDisable(true);
+            btnNextClock.setDisable(false);
+            btnNextSubClock.setDisable(false);
             updateToolTips();
             updateImgColors();
         } catch (CodeParserException e) {
@@ -328,5 +345,35 @@ public class Controller {
         } catch (NumberFormatException e) {
             memorySearchField.setStyle("-fx-border-color: red;");
         }
+    }
+
+    public void newFileAction() {
+        Optional<ButtonType> selectedOption;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Are you sure you want to create a new code file?");
+        alert.setContentText("Current progress will be lost!");
+        selectedOption = alert.showAndWait();
+        if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK)
+            reinitialiseAppState();
+    }
+
+    private void reinitialiseAppState() {
+        codeArea.setEditable(true);
+        codeArea.clear();
+        codeArea.moveTo(0);
+        console.setText("");
+        btnRun.setDisable(false);
+        btnNextClock.setDisable(true);
+        btnNextSubClock.setDisable(true);
+        cpu.setCPUInitial();
+        instructionStatusLabel.setText("");
+        updateToolTips();
+        updateImgColors();
+        tabPane.getSelectionModel().select(codeTab);
+        microcodeArea.setLineHighlighterOn(false);
+        microcodeArea.setLineHighlighterFill(Paint.valueOf("FFFFFF"));
+
+        // TODO try to disable microCodeHighlighter
     }
 }
