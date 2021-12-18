@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CodeParser {
-    private final Map<String, String> supportedInstructions;
-
     private static CodeParser instance;
+    private InstructionParser instructionParser;
 
     public static CodeParser getInstance() {
         if (instance == null) instance = new CodeParser();
@@ -14,7 +13,7 @@ public class CodeParser {
     }
 
     private CodeParser() {
-        supportedInstructions = FileParser.getSupportedInstructionsMap();
+        instructionParser = InstructionParser.getInstance();
     }
 
     public short[] parseCode(String code) throws CodeParserException {
@@ -46,16 +45,17 @@ public class CodeParser {
 
             String[] instructionElements = line.split(" ");
 
-            if (!supportedInstructions.containsKey(instructionElements[0].toUpperCase()))
+            if (!instructionParser.instructionIsSupported(instructionElements[0]))
                 throw new CodeParserException(errMessage + lineNumber + ", unknown instruction mnemonic");
 
             argumentBinaryString = "00000000";
 
-            if (instructionRequiresArgument(instructionElements[0])) {
+
+            if (instructionParser.instructionRequiresArgument(instructionElements[0])) {
                 if (instructionElements.length < 2)
                     throw new CodeParserException(errMessage + lineNumber + ", missing argument");
                 try {
-                    if (instructionIsJump(instructionElements[0])) {
+                    if (instructionParser.instructionIsJump(instructionElements[0])) {
                         try {
                             Integer.parseInt(instructionElements[1]);
                         } catch (NumberFormatException ex) {
@@ -83,7 +83,7 @@ public class CodeParser {
                 throw new CodeParserException(errMessage + lineNumber + ", too many arguments");
             }
 
-            opcodeBinaryString = supportedInstructions.get(instructionElements[0].toUpperCase());
+            opcodeBinaryString = instructionParser.getOpcodeBytesString(instructionElements[0]);
 
             addInstructionToAssembledInstructions(machineCode, memAddress, opcodeBinaryString, argumentBinaryString);
 
@@ -100,12 +100,6 @@ public class CodeParser {
         argumentBinaryString = String.format(format, argumentBinaryString).replace(' ', '0');
         String binaryInstruction = opcodeBinaryString + argumentBinaryString;
         machineCode[memAddress] = (short) Integer.parseInt(binaryInstruction, 2);
-    }
-
-    private boolean instructionIsJump(String mnemonic) {
-        return mnemonic.equalsIgnoreCase("JPOS") || mnemonic.equalsIgnoreCase("JZER")
-                || mnemonic.equalsIgnoreCase("JUMP") || mnemonic.equalsIgnoreCase("JNEG")
-                || mnemonic.equalsIgnoreCase("JNZE");
     }
 
     // As I couldn't think of a better name
@@ -140,10 +134,5 @@ public class CodeParser {
             }
             memoryAddress++;
         }
-    }
-
-    private boolean instructionRequiresArgument(String mnemonic) {
-        return !(mnemonic.equals("PSHI") || mnemonic.equals("POPI") || mnemonic.equals("PUSH")
-                || mnemonic.equals("POP") || mnemonic.equals("RETN") || mnemonic.equals("SWAP"));
     }
 }

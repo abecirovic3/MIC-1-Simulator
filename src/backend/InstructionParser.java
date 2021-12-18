@@ -56,14 +56,23 @@ public class InstructionParser {
         return result.toString();
     }
 
+    public String getOpcodeBytesString(String mnemonic) {
+        return supportedInstructions.get(mnemonic.toUpperCase());
+    }
+
     public boolean instructionRequiresArgument(String mnemonic) {
-        return !(mnemonic.equals("PSHI") || mnemonic.equals("POPI") || mnemonic.equals("PUSH")
-                || mnemonic.equals("POP") || mnemonic.equals("RETN") || mnemonic.equals("SWAP"));
+        return !(mnemonic.equalsIgnoreCase("PSHI") || mnemonic.equalsIgnoreCase("POPI")
+                || mnemonic.equalsIgnoreCase("PUSH") || mnemonic.equalsIgnoreCase("POP")
+                || mnemonic.equalsIgnoreCase("RETN") || mnemonic.equalsIgnoreCase("SWAP"));
     }
 
     public boolean instructionIsJump(String mnemonic) {
         return mnemonic.equalsIgnoreCase("JPOS") || mnemonic.equalsIgnoreCase("JZER")
                 || mnemonic.equalsIgnoreCase("JUMP") || mnemonic.equalsIgnoreCase("JNEG")
                 || mnemonic.equalsIgnoreCase("JNZE");
+    }
+
+    public boolean instructionIsSupported(String mnemonic) {
+        return supportedInstructions.containsKey(mnemonic.toUpperCase());
     }
 }
