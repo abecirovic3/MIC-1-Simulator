@@ -145,7 +145,7 @@ public class Controller {
     }
 
     private void initializeClockGrid() {
-        clockLab.setText(String.valueOf(cpu.clockCounterProperty().get()));
+        clockLab.setText(String.valueOf(cpu.clockCounterProperty().get() + 1));
         subcycleLab.setText(String.valueOf(cpu.clockProperty().get() + 1));
         cpu.clockCounterProperty().addListener((o, oldVal, newVal) -> clockLab.setText(newVal.toString()));
         cpu.clockProperty().addListener(
@@ -209,7 +209,7 @@ public class Controller {
 
     private void bindTooltips() {
         for (Node img : dataPathPane.getChildren()) {
-            if (img.getId().equals("placeHolderImg") || img.getId().equals("clockGrid")) continue;
+            if (img.getId().equals("placeHolderImg")) continue;
             Tooltip tooltip = new Tooltip();
             Tooltip.install(img, tooltip);
             tooltip.setShowDuration(new Duration(60000));
