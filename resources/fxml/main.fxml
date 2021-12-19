@@ -54,7 +54,7 @@
                 <Menu mnemonicParsing="false" text="Execute">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Run" />
-                        <MenuItem mnemonicParsing="false" text="Next faze" />
+                        <MenuItem mnemonicParsing="false" text="Next sub-clock cycle" />
                         <MenuItem mnemonicParsing="false" text="Next clock cycle" />
                     </items>
                 </Menu>
