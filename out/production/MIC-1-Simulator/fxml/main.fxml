@@ -162,10 +162,25 @@
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                        <TableView prefHeight="824.0" prefWidth="705.0">
+                                        <TableView fx:id="controlMemoryTable" prefHeight="824.0" prefWidth="705.0" styleClass="center-align">
                                             <columns>
-                                                <TableColumn prefWidth="121.0" text="Address" />
-                                                <TableColumn prefWidth="768.0" text="Value" />
+                                                <TableColumn fx:id="cmAddressCol" text="Address" />
+                                                <TableColumn prefWidth="-1.0" text="Value">
+                                             <columns>
+                                                <TableColumn fx:id="cmAmuxCol" prefWidth="52.0" styleClass="center-align" text="AMUX" />
+                                                <TableColumn fx:id="cmCondCol" prefWidth="58.0" styleClass="center-align" text="COND" />
+                                                <TableColumn fx:id="cmAluCol" prefWidth="58.0" styleClass="center-align" text="ALU" />
+                                                <TableColumn fx:id="cmShCol" prefWidth="58.0" styleClass="center-align" text="SH" />
+                                                <TableColumn fx:id="cmMbrCol" prefWidth="52.0" styleClass="center-align" text="MBR" />
+                                                <TableColumn fx:id="cmMarCol" prefWidth="52.0" styleClass="center-align" text="MAR" />
+                                                <TableColumn fx:id="cmRdCol" prefWidth="52.0" styleClass="center-align" text="RD" />
+                                                <TableColumn fx:id="cmWrCol" prefWidth="52.0" styleClass="center-align" text="WR" />
+                                                <TableColumn fx:id="cmEncCol" prefWidth="52.0" styleClass="center-align" text="ENC" />
+                                                <TableColumn fx:id="cmCCol" prefWidth="74.0" styleClass="center-align" text="C" />
+                                                <TableColumn fx:id="cmBCol" prefWidth="74.0" styleClass="center-align" text="B" />
+                                                <TableColumn fx:id="cmACol" prefWidth="74.0" styleClass="center-align" text="A" />
+                                                <TableColumn fx:id="cmAddrCol" prefWidth="93.0" styleClass="center-align" text="ADDR" />
+                                             </columns></TableColumn>
                                             </columns>
                                         </TableView>
                                  </children>

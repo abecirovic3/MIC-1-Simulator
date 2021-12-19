@@ -27,11 +27,27 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class Controller {
+    public TableView<Map> supportedInstructionsTable;
     public TableColumn<Map, String> instrMnemonic;
     public TableColumn<Map, String> instrInstruction;
     public TableColumn<Map, String> instrMeaning;
     public TableColumn<Map, String> instrBinaryCode;
-    public TableView<Map> supportedInstructionsTable;
+
+    public TableView<Map> controlMemoryTable;
+    public TableColumn<Map, String> cmAddressCol;
+    public TableColumn<Map, String> cmAmuxCol;
+    public TableColumn<Map, String> cmCondCol;
+    public TableColumn<Map, String> cmAluCol;
+    public TableColumn<Map, String> cmShCol;
+    public TableColumn<Map, String> cmMbrCol;
+    public TableColumn<Map, String> cmMarCol;
+    public TableColumn<Map, String> cmRdCol;
+    public TableColumn<Map, String>cmWrCol;
+    public TableColumn<Map, String> cmEncCol;
+    public TableColumn<Map, String> cmCCol;
+    public TableColumn<Map, String> cmBCol;
+    public TableColumn<Map, String> cmACol;
+    public TableColumn<Map, String> cmAddrCol;
 
     // Registers Table
     public TableView<Register> registersTable;
@@ -82,6 +98,7 @@ public class Controller {
     @FXML
     public void initialize() {
         initializeSupportedInstructionsTable();
+        initializeControlMemoryTable();
         initializeMicrocodeArea();
         initializeCodeArea();
         initializeRegistersTable();
@@ -162,6 +179,24 @@ public class Controller {
         microcodeArea.requestFollowCaret();
         microcodeArea.setLineHighlighterOn(true);
         microcodeArea.setLineHighlighterFill(Paint.valueOf("FFFFFF"));
+    }
+
+    private void initializeControlMemoryTable() {
+        cmAddressCol.setCellValueFactory(new MapValueFactory<>("address"));
+        cmAmuxCol.setCellValueFactory(new MapValueFactory<>("amux"));
+        cmCondCol.setCellValueFactory(new MapValueFactory<>("cond"));
+        cmAluCol.setCellValueFactory(new MapValueFactory<>("alu"));
+        cmShCol.setCellValueFactory(new MapValueFactory<>("sh"));
+        cmMbrCol.setCellValueFactory(new MapValueFactory<>("mbr"));
+        cmMarCol.setCellValueFactory(new MapValueFactory<>("mar"));
+        cmRdCol.setCellValueFactory(new MapValueFactory<>("rd"));
+        cmWrCol.setCellValueFactory(new MapValueFactory<>("wr"));
+        cmEncCol.setCellValueFactory(new MapValueFactory<>("enc"));
+        cmCCol.setCellValueFactory(new MapValueFactory<>("c"));
+        cmBCol.setCellValueFactory(new MapValueFactory<>("b"));
+        cmACol.setCellValueFactory(new MapValueFactory<>("a"));
+        cmAddrCol.setCellValueFactory(new MapValueFactory<>("addr"));
+        controlMemoryTable.getItems().addAll(FileParser.loadControlMemoryTableData());
     }
 
     private void initializeSupportedInstructionsTable() {

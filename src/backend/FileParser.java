@@ -37,6 +37,44 @@ public class FileParser {
         return items;
     }
 
+    public static ObservableList<Map<String, String>> loadControlMemoryTableData() {
+        ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("resources/dataFiles/controlMemory.txt"));
+            String row;
+            int i = 0;
+            while ((row = reader.readLine()) != null) {
+                String[] data = row.split(" ");
+                if (data.length != 13) continue;
+
+                Map<String, String> rawData = new HashMap<>();
+                rawData.put("address", String.valueOf(i++));
+                rawData.put("amux", data[0]);
+                rawData.put("cond" , data[1]);
+                rawData.put("alu", data[2]);
+                rawData.put("sh" , data[3]);
+                rawData.put("mbr", data[4]);
+                rawData.put("mar", data[5]);
+                rawData.put("rd", data[6]);
+                rawData.put("wr", data[7]);
+                rawData.put("enc", data[8]);
+                rawData.put("c", data[9]);
+                rawData.put("b", data[10]);
+                rawData.put("a", data[11]);
+                rawData.put("addr", data[12]);
+
+                items.add(rawData);
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("Problems with reading the file!");
+            e.printStackTrace();
+        }
+
+        return items;
+    }
+
     public static String loadMicroCode() {
         StringBuilder result = new StringBuilder();
         try {
