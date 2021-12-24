@@ -3,9 +3,7 @@ package backend;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +13,7 @@ public class FileParser {
         ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
 
         try {
-            BufferedReader csvReader = new BufferedReader(new FileReader("resources/dataFiles/supportedInstructions.csv"));
+            BufferedReader csvReader = getBufferedReader("/dataFiles/supportedInstructions.csv");
             String row;
             while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(",");
@@ -30,7 +28,7 @@ public class FileParser {
             }
             csvReader.close();
         } catch (IOException e) {
-            System.out.println("Problems with reading the file!");
+            System.out.println("Problems with reading supportedInstructions.csv!");
             e.printStackTrace();
         }
 
@@ -41,7 +39,7 @@ public class FileParser {
         ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("resources/dataFiles/controlMemory.txt"));
+            BufferedReader reader = getBufferedReader("/dataFiles/controlMemory.txt");
             String row;
             int i = 0;
             while ((row = reader.readLine()) != null) {
@@ -68,7 +66,7 @@ public class FileParser {
             }
             reader.close();
         } catch (IOException e) {
-            System.out.println("Problems with reading the file!");
+            System.out.println("Problems with reading controlMemory.txt!");
             e.printStackTrace();
         }
 
@@ -78,7 +76,7 @@ public class FileParser {
     public static String loadMicroCode() {
         StringBuilder result = new StringBuilder();
         try {
-            BufferedReader micReader = new BufferedReader(new FileReader("resources/dataFiles/microprogram.txt"));
+            BufferedReader micReader = getBufferedReader("/dataFiles/microprogram.txt");
             String row;
             short i = 0;
             String padd = "  ";
@@ -87,12 +85,12 @@ public class FileParser {
                     padd = " ";
                 else if (i >= 100)
                     padd = "";
-                result.append(padd + i + "|  " + row + "\n");
+                result.append(padd).append(i).append("|  ").append(row).append("\n");
                 i++;
             }
             micReader.close();
         } catch (IOException e) {
-            System.out.println("Problems with reading the file!");
+            System.out.println("Problems with reading microprogram.txt!");
             e.printStackTrace();
         }
 
@@ -103,7 +101,7 @@ public class FileParser {
         Map<String, String> result = new HashMap<>();
 
         try {
-            BufferedReader csvReader = new BufferedReader(new FileReader("resources/dataFiles/supportedInstructions.csv"));
+            BufferedReader csvReader = getBufferedReader("/dataFiles/supportedInstructions.csv");
             String row;
             while ((row = csvReader.readLine()) != null) {
                 String[] data = row.split(",");
@@ -115,7 +113,7 @@ public class FileParser {
             }
             csvReader.close();
         } catch (IOException e) {
-            System.out.println("Problems with reading the file!");
+            System.out.println("Problems with reading supportedInstructions.csv!");
             e.printStackTrace();
         }
 
@@ -125,7 +123,7 @@ public class FileParser {
     public static int[] getControlMemory() {
         int[] result = new int[256];
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("resources/dataFiles/controlMemoryINT.txt"));
+            BufferedReader bufferedReader = getBufferedReader("/dataFiles/controlMemoryINT.txt");
             String row;
             int i = 0;
             while ((row = bufferedReader.readLine()) != null) {
@@ -133,9 +131,16 @@ public class FileParser {
             }
             bufferedReader.close();
         } catch (IOException e) {
-            System.out.println("Problems with reading the file!");
+            System.out.println("Problems with reading controlMemoryINT.txt!");
             e.printStackTrace();
         }
         return result;
     }
+
+    private static BufferedReader getBufferedReader(String path) {
+        InputStream inputStream = FileParser.class.getResourceAsStream(path);
+        assert inputStream != null;
+        return new BufferedReader(new InputStreamReader(inputStream));
+    }
 }
+
