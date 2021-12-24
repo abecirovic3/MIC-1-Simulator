@@ -2,9 +2,6 @@ package sample;
 
 import backend.*;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -16,11 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 import javafx.util.Pair;
-import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.LineNumberFactory;
 
-import java.sql.SQLOutput;
-import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -59,8 +52,8 @@ public class Controller {
     public TableColumn<MemoryLine, String> memAddress;
     public TableColumn<MemoryLine, String> memValue;
 
-    public CodeArea codeArea;
-    public CodeArea microcodeArea;
+    public TextArea codeArea;
+    public TextArea microcodeArea;
     public TextArea console;
 
     public TextField MARField;
@@ -93,14 +86,12 @@ public class Controller {
     private InstructionParser instructionParser = InstructionParser.getInstance();
     private CPU cpu = new CPU();
 
-    private int codeAreaLineCounter = -1;
-
     @FXML
     public void initialize() {
         initializeSupportedInstructionsTable();
         initializeControlMemoryTable();
         initializeMicrocodeArea();
-        initializeCodeArea();
+//        initializeCodeArea();
         initializeRegistersTable();
         initializeMemoryTable();
         initializeMARAndMBRFields();
@@ -115,9 +106,9 @@ public class Controller {
         });
     }
 
-    private void initializeCodeArea() {
-        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
-    }
+//    private void initializeCodeArea() {
+//        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
+//    }
 
     private void initializeMIRField() {
         MIRField.setText(cpu.MIRProperty().getValue().toString());
@@ -128,11 +119,11 @@ public class Controller {
         MPCField.setText(cpu.MPCProperty().getValue().toString());
         cpu.MPCProperty().addListener((o, oldVal, newVal) -> {
             MPCField.setText(newVal.toString());
-            if (newVal.intValue() > 50 && microcodeArea.getEstimatedScrollY() < 50)
-                microcodeArea.scrollYToPixel(850);
-            else if (newVal.intValue() <= 50 && microcodeArea.getEstimatedScrollY() > 50)
-                microcodeArea.scrollYToPixel(0);
-            microcodeArea.moveTo(newVal.intValue(), 0);
+//            if (newVal.intValue() > 50 && microcodeArea.getEstimatedScrollY() < 50)
+//                microcodeArea.scrollYToPixel(850);
+//            else if (newVal.intValue() <= 50 && microcodeArea.getEstimatedScrollY() > 50)
+//                microcodeArea.scrollYToPixel(0);
+//            microcodeArea.moveTo(newVal.intValue(), 0);
             if (newVal.intValue() <= 2) {
                 instructionStatusLabel.setText("Fetching instruction...");
             }
@@ -173,12 +164,14 @@ public class Controller {
     }
 
     private void initializeMicrocodeArea() {
-        microcodeArea.replaceText(FileParser.loadMicroCode());
+        microcodeArea.setText(FileParser.loadMicroCode());
+        microcodeArea.setScrollTop(0); // should scroll to top ??
+//        microcodeArea.replaceText(FileParser.loadMicroCode());
         // Scroll the area to the top
-        microcodeArea.moveTo(0,0); // this method works with characters...
-        microcodeArea.requestFollowCaret();
-        microcodeArea.setLineHighlighterOn(true);
-        microcodeArea.setLineHighlighterFill(Paint.valueOf("FFFFFF"));
+//        microcodeArea.moveTo(0,0); // this method works with characters...
+//        microcodeArea.requestFollowCaret();
+//        microcodeArea.setLineHighlighterOn(true);
+//        microcodeArea.setLineHighlighterFill(Paint.valueOf("FFFFFF"));
     }
 
     private void initializeControlMemoryTable() {
@@ -331,8 +324,8 @@ public class Controller {
             console.setText("Code assembled successfully");
             cpu.setCPUInitial();
             cpu.getMemory().write(machineCode);
-            microcodeArea.moveTo(0, 0);
-            microcodeArea.setLineHighlighterFill(Paint.valueOf("ADFF2F"));
+//            microcodeArea.moveTo(0, 0);
+//            microcodeArea.setLineHighlighterFill(Paint.valueOf("ADFF2F"));
             codeArea.setEditable(false);
             btnRun.setDisable(true);
             btnNextClock.setDisable(false);
@@ -395,11 +388,13 @@ public class Controller {
     }
 
     private void reinitialiseAppState() {
-        Platform.runLater(() -> {
-            codeArea.setEditable(true);
-            codeArea.moveTo(0,0);
-            codeArea.clear();
-        });
+        codeArea.setEditable(true);
+        codeArea.clear();
+//        Platform.runLater(() -> {
+//            codeArea.setEditable(true);
+//            codeArea.moveTo(0,0);
+//            codeArea.clear();
+//        });
         console.setText("");
         btnRun.setDisable(false);
         btnNextClock.setDisable(true);
@@ -409,6 +404,6 @@ public class Controller {
         updateToolTips();
         updateImgColors();
         tabPane.getSelectionModel().select(codeTab);
-        microcodeArea.setLineHighlighterFill(Paint.valueOf("FFFFFF"));
+//        microcodeArea.setLineHighlighterFill(Paint.valueOf("FFFFFF"));
     }
 }
