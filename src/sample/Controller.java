@@ -1,15 +1,11 @@
 package sample;
 
 import backend.*;
-import javafx.application.Platform;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.skin.ScrollBarSkin;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -81,15 +77,15 @@ public class Controller {
 
     public AnchorPane dataPathPane;
     public ImageView registersImg;
-    private Map<ImageView, Pair<Tooltip, Function<String, String>>> toolTips = new HashMap<>();
+    private final Map<ImageView, Pair<Tooltip, Function<String, String>>> toolTips = new HashMap<>();
 
-    private Map<ImageView, Image[]> dataPathImages = new HashMap<>();
+    private final Map<ImageView, Image[]> dataPathImages = new HashMap<>();
 
-    private CodeParser codeParser = CodeParser.getInstance();
-    private InstructionParser instructionParser = InstructionParser.getInstance();
+    private final CodeParser codeParser = CodeParser.getInstance();
+    private final InstructionParser instructionParser = InstructionParser.getInstance();
     private CPU cpu = new CPU();
 
-    private int[][] microCodeLinesLengths = new int[256][2];
+    private final int[][] microCodeLinesLengths = new int[256][2];
 
     @FXML
     public void initialize() {
@@ -350,8 +346,7 @@ public class Controller {
         Optional<ButtonType> selectedOption = confirmationAlertShowAndWait();
         if (!btnRun.isDisabled()) {
             if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK)
-                System.out.println("OK");
-            codeArea.clear();
+                codeArea.clear();
         } else {
             if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK)
                 reinitialiseAppState();
