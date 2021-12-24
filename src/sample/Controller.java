@@ -344,14 +344,26 @@ public class Controller {
     }
 
     public void newFileAction() {
-        Optional<ButtonType> selectedOption;
+        if (codeArea.getText().isEmpty())
+            return;
+
+        Optional<ButtonType> selectedOption = confirmationAlertShowAndWait();
+        if (!btnRun.isDisabled()) {
+            if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK)
+                System.out.println("OK");
+            codeArea.clear();
+        } else {
+            if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK)
+                reinitialiseAppState();
+        }
+    }
+
+    private Optional<ButtonType> confirmationAlertShowAndWait() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText("Are you sure you want to create a new code file?");
         alert.setContentText("Current progress will be lost!");
-        selectedOption = alert.showAndWait();
-        if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK)
-            reinitialiseAppState();
+        return alert.showAndWait();
     }
 
     private void reinitialiseAppState() {
