@@ -1,7 +1,6 @@
 package sample;
 
 import backend.*;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -10,7 +9,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
@@ -91,7 +89,6 @@ public class Controller {
         initializeSupportedInstructionsTable();
         initializeControlMemoryTable();
         initializeMicrocodeArea();
-//        initializeCodeArea();
         initializeRegistersTable();
         initializeMemoryTable();
         initializeMARAndMBRFields();
@@ -105,10 +102,6 @@ public class Controller {
             searchedAddressValueField.setText("");
         });
     }
-
-//    private void initializeCodeArea() {
-//        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
-//    }
 
     private void initializeMIRField() {
         MIRField.setText(cpu.MIRProperty().getValue().toString());
@@ -165,13 +158,7 @@ public class Controller {
 
     private void initializeMicrocodeArea() {
         microcodeArea.setText(FileParser.loadMicroCode());
-        microcodeArea.setScrollTop(0); // should scroll to top ??
-//        microcodeArea.replaceText(FileParser.loadMicroCode());
-        // Scroll the area to the top
-//        microcodeArea.moveTo(0,0); // this method works with characters...
-//        microcodeArea.requestFollowCaret();
-//        microcodeArea.setLineHighlighterOn(true);
-//        microcodeArea.setLineHighlighterFill(Paint.valueOf("FFFFFF"));
+        // TODO try to set some form of line highlighting
     }
 
     private void initializeControlMemoryTable() {
@@ -221,95 +208,43 @@ public class Controller {
         try {
             for (Node img : dataPathPane.getChildren()) {
                 if (img.getId().equals("registersImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "reg.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "reg_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("reg.png", "reg_active.png"));
                 } else if (img.getId().equals("aluImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "alu.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "alu_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("alu.png", "alu_active.png"));
                 } else if (img.getId().equals("amuxImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "amux.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "amux_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("amux.png", "amux_active.png"));
                 } else if (img.getId().equals("aLatchImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "a-latch.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "a-latch_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("a-latch.png", "a-latch_active.png"));
                 } else if (img.getId().equals("bLatchImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "b-latch.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "b-latch_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("b-latch.png", "b-latch_active.png"));
                 } else if (img.getId().equals("aDecImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "a-dec.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "a-dec_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("a-dec.png", "a-dec_active.png"));
                 } else if (img.getId().equals("bDecImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "b-dec.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "a-dec_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("b-dec.png", "b-dec_active.png"));
                 } else if (img.getId().equals("cDecImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "c-dec.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "c-dec_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("c-dec.png", "c-dec_active.png"));
                 } else if (img.getId().equals("clockImg")) {
-                    //noinspection ConstantConditions
                     dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "clock.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "clock_active_1.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "clock_active_2.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "clock_active_3.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "clock_active_4.png"))});
+                            getImgArray("clock.png", "clock_active_1.png",
+                                    "clock_active_2.png", "clock_active_3.png", "clock_active_4.png"));
                 } else if (img.getId().equals("shifterImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "shifter.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "shifter_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("shifter.png", "shifter_active.png"));
                 } else if (img.getId().equals("marImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "mar.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "mar_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("mar.png", "mar_active.png"));
                 } else if (img.getId().equals("mbrImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "mbr.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "mbr_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("mbr.png", "mbr_active.png"));
                 } else if (img.getId().equals("mMuxImg")) {
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(imgPath + "mmux.png"), new Image(imgPath + "mmux_active.png")});
+                    dataPathImages.put((ImageView) img, getImgArray("mmux.png", "mmux_active.png"));
                 } else if (img.getId().equals("mpcImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "mpc.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "mpc_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("mpc.png", "mpc_active.png"));
                 } else if (img.getId().equals("incImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "incr.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "incr_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("incr.png", "incr_active.png"));
                 } else if (img.getId().equals("controlImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "control.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "control_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("control.png", "control_active.png"));
                 } else if (img.getId().equals("mirImg")) {
-                    //noinspection ConstantConditions
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "mir.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "mir_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("mir.png", "mir_active.png"));
                 } else if (img.getId().equals("mSeqLogicImg")) {
-                    dataPathImages.put((ImageView) img,
-                            new Image[]{new Image(getClass().getResourceAsStream(imgPath + "m-seq.png")),
-                                    new Image(getClass().getResourceAsStream(imgPath + "m-seq_active.png"))});
+                    dataPathImages.put((ImageView) img, getImgArray("m-seq.png", "m-seq_active.png"));
                 }
             }
         } catch (NullPointerException e) {
@@ -318,14 +253,24 @@ public class Controller {
         }
     }
 
+    private Image[] getImgArray(String ... args) {
+        // This code shouldn't throw NPE bcs the resources are present
+        // Warnings are ignored bcs the fix with Objects.requireNonNull method doesn't really do much
+        // except that it throws NPE instead of Image constructor
+        Image[] result = new Image[args.length];
+        String imgPath = "/img/datapath/";
+        for (int i = 0; i < args.length; i++) {
+            result[i] = new Image(getClass().getResourceAsStream(imgPath + args[i]));
+        }
+        return result;
+    }
+
     public void runCodeAction() {
         try {
             short[] machineCode = codeParser.parseCode(codeArea.getText());
             console.setText("Code assembled successfully");
             cpu.setCPUInitial();
             cpu.getMemory().write(machineCode);
-//            microcodeArea.moveTo(0, 0);
-//            microcodeArea.setLineHighlighterFill(Paint.valueOf("ADFF2F"));
             codeArea.setEditable(false);
             btnRun.setDisable(true);
             btnNextClock.setDisable(false);
@@ -390,11 +335,6 @@ public class Controller {
     private void reinitialiseAppState() {
         codeArea.setEditable(true);
         codeArea.clear();
-//        Platform.runLater(() -> {
-//            codeArea.setEditable(true);
-//            codeArea.moveTo(0,0);
-//            codeArea.clear();
-//        });
         console.setText("");
         btnRun.setDisable(false);
         btnNextClock.setDisable(true);
@@ -404,6 +344,5 @@ public class Controller {
         updateToolTips();
         updateImgColors();
         tabPane.getSelectionModel().select(codeTab);
-//        microcodeArea.setLineHighlighterFill(Paint.valueOf("FFFFFF"));
     }
 }
