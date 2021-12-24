@@ -1,13 +1,18 @@
 package sample;
 
 import backend.*;
+import javafx.application.Platform;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.skin.ScrollBarSkin;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -84,6 +89,8 @@ public class Controller {
     private InstructionParser instructionParser = InstructionParser.getInstance();
     private CPU cpu = new CPU();
 
+    private int[][] microCodeLinesLengths = new int[256][2];
+
     @FXML
     public void initialize() {
         initializeSupportedInstructionsTable();
@@ -112,11 +119,8 @@ public class Controller {
         MPCField.setText(cpu.MPCProperty().getValue().toString());
         cpu.MPCProperty().addListener((o, oldVal, newVal) -> {
             MPCField.setText(newVal.toString());
-//            if (newVal.intValue() > 50 && microcodeArea.getEstimatedScrollY() < 50)
-//                microcodeArea.scrollYToPixel(850);
-//            else if (newVal.intValue() <= 50 && microcodeArea.getEstimatedScrollY() > 50)
-//                microcodeArea.scrollYToPixel(0);
-//            microcodeArea.moveTo(newVal.intValue(), 0);
+            microcodeArea.selectRange(
+                    microCodeLinesLengths[newVal.intValue()][0], microCodeLinesLengths[newVal.intValue()][1]);
             if (newVal.intValue() <= 2) {
                 instructionStatusLabel.setText("Fetching instruction...");
             }
@@ -131,10 +135,10 @@ public class Controller {
     private void initializeClockGrid() {
         clockLab.setText(String.valueOf(cpu.clockCounterProperty().get() + 1));
         subcycleLab.setText(String.valueOf(cpu.clockProperty().get() + 1));
-        cpu.clockCounterProperty().addListener((o, oldVal, newVal) -> clockLab.setText(newVal.toString()));
+        cpu.clockCounterProperty().addListener(
+                (o, oldVal, newVal) -> clockLab.setText(String.valueOf((Integer) newVal + 1)));
         cpu.clockProperty().addListener(
-                (o, oldVal, newVal) -> subcycleLab.setText(String.valueOf((Integer) newVal + 1))
-        );
+                (o, oldVal, newVal) -> subcycleLab.setText(String.valueOf((Integer) newVal + 1)));
     }
 
     private void initializeMARAndMBRFields() {
@@ -157,9 +161,25 @@ public class Controller {
     }
 
     private void initializeMicrocodeArea() {
+        String code = FileParser.loadMicroCode();
+        String[] codeLines = code.split("\n");
+        setMicroCodeLinesLengths(codeLines);
         microcodeArea.setText(FileParser.loadMicroCode());
-        // TODO try to set some form of line highlighting
+        microcodeArea.setStyle(null);
+        microcodeArea.addEventFilter(MouseEvent.MOUSE_RELEASED, t -> {
+            int line = cpu.MPCProperty().get();
+            if (btnRun.isDisabled())
+                microcodeArea.selectRange(microCodeLinesLengths[line][0], microCodeLinesLengths[line][1]);
+        });
     }
+
+    private void setMicroCodeLinesLengths(String[] codeLines) {
+        for (int i = 0; i < codeLines.length; i++) {
+            microCodeLinesLengths[i][0] = i > 0 ? microCodeLinesLengths[i-1][1] + 1 : 0;
+            microCodeLinesLengths[i][1] = microCodeLinesLengths[i][0] + codeLines[i].length();
+        }
+    }
+
 
     private void initializeControlMemoryTable() {
         cmAddressCol.setCellValueFactory(new MapValueFactory<>("address"));
@@ -200,7 +220,6 @@ public class Controller {
     }
 
     private void bindImageViews() {
-        String imgPath = "/img/datapath/";
         // This code shouldn't throw NPE bcs the resources are present
         // Warnings are ignored bcs the fix with Objects.requireNonNull method doesn't really do much
         // except that it throws NPE instead of Image constructor
@@ -275,6 +294,9 @@ public class Controller {
             btnRun.setDisable(true);
             btnNextClock.setDisable(false);
             btnNextSubClock.setDisable(false);
+            microcodeArea.setScrollTop(0);
+            microcodeArea.setStyle("-fx-highlight-fill: #ADFF2F; -fx-highlight-text-fill: #000000");
+            microcodeArea.selectRange(microCodeLinesLengths[0][0], microCodeLinesLengths[0][1]);
             updateToolTips();
             updateImgColors();
         } catch (CodeParserException e) {
@@ -333,13 +355,16 @@ public class Controller {
     }
 
     private void reinitialiseAppState() {
+        cpu.setCPUInitial();
         codeArea.setEditable(true);
         codeArea.clear();
+        microcodeArea.setScrollTop(0);
+        microcodeArea.selectRange(0, 0);
+        microcodeArea.setStyle(null);
         console.setText("");
         btnRun.setDisable(false);
         btnNextClock.setDisable(true);
         btnNextSubClock.setDisable(true);
-        cpu.setCPUInitial();
         instructionStatusLabel.setText("");
         updateToolTips();
         updateImgColors();
