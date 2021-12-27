@@ -1,15 +1,14 @@
 package backend;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Register {
     private SimpleStringProperty name;
-    private SimpleIntegerProperty value;
+    private SimpleStringProperty value;
 
     public Register(String name, short value) {
         this.name = new SimpleStringProperty(name);
-        this.value = new SimpleIntegerProperty(value);
+        this.value = new SimpleStringProperty(NumericFactory.getStringValue(value));
     }
 
     public String getName() {
@@ -25,15 +24,15 @@ public class Register {
     }
 
     public int getValue() {
-        return value.get();
+        return NumericFactory.getShortValue(value.getValue());
     }
 
-    public SimpleIntegerProperty valueProperty() {
+    public SimpleStringProperty valueProperty() {
         return value;
     }
 
     public void setValue(int value) {
-        this.value.set(value);
+        this.value.set(NumericFactory.getStringValue((short) value));
     }
 
     @Override
