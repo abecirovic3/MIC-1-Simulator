@@ -29,4 +29,9 @@ To run the pre-release please follow these steps:
 - Load file
 - Translation
 
-Features to be edited:
+###Features to be edited:
+- CodeArea text wrap
+- console style
+- table widths
+- microcode TextField windows issues?
+- tooltips delay
