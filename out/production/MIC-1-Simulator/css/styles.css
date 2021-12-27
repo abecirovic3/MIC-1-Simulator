@@ -26,6 +26,10 @@
     -fx-background-image: url("/img/search.png");
 }
 
+#btnSelectRadix {
+    -fx-background-image: url("/img/search.png");
+}
+
 .buttons {
     -fx-background-color: Transparent;
     -fx-cursor: HAND;

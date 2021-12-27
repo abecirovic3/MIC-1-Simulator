@@ -91,6 +91,12 @@
                      <tooltip>
                         <Tooltip text="Next clock cycle" />
                      </tooltip></Button>
+                  <Separator layoutX="226.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
+                  <Button fx:id="btnSelectRadix" layoutX="235.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#selectRadixAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
+                     <tooltip>
+                        <Tooltip text="Select radix" />
+                     </tooltip>
+                  </Button>
               </items>
                <opaqueInsets>
                   <Insets />

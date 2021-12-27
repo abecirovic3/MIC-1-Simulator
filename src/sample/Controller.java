@@ -377,4 +377,11 @@ public class Controller {
         updateImgColors();
         tabPane.getSelectionModel().select(codeTab);
     }
+
+    public void selectRadixAction() {
+        if (NumericFactory.getRadix() == 10) NumericFactory.setRadix(2);
+        else NumericFactory.setRadix(10);
+//        for (Register r : cpu.getRegisters())
+//            r.setValue(r.getValue());
+    }
 }
