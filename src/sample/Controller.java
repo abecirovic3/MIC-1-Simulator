@@ -107,14 +107,15 @@ public class Controller {
     }
 
     private void initializeMIRField() {
-        MIRField.setText(cpu.MIRProperty().getValue().toString());
-        cpu.MIRProperty().addListener((o, oldVal, newVal) -> MIRField.setText(newVal.toString()));
+        MIRField.setText(NumericFactory.getStringValue32(cpu.MIRProperty().get()));
+        cpu.MIRProperty().addListener(
+                (o, oldVal, newVal) -> MIRField.setText(NumericFactory.getStringValue32(newVal.intValue())));
     }
 
     private void initializeMPCField() {
-        MPCField.setText(cpu.MPCProperty().getValue().toString());
+        MPCField.setText(NumericFactory.getStringValue8(cpu.MPCProperty().getValue().shortValue()));
         cpu.MPCProperty().addListener((o, oldVal, newVal) -> {
-            MPCField.setText(newVal.toString());
+            MPCField.setText(NumericFactory.getStringValue8(newVal.shortValue()));
             microcodeArea.selectRange(
                     microCodeLinesLengths[newVal.intValue()][0], microCodeLinesLengths[newVal.intValue()][1]);
             if (newVal.intValue() <= 2) {
@@ -138,10 +139,12 @@ public class Controller {
     }
 
     private void initializeMARAndMBRFields() {
-        MARField.setText(cpu.MARProperty().getValue().toString());
-        MBRField.setText(cpu.MBRProperty().getValue().toString());
-        cpu.MARProperty().addListener((o, oldVal, newVal) -> MARField.setText(newVal.toString()));
-        cpu.MBRProperty().addListener((o, oldVal, newVal) -> MBRField.setText(newVal.toString()));
+        MARField.setText(NumericFactory.getStringValue16(cpu.MARProperty().getValue().shortValue()));
+        MBRField.setText(NumericFactory.getStringValue16(cpu.MBRProperty().getValue().shortValue()));
+        cpu.MARProperty().addListener(
+                (o, oldVal, newVal) -> MARField.setText(NumericFactory.getStringValue16(newVal.shortValue())));
+        cpu.MBRProperty().addListener(
+                (o, oldVal, newVal) -> MBRField.setText(NumericFactory.getStringValue16(newVal.shortValue())));
     }
 
     private void initializeMemoryTable() {
@@ -332,7 +335,7 @@ public class Controller {
             int address = Integer.parseInt(addressString);
             if (address < 0 || address > 4095)
                 throw new NumberFormatException("out of bounds");
-            searchedAddressValueField.setText(String.valueOf(cpu.getMemory().read((short) address)));
+            searchedAddressValueField.setText(NumericFactory.getStringValue16(cpu.getMemory().read((short) address)));
             memorySearchField.setStyle(null);
         } catch (NumberFormatException e) {
             memorySearchField.setStyle("-fx-border-color: red;");
@@ -379,8 +382,25 @@ public class Controller {
     }
 
     public void selectRadixAction() {
-        if (NumericFactory.getRadix() == 10) NumericFactory.setRadix(2);
+        int oldRadix = NumericFactory.getRadix();
+        if (oldRadix == 10) NumericFactory.setRadix(2);
         else NumericFactory.setRadix(10);
+        changeRadixInTables();
+        changeRadixInStaticFields(oldRadix);
+    }
+
+    private void changeRadixInStaticFields(int oldRadix) {
+        MPCField.setText(NumericFactory.getStringValue8(cpu.MPCProperty().getValue().shortValue()));
+        MIRField.setText(NumericFactory.getStringValue32(cpu.MIRProperty().get()));
+        MARField.setText(NumericFactory.getStringValue16(cpu.MARProperty().getValue().shortValue()));
+        MBRField.setText(NumericFactory.getStringValue16(cpu.MBRProperty().getValue().shortValue()));
+        String memValue = searchedAddressValueField.getText();
+        if (!memValue.isEmpty())
+            searchedAddressValueField.setText(
+                    NumericFactory.getStringValue16(NumericFactory.getShortValue(memValue, oldRadix)));
+    }
+
+    private void changeRadixInTables() {
         for (Register r : cpu.getRegisters())
             r.setValue(r.getValue());
         for (MemoryLine m : cpu.getMemory().getMemory())
