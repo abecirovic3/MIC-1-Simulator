@@ -10,7 +10,7 @@ public class Register {
     public Register(String name, short value) {
         this.name = new SimpleStringProperty(name);
         this.value = value;
-        this.stringValue = new SimpleStringProperty(NumericFactory.getStringValue(value));
+        this.stringValue = new SimpleStringProperty(NumericFactory.getStringValue16(value));
     }
 
     public String getName() {
@@ -31,7 +31,7 @@ public class Register {
 
     public void setValue(short value) {
         this.value = value;
-        stringValue.setValue(NumericFactory.getStringValue(value));
+        stringValue.setValue(NumericFactory.getStringValue16(value));
     }
 
     public String getStringValue() {

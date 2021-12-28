@@ -11,7 +11,7 @@ public class MemoryLine {
     public MemoryLine(short address, short value) {
         this.address = new SimpleIntegerProperty(address);
         this.value = value;
-        stringValue = new SimpleStringProperty(NumericFactory.getStringValue(value));
+        stringValue = new SimpleStringProperty(NumericFactory.getStringValue16(value));
     }
 
     public int getAddress() {
@@ -32,7 +32,7 @@ public class MemoryLine {
 
     public void setValue(short value) {
         this.value = value;
-        stringValue.setValue(NumericFactory.getStringValue(value));
+        stringValue.setValue(NumericFactory.getStringValue16(value));
     }
 
     public String getStringValue() {
