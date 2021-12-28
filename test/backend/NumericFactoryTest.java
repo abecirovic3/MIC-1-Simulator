@@ -100,4 +100,28 @@ class NumericFactoryTest {
         assertEquals("10000000",
                 NumericFactory.getStringValue8((short) 128));
     }
+
+    @Test
+    void getShortValueTest1() {
+        assertEquals(10, NumericFactory.getShortValue("10", 10));
+        assertEquals(10, NumericFactory.getShortValue("0000000000001010", 2));
+    }
+
+    @Test
+    void getShortValueTest2() {
+        assertEquals(-32768, NumericFactory.getShortValue("1000000000000000", 2));
+        assertEquals(-32768, NumericFactory.getShortValue("-32768", 10));
+    }
+
+    @Test
+    void getShortValueTest3() {
+        assertEquals(24576, NumericFactory.getShortValue("0110000000000000", 2));
+        assertEquals(24576, NumericFactory.getShortValue("24576", 10));
+    }
+
+    @Test
+    void getShortValueTest4() {
+        assertEquals(-1, NumericFactory.getShortValue("1111111111111111", 2));
+        assertEquals(-1, NumericFactory.getShortValue("-1", 10));
+    }
 }

@@ -43,6 +43,15 @@ public class NumericFactory {
         return "0".repeat(length - res.length()) + res;
     }
 
+    public static short getShortValue(String value, int radix) {
+        try {
+            return (short) Integer.parseInt(value, radix);
+        } catch (NumberFormatException e) {
+            System.out.println("Error in NumericFactory getShortValue");
+        }
+        return 0;
+    }
+
     public static int getRadix() {
         return radix;
     }
