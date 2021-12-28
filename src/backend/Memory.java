@@ -41,7 +41,7 @@ public class Memory {
 
     public short read() {
         readCounter = 0;
-        return (short) memory.get(address).getValue();
+        return memory.get(address).getValue();
     }
 
     public boolean isWriteReady() {
@@ -72,7 +72,7 @@ public class Memory {
     }
 
     public short read(short address) {
-        return (short) memory.get(address).getValue();
+        return memory.get(address).getValue();
     }
 
     public ObservableList<MemoryLine> getMemory() {

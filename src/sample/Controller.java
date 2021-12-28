@@ -146,7 +146,7 @@ public class Controller {
 
     private void initializeMemoryTable() {
         memAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-        memValue.setCellValueFactory(new PropertyValueFactory<>("value"));
+        memValue.setCellValueFactory(new PropertyValueFactory<>("stringValue"));
         memoryTable.setItems(cpu.getMemory().getMemory());
     }
 
@@ -383,5 +383,7 @@ public class Controller {
         else NumericFactory.setRadix(10);
         for (Register r : cpu.getRegisters())
             r.setValue(r.getValue());
+        for (MemoryLine m : cpu.getMemory().getMemory())
+            m.setValue(m.getValue());
     }
 }
