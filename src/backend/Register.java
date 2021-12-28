@@ -3,12 +3,14 @@ package backend;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Register {
+    private short value;
     private SimpleStringProperty name;
-    private SimpleStringProperty value;
+    private SimpleStringProperty stringValue;
 
     public Register(String name, short value) {
         this.name = new SimpleStringProperty(name);
-        this.value = new SimpleStringProperty(NumericFactory.getStringValue(value));
+        this.value = value;
+        this.stringValue = new SimpleStringProperty(NumericFactory.getStringValue(value));
     }
 
     public String getName() {
@@ -23,16 +25,25 @@ public class Register {
         this.name.set(name);
     }
 
-    public int getValue() {
-        return NumericFactory.getShortValue(value.getValue());
-    }
-
-    public SimpleStringProperty valueProperty() {
+    public short getValue() {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value.set(NumericFactory.getStringValue((short) value));
+    public void setValue(short value) {
+        this.value = value;
+        stringValue.setValue(NumericFactory.getStringValue(value));
+    }
+
+    public String getStringValue() {
+        return stringValue.get();
+    }
+
+    public SimpleStringProperty stringValueProperty() {
+        return stringValue;
+    }
+
+    public void setStringValue(String stringValue) {
+        this.stringValue.set(stringValue);
     }
 
     @Override

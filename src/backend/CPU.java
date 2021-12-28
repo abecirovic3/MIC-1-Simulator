@@ -90,22 +90,22 @@ public class CPU {
     }
 
     private void setRegistersInitial() {
-        registers.get(0).setValue(0);
-        registers.get(1).setValue(0);
-        registers.get(2).setValue(4095);
-        registers.get(3).setValue(0);
-        registers.get(4).setValue(0);
-        registers.get(5).setValue(0);
-        registers.get(6).setValue(1);
-        registers.get(7).setValue(-1);
-        registers.get(8).setValue(0x0fff);
-        registers.get(9).setValue(0x00ff);
-        registers.get(10).setValue(0);
-        registers.get(11).setValue(0);
-        registers.get(12).setValue(0);
-        registers.get(13).setValue(0);
-        registers.get(14).setValue(0);
-        registers.get(15).setValue(0);
+        registers.get(0).setValue((short) 0);
+        registers.get(1).setValue((short) 0);
+        registers.get(2).setValue((short) 4095);
+        registers.get(3).setValue((short) 0);
+        registers.get(4).setValue((short) 0);
+        registers.get(5).setValue((short) 0);
+        registers.get(6).setValue((short) 1);
+        registers.get(7).setValue((short) -1);
+        registers.get(8).setValue((short) 0x0fff);
+        registers.get(9).setValue((short) 0x00ff);
+        registers.get(10).setValue((short) 0);
+        registers.get(11).setValue((short) 0);
+        registers.get(12).setValue((short) 0);
+        registers.get(13).setValue((short) 0);
+        registers.get(14).setValue((short) 0);
+        registers.get(15).setValue((short) 0);
     }
 
     public void runFirstSubCycle() {
@@ -124,8 +124,8 @@ public class CPU {
     public void runSecondSubCycle() {
         aDec = (short)getBytesField(8, 0x0000000F);
         bDec = (short)getBytesField(12, 0x0000000F);
-        ALatch = (short)registers.get(aDec).getValue();
-        BLatch = (short)registers.get(bDec).getValue();
+        ALatch = registers.get(aDec).getValue();
+        BLatch = registers.get(bDec).getValue();
         incrementer = (byte)(MPC.get() + 1);
         clock.set((clock.get() + 1) % 4);
     }
