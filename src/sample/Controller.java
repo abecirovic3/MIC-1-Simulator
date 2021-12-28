@@ -152,7 +152,7 @@ public class Controller {
 
     private void initializeRegistersTable() {
         regName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        regValue.setCellValueFactory(new PropertyValueFactory<>("value"));
+        regValue.setCellValueFactory(new PropertyValueFactory<>("stringValue"));
         registersTable.setItems(cpu.getRegisters());
     }
 
@@ -381,7 +381,7 @@ public class Controller {
     public void selectRadixAction() {
         if (NumericFactory.getRadix() == 10) NumericFactory.setRadix(2);
         else NumericFactory.setRadix(10);
-//        for (Register r : cpu.getRegisters())
-//            r.setValue(r.getValue());
+        for (Register r : cpu.getRegisters())
+            r.setValue(r.getValue());
     }
 }
