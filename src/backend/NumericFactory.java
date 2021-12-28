@@ -17,21 +17,30 @@ public class NumericFactory {
         return (short) Integer.parseInt(value);
     }
 
-    public static String getStringValue(short value) {
+    public static String getStringValue16(short value) {
         if (radix == 10)
-            return getStringValue10(value);
-        return getStringValue2(value);
+            return String.valueOf(value);
+        return getStringValue2(value, 16);
     }
 
-    private static String getStringValue10(short value) {
-        return String.valueOf(value);
+    public static String getStringValue32(int value) {
+        if (radix == 10)
+            return String.valueOf(value);
+        return getStringValue2(value, 32);
     }
 
-    private static String getStringValue2(short value) {
+    public static String getStringValue8(short value) {
+        // here we use short bcs we need unsigned byte
+        if (radix == 10)
+            return String.valueOf(value);
+        return getStringValue2(value, 8);
+    }
+
+    private static String getStringValue2(int value, int length) {
         String res = Integer.toBinaryString(value);
-        if (res.length() > 16)
-            return res.substring(res.length()-16);
-        return "0".repeat(16 - res.length()) + res;
+        if (res.length() > length)
+            return res.substring(res.length()-length);
+        return "0".repeat(length - res.length()) + res;
     }
 
     public static int getRadix() {
