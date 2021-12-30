@@ -30,7 +30,7 @@ To run the pre-release please follow these steps:
 - Translation
 
 ###Features to be edited:
-- CodeArea text wrap
+- Smaller CodeArea
 - console style
 - table widths
 - microcode TextField windows issues?
