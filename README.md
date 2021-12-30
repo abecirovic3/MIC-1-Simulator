@@ -35,3 +35,4 @@ To run the pre-release please follow these steps:
 - table widths
 - microcode TextField windows issues?
 - tooltips delay
+- New File Action should always clear Console
