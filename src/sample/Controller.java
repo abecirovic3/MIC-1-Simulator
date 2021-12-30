@@ -1,6 +1,8 @@
 package sample;
 
 import backend.*;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -101,12 +103,21 @@ public class Controller {
         initializeMPCField();
         initializeMIRField();
         initializeRadixChoiceBox();
+        initializeConsole();
+        initializeMemoryTab();
         bindTooltips();
         bindImageViews();
+    }
+
+    private void initializeMemoryTab() {
         memoryTab.setOnSelectionChanged(event -> {
             memorySearchField.setText("");
             searchedAddressValueField.setText("");
         });
+    }
+
+    private void initializeConsole() {
+        console.addEventFilter(MouseEvent.ANY, Event::consume);
     }
 
     private void initializeRadixChoiceBox() {
@@ -120,31 +131,6 @@ public class Controller {
             if (radix != NumericFactory.getRadix())
                 changeRadix(radix);
         });
-    }
-
-    private void changeRadix(int radix) {
-        int oldRadix = NumericFactory.getRadix();
-        NumericFactory.setRadix(radix);
-        changeRadixInTables();
-        changeRadixInStaticFields(oldRadix);
-    }
-
-    private void changeRadixInStaticFields(int oldRadix) {
-        MPCField.setText(NumericFactory.getStringValue8(cpu.MPCProperty().getValue().shortValue()));
-        MIRField.setText(NumericFactory.getStringValue32(cpu.MIRProperty().get()));
-        MARField.setText(NumericFactory.getStringValue16(cpu.MARProperty().getValue().shortValue()));
-        MBRField.setText(NumericFactory.getStringValue16(cpu.MBRProperty().getValue().shortValue()));
-        String memValue = searchedAddressValueField.getText();
-        if (!memValue.isEmpty())
-            searchedAddressValueField.setText(
-                    NumericFactory.getStringValue16(NumericFactory.getShortValue(memValue, oldRadix)));
-    }
-
-    private void changeRadixInTables() {
-        for (Register r : cpu.getRegisters())
-            r.setValue(r.getValue());
-        for (MemoryLine m : cpu.getMemory().getMemory())
-            m.setValue(m.getValue());
     }
 
     private void initializeMIRField() {
@@ -322,6 +308,31 @@ public class Controller {
             result[i] = new Image(getClass().getResourceAsStream(imgPath + args[i]));
         }
         return result;
+    }
+
+    private void changeRadix(int radix) {
+        int oldRadix = NumericFactory.getRadix();
+        NumericFactory.setRadix(radix);
+        changeRadixInTables();
+        changeRadixInStaticFields(oldRadix);
+    }
+
+    private void changeRadixInStaticFields(int oldRadix) {
+        MPCField.setText(NumericFactory.getStringValue8(cpu.MPCProperty().getValue().shortValue()));
+        MIRField.setText(NumericFactory.getStringValue32(cpu.MIRProperty().get()));
+        MARField.setText(NumericFactory.getStringValue16(cpu.MARProperty().getValue().shortValue()));
+        MBRField.setText(NumericFactory.getStringValue16(cpu.MBRProperty().getValue().shortValue()));
+        String memValue = searchedAddressValueField.getText();
+        if (!memValue.isEmpty())
+            searchedAddressValueField.setText(
+                    NumericFactory.getStringValue16(NumericFactory.getShortValue(memValue, oldRadix)));
+    }
+
+    private void changeRadixInTables() {
+        for (Register r : cpu.getRegisters())
+            r.setValue(r.getValue());
+        for (MemoryLine m : cpu.getMemory().getMemory())
+            m.setValue(m.getValue());
     }
 
     public void runCodeAction() {

@@ -127,7 +127,7 @@
                                         <TableColumn fx:id="instrBinaryCode" editable="false" prefWidth="196.0" resizable="false" styleClass="center-align" text="Binary code" />
                                       </columns>
                                     </TableView>
-                                    <TextArea fx:id="console" editable="false" prefHeight="225.0" prefWidth="725.0" promptText="Console" />
+                                    <TextArea fx:id="console" editable="false" prefHeight="239.0" prefWidth="725.0" promptText="Console" />
                                  </children>
                               </VBox>
                            </children>
