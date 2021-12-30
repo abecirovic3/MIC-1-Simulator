@@ -23,7 +23,6 @@ To run the pre-release please follow these steps:
 - Register and Memory table edit
 - Input validation
 - Control Memory table
-- Change of displaying number formats
 - Other tooltips (partly done)
 - Save file
 - Load file
@@ -31,6 +30,5 @@ To run the pre-release please follow these steps:
 
 ###Features to be edited:
 - table widths
-- microcode TextField windows issues?
 - tooltips delay
-- New File Action should always clear Console
+- Center table and static fields in datapath

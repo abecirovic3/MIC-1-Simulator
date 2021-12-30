@@ -79,13 +79,13 @@ public class FileParser {
             BufferedReader micReader = getBufferedReader("/dataFiles/microprogram.txt");
             String row;
             short i = 0;
-            String padd = "  ";
+            String insert = " 0";
             while ((row = micReader.readLine()) != null) {
                 if (i >= 10 && i < 100)
-                    padd = " ";
+                    insert = " ";
                 else if (i >= 100)
-                    padd = "";
-                result.append(padd).append(i).append("|  ").append(row).append("\n");
+                    insert = "";
+                result.append(insert).append(i).append("|  ").append(row).append("\n");
                 i++;
             }
             micReader.close();
