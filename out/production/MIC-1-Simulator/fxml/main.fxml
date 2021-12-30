@@ -222,10 +222,10 @@
                                  <children>
                                     <VBox prefHeight="827.0" prefWidth="357.0" spacing="10.0">
                                        <children>
-                                          <TableView fx:id="registersTable" prefHeight="413.0" prefWidth="320.0">
+                                          <TableView fx:id="registersTable" fixedCellSize="24.0" prefHeight="413.0" prefWidth="320.0" styleClass="center-align">
                                             <columns>
                                               <TableColumn fx:id="regName" editable="false" prefWidth="74.0" resizable="false" text="Register" />
-                                              <TableColumn fx:id="regValue" prefWidth="244.0" resizable="false" sortable="false" text="Value" />
+                                              <TableColumn fx:id="regValue" prefWidth="244.0" resizable="false" sortable="false" styleClass="center-align" text="Value" />
                                             </columns>
                                           </TableView>
                                           <VBox layoutX="10.0" layoutY="294.0" styleClass="default-border">
