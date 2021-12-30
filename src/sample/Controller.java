@@ -395,13 +395,17 @@ public class Controller {
     }
 
     public void newFileAction() {
-        if (codeArea.getText().isEmpty())
+        if (codeArea.getText().isEmpty()) {
+            console.setText("");
             return;
+        }
 
         Optional<ButtonType> selectedOption = confirmationAlertShowAndWait();
         if (!btnRun.isDisabled()) {
-            if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK)
+            if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
                 codeArea.clear();
+                console.setText("");
+            }
         } else {
             if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK)
                 reinitialiseAppState();
