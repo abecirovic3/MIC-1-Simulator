@@ -31,4 +31,3 @@ To run the pre-release please follow these steps:
 ###Features to be edited:
 - table widths
 - tooltips delay
-- Center table and static fields in datapath
