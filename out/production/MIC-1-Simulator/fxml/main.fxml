@@ -235,7 +235,7 @@
                                                       <Font name="System Bold" size="13.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="MPCField" prefHeight="40.0" prefWidth="318.0" styleClass="table-field" />
+                                                <Label fx:id="MPCField" alignment="CENTER" prefHeight="40.0" prefWidth="318.0" styleClass="status-bar" />
                                              </children>
                                           </VBox>
                                           <VBox styleClass="default-border">
@@ -245,7 +245,7 @@
                                                       <Font name="System Bold" size="13.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="MIRField" prefHeight="40.0" prefWidth="318.0" styleClass="table-field" />
+                                                <Label fx:id="MIRField" alignment="CENTER" prefHeight="40.0" prefWidth="318.0" styleClass="status-bar" />
                                              </children>
                                           </VBox>
                                           <VBox layoutX="10.0" layoutY="368.0" styleClass="default-border">
@@ -255,7 +255,7 @@
                                                       <Font name="System Bold" size="13.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="MARField" editable="false" prefHeight="40.0" prefWidth="318.0" styleClass="table-field" text="-" />
+                                                <Label fx:id="MARField" alignment="CENTER" prefHeight="40.0" prefWidth="318.0" styleClass="status-bar" />
                                              </children>
                                           </VBox>
                                           <VBox layoutX="10.0" layoutY="442.0" styleClass="default-border">
@@ -265,7 +265,7 @@
                                                       <Font name="System Bold" size="13.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="MBRField" editable="false" prefHeight="40.0" prefWidth="318.0" styleClass="table-field" text="-" />
+                                                <Label fx:id="MBRField" alignment="CENTER" prefHeight="40.0" prefWidth="318.0" styleClass="status-bar" />
                                              </children>
                                           </VBox>
                                           <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">

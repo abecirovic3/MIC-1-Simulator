@@ -57,10 +57,10 @@ public class Controller {
     public TextArea microcodeArea;
     public TextArea console;
 
-    public TextField MARField;
-    public TextField MBRField;
-    public TextField MPCField;
-    public TextField MIRField;
+    public Label MARField;
+    public Label MBRField;
+    public Label MPCField;
+    public Label MIRField;
 
     public TextField memorySearchField;
     public TextField searchedAddressValueField;
