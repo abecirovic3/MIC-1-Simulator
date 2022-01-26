@@ -5,7 +5,7 @@ To run the pre-release please follow these steps:
 1. First install java version 11. Download JDK 11 [here](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html).
 2. Download JavaFX v17 [here](https://gluonhq.com/products/javafx/).
 3. Go to [Releases](https://github.com/abecirovic3/MIC-1-Simulator/releases)
-4. Click on Assets in First pre-release and download the MIC-1-Simulator.jar file
+4. Click on Assets for the last pre-release and download the MIC-1-Simulator.jar file
 5. Open up terminal and change directory to where you've downloaded the MIC-1-Simulator.jar file. For example:
    ```sh
    cd C:\Users\UserName\Downloads
@@ -22,12 +22,14 @@ To run the pre-release please follow these steps:
 ### Features to be implemented:
 - Register and Memory table edit
 - Input validation
-- Control Memory table
 - Other tooltips (partly done)
 - Save file
 - Load file
 - Translation
+- Code examples
+- About etc
 
-###Features to be edited:
-- table widths
-- tooltips delay
+### Features to be edited:
+- Datapath tooltip radix
+- Table widths
+- Tooltips delay
