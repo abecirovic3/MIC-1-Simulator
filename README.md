@@ -10,7 +10,7 @@ To run the pre-release please follow these steps:
    ```sh
    cd C:\Users\UserName\Downloads
    ```
-6. Run the folowing command
+6. Run the following command
    ```sh
    java --module-path %PATH-TO-JAVAFX-LIB% --add-modules javafx.controls,javafx.fxml -jar MIC-1-Simulator.jar
    ```
