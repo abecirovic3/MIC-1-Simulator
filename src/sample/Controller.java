@@ -315,6 +315,7 @@ public class Controller {
         NumericFactory.setRadix(radix);
         changeRadixInTables();
         changeRadixInStaticFields(oldRadix);
+        updateToolTips();
     }
 
     private void changeRadixInStaticFields(int oldRadix) {

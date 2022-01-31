@@ -302,14 +302,14 @@ public class CPU {
     public String getALatchToolTip() {
         String result = "data: /";
         if (isWholeCycleDone() || clock.get() >= 2)
-            result = "data: " + ALatch;
+            result = "data: " + NumericFactory.getStringValue16(ALatch);
         return result;
     }
 
     public String getBLatchToolTip() {
         String result = "data: /";
         if (isWholeCycleDone() || clock.get() >= 2)
-            result = "data: " + BLatch;
+            result = "data: " + NumericFactory.getStringValue16(BLatch);
         return result;
     }
 
@@ -318,11 +318,11 @@ public class CPU {
         String inp1 = "1: /";
         String out = "out: /";
         if (isWholeCycleDone() || clock.get() >= 2) {
-            inp0 = "0: " + ALatch;
-            inp1 = "1: " + MBR.get();
+            inp0 = "0: " + NumericFactory.getStringValue16(ALatch);
+            inp1 = "1: " + NumericFactory.getStringValue16((short) MBR.get());
         }
         if (isWholeCycleDone() || clock.get() >= 3)
-            out = "out: " + aMux.getOutput();
+            out = "out: " + NumericFactory.getStringValue16(aMux.getOutput());
 
         return inp0 + "\n" + inp1 + "\n" + out;
     }
@@ -331,9 +331,12 @@ public class CPU {
         String a = "A: /";
         String b = "B: /";
         if (isWholeCycleDone() || clock.get() >= 2)
-            b = "B: " + BLatch;
+            b = "B: " + NumericFactory.getStringValue16(BLatch);
         if (isWholeCycleDone() || clock.get() >= 3) {
-            return  "A: " + aMux.getOutput() + "\n" + b + "\n" + alu.toString();
+            return  "A: " + NumericFactory.getStringValue16(aMux.getOutput()) + "\n" + b
+                    + "\nout: " + NumericFactory.getStringValue16(alu.getOutput())
+                    + "\nN: " + NumericFactory.getStringValue(alu.getNBit() ? 1 : 0, 1)
+                    + "\nZ: " + NumericFactory.getStringValue(alu.getZBit() ? 1 : 0, 1);
         }
         return a + "\n" + b + "\nout: /\nN: /\nZ: /";
     }
@@ -341,7 +344,8 @@ public class CPU {
     public String getShifterToolTip() {
         String result = "in: /\nout: /";
         if (isWholeCycleDone() || clock.get() >= 3)
-            result = "in: " + alu.getOutput() + "\nout: " + shifter.getOutput();
+            result = "in: " + NumericFactory.getStringValue16(alu.getOutput())
+                    + "\nout: " + NumericFactory.getStringValue16(shifter.getOutput());
         return result;
     }
 
@@ -349,7 +353,7 @@ public class CPU {
         String in = "in: /";
         String out = "out: /";
         if (isWholeCycleDone() || clock.get() >= 1) {
-            in = "in: " + getABytes();
+            in = "in: " + NumericFactory.getStringValue(getABytes(), 4);
             out = "out: " + getDecoderOutput(getABytes());
         }
         return in + "\n" + out;
@@ -359,7 +363,7 @@ public class CPU {
         String in = "in: /";
         String out = "out: /";
         if (isWholeCycleDone() || clock.get() >= 1) {
-            in = "in: " + getBBytes();
+            in = "in: " + NumericFactory.getStringValue(getBBytes(), 4);
             out = "out: " + getDecoderOutput(getBBytes());
         }
         return in + "\n" + out;
@@ -370,8 +374,8 @@ public class CPU {
         String out = "out: /";
         String en = "en: /";
         if (isWholeCycleDone() || clock.get() >= 1) {
-            en = "en: " + getENCBytes();
-            in = "in: " + getCBytes();
+            en = "en: " + NumericFactory.getStringValue(getENCBytes(), 1);
+            in = "in: " + NumericFactory.getStringValue(getCBytes(), 4);
         }
         if (isWholeCycleDone() || clock.get() >= 3)
             if (getENCBytes() == 1)
@@ -381,9 +385,15 @@ public class CPU {
         return in + "\n" + out + "\n" + en;
     }
 
+    private String getDecoderOutput(int position) {
+        if (NumericFactory.getRadix() != 10)
+            return NumericFactory.getStringValue16((short) (1 << position));
+        return String.valueOf(position);
+    }
+
     public String getIncrementerToolTip() {
         if (isWholeCycleDone() || clock.get() >= 2)
-            return "value: " + incrementer;
+            return "value: " + NumericFactory.getStringValue8(incrementer);
         return "value: /";
     }
 
@@ -392,11 +402,11 @@ public class CPU {
         String inp1 = "1: /";
         String out = "out: /";
         if (isWholeCycleDone())
-            out = "out: " + mMux.getOutput();
+            out = "out: " + NumericFactory.getStringValue8(mMux.getOutput());
         if (isWholeCycleDone() || clock.get() >= 1)
-            inp1 = "1: " + getAddressBytes();
+            inp1 = "1: " + NumericFactory.getStringValue8((short) getAddressBytes());
         if (isWholeCycleDone() || clock.get() >= 2)
-            inp0 = "0: " + incrementer;
+            inp0 = "0: " + NumericFactory.getStringValue8(incrementer);
         return inp0 + "\n" + inp1 + "\n" + out;
     }
 
@@ -407,17 +417,17 @@ public class CPU {
         String z = "Z: /";
         String out = "out: /";
         if (isWholeCycleDone() || clock.get() >= 1) {
-            l = "L: " + getBitAt(30);
-            r = "R: " + getBitAt(29);
+            l = "L: " + NumericFactory.getStringValue(getBitAt(30) ? 1 : 0, 1);
+            r = "R: " + NumericFactory.getStringValue(getBitAt(29) ? 1 : 0, 1);
         }
 
         if (isWholeCycleDone() || clock.get() >= 3) {
-            n = "N: " + alu.getNBit();
-            z = "Z: " + alu.getZBit();
+            n = "N: " + NumericFactory.getStringValue(alu.getNBit() ? 1 : 0, 1);
+            z = "Z: " + NumericFactory.getStringValue(alu.getZBit() ? 1 : 0, 1);
         }
 
         if (isWholeCycleDone())
-            out = "out: " + mSeqLogic.isOutput();
+            out = "out: " + NumericFactory.getStringValue(mSeqLogic.isOutput() ? 1 : 0, 1);
 
         return l + "\n" + r + "\n" + n + "\n" + z + "\n" + out;
     }
@@ -426,19 +436,19 @@ public class CPU {
 
         String result =  "AMUX: /\nCOND: /\nALU: /\nShifter: /\nMBR: /\nMAR: /\nRD: /\nWR: /\nENC: /\nC: /\nB: /\nA: /\nAddress: /";
         if (isWholeCycleDone() || clock.get() >= 1)
-            result =  "AMUX: " + getBytesString(1, getAMuxBytes()) +
-                    "\nCOND: " + getBytesString(2, getCONDBytes()) +
-                    "\nALU: " + getBytesString(2, getALUBytes()) +
-                    "\nShifter: " + getBytesString(2, getShifterBytes()) +
-                    "\nMBR: " + getBytesString(1, getMBRBytes()) +
-                    "\nMAR: " + getBytesString(1, getMARBytes()) +
-                    "\nRD: " + getBytesString(1, getRDBytes()) +
-                    "\nWR: " + getBytesString(1, getWRBytes()) +
-                    "\nENC: " + getBytesString(1, getENCBytes()) +
-                    "\nC: " + getBytesString(4, getCBytes()) +
-                    "\nB: " + getBytesString(4, getBBytes()) +
-                    "\nA: " + getBytesString(4, getABytes()) +
-                    "\nAddress: " + getBytesString(8, getAddressBytes());
+            result =  "AMUX: " + NumericFactory.getStringValue(getAMuxBytes(), 1) +
+                    "\nCOND: " + NumericFactory.getStringValue(getCONDBytes(), 2) +
+                    "\nALU: " + NumericFactory.getStringValue(getALUBytes(), 2) +
+                    "\nShifter: " + NumericFactory.getStringValue(getShifterBytes(), 2) +
+                    "\nMBR: " + NumericFactory.getStringValue(getMBRBytes(), 1) +
+                    "\nMAR: " + NumericFactory.getStringValue(getMARBytes(), 1) +
+                    "\nRD: " + NumericFactory.getStringValue(getRDBytes(), 1) +
+                    "\nWR: " + NumericFactory.getStringValue(getWRBytes(), 1) +
+                    "\nENC: " + NumericFactory.getStringValue(getENCBytes(), 1) +
+                    "\nC: " + NumericFactory.getStringValue(getCBytes(), 4) +
+                    "\nB: " + NumericFactory.getStringValue(getBBytes(), 4) +
+                    "\nA: " + NumericFactory.getStringValue(getABytes(), 4) +
+                    "\nAddress: " + NumericFactory.getStringValue(getAddressBytes(), 8);
         return result;
     }
 
@@ -474,22 +484,23 @@ public class CPU {
             return getShifterToolTip();
 
         if (component.equals("marImg"))
-            return "Value: " + MAR.get();
+            return "Value: " + NumericFactory.getStringValue16((short) MAR.get());
 
         if (component.equals("mbrImg"))
-            return "Value: " + MBR.get();
+            return "Value: " + NumericFactory.getStringValue16((short) MBR.get());
 
         if (component.equals("mMuxImg"))
             return getMMuxToolTip();
 
         if (component.equals("mpcImg"))
-            return "Value: " + MPC.get();
+            return "Value: " + NumericFactory.getStringValue8((short) MPC.get());
 
         if (component.equals("incImg"))
             return getIncrementerToolTip();
 
         if (component.equals("controlImg"))
-            return "Address: " + MPC.get() + "\nValue: " + controlMemory[MPC.get()];
+            return "Address: " + NumericFactory.getStringValue8((short) MPC.get())
+                    + "\nValue: " + NumericFactory.getStringValue32(controlMemory[MPC.get()]);
 
         if (component.equals("mirImg"))
             return getMIRToolTip();
@@ -571,25 +582,6 @@ public class CPU {
 
     public int getRegistersImg() {
         return clock.get() == 2 || getCDecImg() == 1 ? 1 : 0;
-    }
-
-
-    private String getBytesString(int length, int value) {
-        StringBuilder result = new StringBuilder(Integer.toBinaryString(value));
-        while (result.length() < length)
-            result.insert(0, "0");
-        return result.toString();
-    }
-
-    private String getDecoderOutput(int position) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < 16; i++) {
-            if (i == position)
-                result.insert(0, "1");
-            else
-                result.insert(0, "0");
-        }
-        return result.toString();
     }
 
     @Override
