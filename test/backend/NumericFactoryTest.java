@@ -124,4 +124,99 @@ class NumericFactoryTest {
         assertEquals(-1, NumericFactory.getShortValue("1111111111111111", 2));
         assertEquals(-1, NumericFactory.getShortValue("-1", 10));
     }
+
+    @Test
+    void getStringValueTest1() {
+        NumericFactory.setRadix(10);
+        assertEquals("10", NumericFactory.getStringValue((short) 10, 16));
+        NumericFactory.setRadix(2);
+        assertEquals("0000000000001010", NumericFactory.getStringValue((short) 10, 16));
+    }
+
+    @Test
+    void getStringValueTest2() {
+        NumericFactory.setRadix(10);
+        assertEquals("-10", NumericFactory.getStringValue((short) -10, 16));
+        NumericFactory.setRadix(2);
+        assertEquals("1111111111110110", NumericFactory.getStringValue((short) -10, 16));
+    }
+
+    @Test
+    void getStringValueTest3() {
+        NumericFactory.setRadix(10);
+        assertEquals("-32767", NumericFactory.getStringValue((short) -32767, 16));
+        NumericFactory.setRadix(2);
+        assertEquals("1000000000000001", NumericFactory.getStringValue((short) -32767, 16));
+    }
+
+    @Test
+    void getStringValueTest4() {
+        NumericFactory.setRadix(10);
+        assertEquals("-1", NumericFactory.getStringValue((short) -1, 16));
+        NumericFactory.setRadix(2);
+        assertEquals("1111111111111111", NumericFactory.getStringValue((short) -1, 16));
+    }
+
+    @Test
+    void getStringValueTest5() {
+        NumericFactory.setRadix(10);
+        assertEquals("-1", NumericFactory.getStringValue(-1, 32));
+        NumericFactory.setRadix(2);
+        assertEquals("11111111111111111111111111111111",
+                NumericFactory.getStringValue(-1, 32));
+    }
+
+    @Test
+    void getStringValueTest6() {
+        NumericFactory.setRadix(10);
+        assertEquals("-1340932068", NumericFactory.getStringValue(-1340932068, 32));
+        NumericFactory.setRadix(2);
+        assertEquals("10110000000100110000000000011100",
+                NumericFactory.getStringValue(-1340932068, 32));
+    }
+
+    @Test
+    void getStringValueTest7() {
+        NumericFactory.setRadix(10);
+        assertEquals("1612709888", NumericFactory.getStringValue(1612709888, 32));
+        NumericFactory.setRadix(2);
+        assertEquals("01100000001000000000000000000000",
+                NumericFactory.getStringValue(1612709888, 32));
+    }
+
+    @Test
+    void getStringValueTest8() {
+        NumericFactory.setRadix(10);
+        assertEquals("-1", NumericFactory.getStringValue((short) -1, 8));
+        NumericFactory.setRadix(2);
+        assertEquals("11111111",
+                NumericFactory.getStringValue((short) -1, 8));
+    }
+
+    @Test
+    void getStringValueTest9() {
+        NumericFactory.setRadix(10);
+        assertEquals("255", NumericFactory.getStringValue((short) 255, 8));
+        NumericFactory.setRadix(2);
+        assertEquals("11111111",
+                NumericFactory.getStringValue((short) 255, 8));
+    }
+
+    @Test
+    void getStringValueTest10() {
+        NumericFactory.setRadix(10);
+        assertEquals("72", NumericFactory.getStringValue((short) 72, 8));
+        NumericFactory.setRadix(2);
+        assertEquals("01001000",
+                NumericFactory.getStringValue((short) 72, 8));
+    }
+
+    @Test
+    void getStringValueTest11() {
+        NumericFactory.setRadix(10);
+        assertEquals("128", NumericFactory.getStringValue((short) 128, 8));
+        NumericFactory.setRadix(2);
+        assertEquals("10000000",
+                NumericFactory.getStringValue((short) 128, 8));
+    }
 }

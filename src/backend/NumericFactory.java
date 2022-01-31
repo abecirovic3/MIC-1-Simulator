@@ -18,25 +18,22 @@ public class NumericFactory {
     }
 
     public static String getStringValue16(short value) {
-        if (radix == 10)
-            return String.valueOf(value);
-        return getStringValue2(value, 16);
+        return getStringValue(value, 16);
     }
 
     public static String getStringValue32(int value) {
-        if (radix == 10)
-            return String.valueOf(value);
-        return getStringValue2(value, 32);
+        return getStringValue(value, 32);
     }
 
     public static String getStringValue8(short value) {
         // here we use short bcs we need unsigned byte
-        if (radix == 10)
-            return String.valueOf(value);
-        return getStringValue2(value, 8);
+        return getStringValue(value, 8);
     }
 
-    private static String getStringValue2(int value, int length) {
+    public static String getStringValue(int value, int length) {
+        if (radix == 10)
+            return String.valueOf(value);
+
         String res = Integer.toBinaryString(value);
         if (res.length() > length)
             return res.substring(res.length()-length);
