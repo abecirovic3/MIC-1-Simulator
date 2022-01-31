@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -183,7 +184,69 @@ public class Controller {
     private void initializeRegistersTable() {
         regName.setCellValueFactory(new PropertyValueFactory<>("name"));
         regValue.setCellValueFactory(new PropertyValueFactory<>("stringValue"));
+        regValue.setCellFactory(TextFieldTableCell.forTableColumn());
+        regValue.setOnEditCommit(event -> {
+            changeRegisterValue(event.getRowValue(), event.getNewValue());
+        });
         registersTable.setItems(cpu.getRegisters());
+    }
+
+    private void changeRegisterValue(Register register, String newValue) {
+        try {
+            int value = Integer.parseInt(newValue);
+            validateValue(register.getName(), value);
+            register.setValue((short) value);
+            registersTable.refresh();
+        } catch (NumberFormatException e) {
+            showErrorAlert(register.getName());
+            registersTable.refresh();
+        }
+    }
+
+    private void showErrorAlert(String regName) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Invalid new value!");
+        alert.setContentText(regName + getRegisterBoundaryMsg(regName));
+        alert.showAndWait();
+    }
+
+    private String getRegisterBoundaryMsg(String regName) {
+        if (isImmutableRegister(regName))
+            return " register is immutable.";
+        return ": valid range is [" + getRegisterLowerBound(regName)
+                + ", " + getRegisterUpperBound(regName) + "].";
+    }
+
+    private void validateValue(String regName, int value) {
+        if (isImmutableRegister(regName))
+            throw new NumberFormatException();
+
+        int lower = getRegisterLowerBound(regName);
+        int upper = getRegisterUpperBound(regName);
+
+        if (value < lower || value > upper)
+            throw new NumberFormatException();
+    }
+
+    private int getRegisterUpperBound(String regName) {
+        int res = Short.MAX_VALUE;
+        if (regName.equalsIgnoreCase("PC") || regName.equalsIgnoreCase("SP"))
+            res = 4095;
+        return res;
+    }
+
+    private int getRegisterLowerBound(String regName) {
+        int res = Short.MIN_VALUE;
+        if (regName.equalsIgnoreCase("PC") || regName.equalsIgnoreCase("SP"))
+            res = 0;
+        return res;
+    }
+
+    private boolean isImmutableRegister(String regName) {
+        return regName.equals("0") || regName.equals("+1") || regName.equals("-1")
+                || regName.equalsIgnoreCase("AMASK")
+                || regName.equalsIgnoreCase("SMASK");
     }
 
     private void initializeMicrocodeArea() {

@@ -30,6 +30,6 @@ To run the pre-release please follow these steps:
 - About etc
 
 ### Features to be edited:
-- Datapath tooltip radix
+- Register and MemoryLine write validation
 - Table widths
 - Tooltips delay

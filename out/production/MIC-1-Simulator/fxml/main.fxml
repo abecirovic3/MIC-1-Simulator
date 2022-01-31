@@ -152,7 +152,7 @@
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                        <TableView fx:id="controlMemoryTable" prefHeight="824.0" prefWidth="705.0" styleClass="center-align">
+                                        <TableView fx:id="controlMemoryTable" fixedCellSize="24.0" prefHeight="824.0" prefWidth="705.0" styleClass="center-align">
                                             <columns>
                                                 <TableColumn fx:id="cmAddressCol" text="Address" />
                                                 <TableColumn prefWidth="-1.0" text="Value">
@@ -197,7 +197,7 @@
                                     <TextField fx:id="searchedAddressValueField" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="251.0" />
                                  </children>
                               </HBox>
-                                  <TableView fx:id="memoryTable" prefHeight="819.0" prefWidth="1270.0">
+                                  <TableView fx:id="memoryTable" fixedCellSize="24.0" prefHeight="819.0" prefWidth="1270.0">
                                       <columns>
                                           <TableColumn fx:id="memAddress" prefWidth="120.0" resizable="false" text="Address" />
                                           <TableColumn fx:id="memValue" prefWidth="1134.0" resizable="false" text="Value" />
@@ -222,9 +222,9 @@
                                  <children>
                                     <VBox prefHeight="827.0" prefWidth="357.0" spacing="10.0">
                                        <children>
-                                          <TableView fx:id="registersTable" fixedCellSize="24.0" prefHeight="413.0" prefWidth="320.0" styleClass="center-align">
+                                          <TableView fx:id="registersTable" editable="true" fixedCellSize="24.0" prefHeight="413.0" prefWidth="320.0" styleClass="center-align">
                                             <columns>
-                                              <TableColumn fx:id="regName" editable="false" prefWidth="74.0" resizable="false" text="Register" />
+                                              <TableColumn fx:id="regName" editable="false" prefWidth="74.0" resizable="false" sortable="false" text="Register" />
                                               <TableColumn fx:id="regValue" prefWidth="244.0" resizable="false" sortable="false" styleClass="center-align" text="Value" />
                                             </columns>
                                           </TableView>
