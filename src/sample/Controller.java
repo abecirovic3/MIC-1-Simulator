@@ -1,6 +1,7 @@
 package sample;
 
 import backend.*;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -12,9 +13,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -91,6 +94,7 @@ public class Controller {
 
     private final int[][] microCodeLinesLengths = new int[256][2];
 
+    private final FileChooser fileChooser = new FileChooser();
     @FXML
     public void initialize() {
         initializeSupportedInstructionsTable();
@@ -107,6 +111,11 @@ public class Controller {
         initializeMemoryTab();
         bindTooltips();
         bindImageViews();
+        initializeFileChooser();
+    }
+
+    private void initializeFileChooser() {
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
     }
 
     private void initializeMemoryTab() {
@@ -517,5 +526,27 @@ public class Controller {
         updateToolTips();
         updateImgColors();
         tabPane.getSelectionModel().select(codeTab);
+    }
+
+    public void loadFileAction(ActionEvent actionEvent) {
+        Optional<ButtonType> selectedOption = Optional.of(ButtonType.OK);
+        if (!codeArea.getText().isEmpty())
+            selectedOption = confirmationAlertShowAndWait();
+
+        if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
+            File selectedFile = fileChooser.showOpenDialog(((Node) actionEvent.getSource()).getScene().getWindow());
+            if (selectedFile != null) {
+                String content = FileParser.readFile(selectedFile);
+                codeArea.setText(content);
+            }
+            if (btnRun.isDisabled())
+                reinitialiseAppState();
+        }
+    }
+
+    public void saveFileAction(ActionEvent actionEvent) {
+        File selectedFile = fileChooser.showSaveDialog(((Node) actionEvent.getSource()).getScene().getWindow());
+        if (selectedFile != null)
+            FileParser.writeFile(selectedFile, codeArea.getText());
     }
 }

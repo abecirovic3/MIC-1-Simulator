@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class FileParser {
 
@@ -141,6 +142,36 @@ public class FileParser {
         InputStream inputStream = FileParser.class.getResourceAsStream(path);
         assert inputStream != null;
         return new BufferedReader(new InputStreamReader(inputStream));
+    }
+
+    public static String readFile(File file) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            StringBuilder res = new StringBuilder();
+            String row;
+            if (file.exists())
+                while ((row = reader.readLine()) != null)
+                    res.append(row).append("\n");
+            reader.close();
+            return res.toString();
+        } catch (IOException e) {
+            System.out.println("FileParser error readFile method");
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static void writeFile(File file, String content) {
+        try {
+            if (file.exists() || file.createNewFile()) {
+                FileWriter writer = new FileWriter(file);
+                writer.write(content);
+                writer.close();
+            }
+        } catch (IOException e) {
+            System.out.println("FileParser error writeFile method");
+            e.printStackTrace();
+        }
     }
 }
 
