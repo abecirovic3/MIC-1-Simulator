@@ -22,8 +22,6 @@ To run the pre-release please follow these steps:
 ### Features to be implemented:
 - Input validation
 - Other tooltips (partly done)
-- Save file
-- Load file
 - Translation
 - Code examples
 - About etc

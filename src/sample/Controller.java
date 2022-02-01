@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
@@ -534,7 +535,7 @@ public class Controller {
             selectedOption = confirmationAlertShowAndWait();
 
         if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
-            File selectedFile = fileChooser.showOpenDialog(((Node) actionEvent.getSource()).getScene().getWindow());
+            File selectedFile = fileChooser.showOpenDialog(btnRun.getScene().getWindow());
             if (selectedFile != null) {
                 String content = FileParser.readFile(selectedFile);
                 codeArea.setText(content);
@@ -545,8 +546,26 @@ public class Controller {
     }
 
     public void saveFileAction(ActionEvent actionEvent) {
-        File selectedFile = fileChooser.showSaveDialog(((Node) actionEvent.getSource()).getScene().getWindow());
+        File selectedFile = fileChooser.showSaveDialog(btnRun.getScene().getWindow());
         if (selectedFile != null)
             FileParser.writeFile(selectedFile, codeArea.getText());
+    }
+
+    public void exitAction() {
+        Stage currStage = (Stage) btnRun.getScene().getWindow();
+        currStage.close();
+    }
+
+    public void loadSimpleAdderAction() {
+        loadExample(CodeExample.getSimpleAdderExample());
+    }
+
+    private void loadExample(String example) {
+        Optional<ButtonType> selectedOption = Optional.of(ButtonType.OK);
+        if (!codeArea.getText().isEmpty())
+            selectedOption = confirmationAlertShowAndWait();
+
+        if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK)
+            codeArea.setText(example);
     }
 }

@@ -144,6 +144,23 @@ public class FileParser {
         return new BufferedReader(new InputStreamReader(inputStream));
     }
 
+//    public static String readLocalFile(String fileName) {
+//        StringBuilder result = new StringBuilder();
+//        try {
+//            BufferedReader bufferedReader = getBufferedReader("/dataFiles/" + fileName);
+//            String row;
+//            while ((row = bufferedReader.readLine()) != null) {
+//                result.append(row).append("\n");
+//            }
+//            bufferedReader.close();
+//            return result.toString();
+//        } catch (IOException e) {
+//            System.out.println("Problems with reading controlMemoryINT.txt!");
+//            e.printStackTrace();
+//        }
+//        return "";
+//    }
+
     public static String readFile(File file) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));

@@ -32,14 +32,13 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="New" />
-                    <MenuItem mnemonicParsing="false" text="Open" />
-                    <MenuItem mnemonicParsing="false" text="Save" />
+                    <MenuItem mnemonicParsing="false" text="New" onAction="#newFileAction" />
+                    <MenuItem mnemonicParsing="false" text="Open" onAction="#loadFileAction" />
+                    <MenuItem mnemonicParsing="false" text="Save" onAction="#saveFileAction" />
                     <Menu mnemonicParsing="false" text="Examples">
-                        <MenuItem mnemonicParsing="false" text="Hello World" />
-                        <MenuItem mnemonicParsing="false" text="Simple add" />
+                        <MenuItem mnemonicParsing="false" text="Simple Adder" onAction="#loadSimpleAdderAction" />
                     </Menu>
-                    <MenuItem mnemonicParsing="false" text="Exit" />
+                    <MenuItem mnemonicParsing="false" text="Exit" onAction="#exitAction" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Documentation">
@@ -70,12 +69,12 @@
                   <Separator minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnLoadFile" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#loadFileAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
                      <tooltip>
-                        <Tooltip text="Open file - not implemented" />
+                        <Tooltip text="Load file" />
                      </tooltip></Button>
                   <Separator minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnSaveFile" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#saveFileAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
                      <tooltip>
-                        <Tooltip text="Save file - not imeplemented" />
+                        <Tooltip text="Save file" />
                      </tooltip></Button>
                   <Separator layoutX="235.0" layoutY="10.0" minWidth="5.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnRun" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#runCodeAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">

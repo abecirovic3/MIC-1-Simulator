@@ -32,14 +32,13 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="New" />
-                    <MenuItem mnemonicParsing="false" text="Open" />
-                    <MenuItem mnemonicParsing="false" text="Save" />
+                    <MenuItem mnemonicParsing="false" text="New" onAction="#newFileAction" />
+                    <MenuItem mnemonicParsing="false" text="Open" onAction="#loadFileAction" />
+                    <MenuItem mnemonicParsing="false" text="Save" onAction="#saveFileAction" />
                     <Menu mnemonicParsing="false" text="Examples">
-                        <MenuItem mnemonicParsing="false" text="Hello World" />
-                        <MenuItem mnemonicParsing="false" text="Simple add" />
+                        <MenuItem mnemonicParsing="false" text="Simple Adder" onAction="#loadSimpleAdderAction" />
                     </Menu>
-                    <MenuItem mnemonicParsing="false" text="Exit" />
+                    <MenuItem mnemonicParsing="false" text="Exit" onAction="#exitAction" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Documentation">
