@@ -2,7 +2,6 @@ package sample;
 
 import backend.*;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -178,7 +177,24 @@ public class Controller {
     private void initializeMemoryTable() {
         memAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         memValue.setCellValueFactory(new PropertyValueFactory<>("stringValue"));
+        memValue.setCellFactory(TextFieldTableCell.forTableColumn());
+        memValue.setOnEditCommit(event -> {
+            changeMemoryLineValue(event.getRowValue(), event.getNewValue());
+        });
         memoryTable.setItems(cpu.getMemory().getMemory());
+    }
+
+    private void changeMemoryLineValue(MemoryLine memLine, String newValue) {
+        try {
+            int value = Integer.parseInt(newValue);
+            if (value < Short.MIN_VALUE || value > Short.MAX_VALUE)
+                throw new NumberFormatException();
+            memLine.setValue((short) value);
+            memoryTable.refresh();
+        } catch (NumberFormatException e) {
+            showErrorAlert("memory");
+            memoryTable.refresh();
+        }
     }
 
     private void initializeRegistersTable() {
@@ -203,19 +219,21 @@ public class Controller {
         }
     }
 
-    private void showErrorAlert(String regName) {
+    private void showErrorAlert(String identifier) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText("Invalid new value!");
-        alert.setContentText(regName + getRegisterBoundaryMsg(regName));
+        alert.setContentText(identifier + getBoundaryMsg(identifier));
         alert.showAndWait();
     }
 
-    private String getRegisterBoundaryMsg(String regName) {
-        if (isImmutableRegister(regName))
+    private String getBoundaryMsg(String identifier) {
+        if (identifier.equalsIgnoreCase("memory"))
+            return ": valid range is [" + Short.MIN_VALUE + ", " + Short.MAX_VALUE +"].";
+        if (isImmutableRegister(identifier))
             return " register is immutable.";
-        return ": valid range is [" + getRegisterLowerBound(regName)
-                + ", " + getRegisterUpperBound(regName) + "].";
+        return ": valid range is [" + getRegisterLowerBound(identifier)
+                + ", " + getRegisterUpperBound(identifier) + "].";
     }
 
     private void validateValue(String regName, int value) {

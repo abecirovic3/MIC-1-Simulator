@@ -20,7 +20,6 @@ To run the pre-release please follow these steps:
    ```
 
 ### Features to be implemented:
-- Register and Memory table edit
 - Input validation
 - Other tooltips (partly done)
 - Save file

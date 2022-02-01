@@ -197,10 +197,10 @@
                                     <TextField fx:id="searchedAddressValueField" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="251.0" />
                                  </children>
                               </HBox>
-                                  <TableView fx:id="memoryTable" fixedCellSize="24.0" prefHeight="819.0" prefWidth="1270.0">
+                                  <TableView fx:id="memoryTable" editable="true" fixedCellSize="24.0" prefHeight="819.0" prefWidth="1270.0">
                                       <columns>
-                                          <TableColumn fx:id="memAddress" prefWidth="120.0" resizable="false" text="Address" />
-                                          <TableColumn fx:id="memValue" prefWidth="1134.0" resizable="false" text="Value" />
+                                          <TableColumn fx:id="memAddress" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Address" />
+                                          <TableColumn fx:id="memValue" prefWidth="1134.0" resizable="false" sortable="false" text="Value" />
                                       </columns>
                                   </TableView>
                            </children>
