@@ -41,16 +41,11 @@
                     <MenuItem mnemonicParsing="false" text="Exit" onAction="#exitAction" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Documentation">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Supported instructions" />
-                  </items>
-                </Menu>
                 <Menu mnemonicParsing="false" text="Execute">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Run" />
-                        <MenuItem mnemonicParsing="false" text="Next sub-clock cycle" />
-                        <MenuItem mnemonicParsing="false" text="Next clock cycle" />
+                        <MenuItem fx:id="menuItemRun" mnemonicParsing="false" text="Run" onAction="#runCodeAction" />
+                        <MenuItem fx:id="menuItemNextSubClk" mnemonicParsing="false" text="Next sub-clock cycle" disable="true" onAction="#runSubClockCycleAction" />
+                        <MenuItem fx:id="menuItemNextClk" mnemonicParsing="false" text="Next clock cycle" disable="true" onAction="#runClockCycleAction" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -58,38 +53,43 @@
                     <MenuItem mnemonicParsing="false" text="About" />
                   </items>
                 </Menu>
+                  <Menu mnemonicParsing="false" text="Documentation">
+                      <items>
+                          <MenuItem mnemonicParsing="false" text="Supported instructions" />
+                      </items>
+                  </Menu>
               </menus>
             </MenuBar>
             <ToolBar prefHeight="40.0" prefWidth="200.0" styleClass="toolbar">
               <items>
                 <Button fx:id="btnNewFile" alignment="CENTER" contentDisplay="CENTER" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#newFileAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
                      <tooltip>
-                        <Tooltip text="New file" />
+                        <Tooltip text="New file" showDelay="250ms" />
                      </tooltip></Button>
                   <Separator minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnLoadFile" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#loadFileAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
                      <tooltip>
-                        <Tooltip text="Load file" />
+                        <Tooltip text="Load file" showDelay="250ms" />
                      </tooltip></Button>
                   <Separator minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnSaveFile" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#saveFileAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
                      <tooltip>
-                        <Tooltip text="Save file" />
+                        <Tooltip text="Save file" showDelay="250ms" />
                      </tooltip></Button>
                   <Separator layoutX="235.0" layoutY="10.0" minWidth="5.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnRun" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#runCodeAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
                      <tooltip>
-                        <Tooltip text="Run code" />
+                        <Tooltip text="Run code" showDelay="250ms" />
                      </tooltip></Button>
                   <Separator layoutX="244.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnNextSubClock" disable="true" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#runSubClockCycleAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
                      <tooltip>
-                        <Tooltip text="Next sub-clock-cycle" />
+                        <Tooltip text="Next sub-clock-cycle" showDelay="250ms" />
                      </tooltip></Button>
                   <Separator layoutX="253.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnNextClock" disable="true" layoutX="208.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#runClockCycleAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
                      <tooltip>
-                        <Tooltip text="Next clock cycle" />
+                        <Tooltip text="Next clock cycle" showDelay="250ms" />
                      </tooltip></Button>
                   <Separator layoutX="226.0" layoutY="10.0" opacity="0.0" orientation="VERTICAL" prefHeight="32.0" prefWidth="900.0" />
                   <ChoiceBox fx:id="radixChoiceBox" prefWidth="100.0" />

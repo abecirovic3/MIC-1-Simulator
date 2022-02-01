@@ -1,6 +1,7 @@
 package sample;
 
 import backend.*;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -83,6 +84,10 @@ public class Controller {
     public Tab codeTab;
     public Tab memoryTab;
 
+    public MenuItem menuItemRun;
+    public MenuItem menuItemNextSubClk;
+    public MenuItem menuItemNextClk;
+
     public AnchorPane dataPathPane;
     public ImageView registersImg;
     private final Map<ImageView, Pair<Tooltip, Function<String, String>>> toolTips = new HashMap<>();
@@ -96,6 +101,9 @@ public class Controller {
     private final int[][] microCodeLinesLengths = new int[256][2];
 
     private final FileChooser fileChooser = new FileChooser();
+
+    private final SimpleBooleanProperty activeExecutionState = new SimpleBooleanProperty(false);
+
     @FXML
     public void initialize() {
         initializeSupportedInstructionsTable();
@@ -113,6 +121,27 @@ public class Controller {
         bindTooltips();
         bindImageViews();
         initializeFileChooser();
+        initializeExecutionState();
+    }
+
+    private void initializeExecutionState() {
+        activeExecutionState.addListener((o, oldVal, newVal) -> {
+            if (newVal) {
+                menuItemRun.setDisable(true);
+                menuItemNextSubClk.setDisable(false);
+                menuItemNextClk.setDisable(false);
+                btnRun.setDisable(true);
+                btnNextSubClock.setDisable(false);
+                btnNextClock.setDisable(false);
+            } else {
+                menuItemRun.setDisable(false);
+                menuItemNextSubClk.setDisable(true);
+                menuItemNextClk.setDisable(true);
+                btnRun.setDisable(false);
+                btnNextSubClock.setDisable(true);
+                btnNextClock.setDisable(true);
+            }
+        });
     }
 
     private void initializeFileChooser() {
@@ -285,7 +314,7 @@ public class Controller {
         microcodeArea.setStyle(null);
         microcodeArea.addEventFilter(MouseEvent.MOUSE_RELEASED, t -> {
             int line = cpu.MPCProperty().get();
-            if (btnRun.isDisabled())
+            if (activeExecutionState.get())
                 microcodeArea.selectRange(microCodeLinesLengths[line][0], microCodeLinesLengths[line][1]);
         });
     }
@@ -434,9 +463,7 @@ public class Controller {
             cpu.setCPUInitial();
             cpu.getMemory().write(machineCode);
             codeArea.setEditable(false);
-            btnRun.setDisable(true);
-            btnNextClock.setDisable(false);
-            btnNextSubClock.setDisable(false);
+            activeExecutionState.set(true);
             microcodeArea.setScrollTop(0);
             microcodeArea.setStyle("-fx-highlight-fill: #ADFF2F; -fx-highlight-text-fill: #000000");
             microcodeArea.selectRange(microCodeLinesLengths[0][0], microCodeLinesLengths[0][1]);
@@ -493,7 +520,7 @@ public class Controller {
         }
 
         Optional<ButtonType> selectedOption = confirmationAlertShowAndWait();
-        if (!btnRun.isDisabled()) {
+        if (!activeExecutionState.get()) {
             if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
                 codeArea.clear();
                 console.setText("");
@@ -520,32 +547,30 @@ public class Controller {
         microcodeArea.selectRange(0, 0);
         microcodeArea.setStyle(null);
         console.setText("");
-        btnRun.setDisable(false);
-        btnNextClock.setDisable(true);
-        btnNextSubClock.setDisable(true);
+        activeExecutionState.set(false);
         instructionStatusLabel.setText("");
         updateToolTips();
         updateImgColors();
         tabPane.getSelectionModel().select(codeTab);
     }
 
-    public void loadFileAction(ActionEvent actionEvent) {
+    public void loadFileAction() {
         Optional<ButtonType> selectedOption = Optional.of(ButtonType.OK);
         if (!codeArea.getText().isEmpty())
             selectedOption = confirmationAlertShowAndWait();
 
         if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
             File selectedFile = fileChooser.showOpenDialog(btnRun.getScene().getWindow());
+            if (activeExecutionState.get())
+                reinitialiseAppState();
             if (selectedFile != null) {
                 String content = FileParser.readFile(selectedFile);
                 codeArea.setText(content);
             }
-            if (btnRun.isDisabled())
-                reinitialiseAppState();
         }
     }
 
-    public void saveFileAction(ActionEvent actionEvent) {
+    public void saveFileAction() {
         File selectedFile = fileChooser.showSaveDialog(btnRun.getScene().getWindow());
         if (selectedFile != null)
             FileParser.writeFile(selectedFile, codeArea.getText());
