@@ -555,15 +555,14 @@ public class Controller {
     }
 
     public void loadFileAction() {
-        Optional<ButtonType> selectedOption = Optional.of(ButtonType.OK);
-        if (!codeArea.getText().isEmpty())
-            selectedOption = confirmationAlertShowAndWait();
-
-        if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
-            File selectedFile = fileChooser.showOpenDialog(btnRun.getScene().getWindow());
-            if (activeExecutionState.get())
+        File selectedFile = fileChooser.showOpenDialog(btnRun.getScene().getWindow());
+        if (selectedFile != null) {
+            Optional<ButtonType> selectedOption = Optional.of(ButtonType.OK);
+            if (!codeArea.getText().isEmpty()) {
+                selectedOption = confirmationAlertShowAndWait();
+            }
+            if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
                 reinitialiseAppState();
-            if (selectedFile != null) {
                 String content = FileParser.readFile(selectedFile);
                 codeArea.setText(content);
             }
