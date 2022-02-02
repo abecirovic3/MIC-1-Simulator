@@ -37,6 +37,7 @@
                     <MenuItem mnemonicParsing="false" text="Save" onAction="#saveFileAction" />
                     <Menu mnemonicParsing="false" text="Examples">
                         <MenuItem mnemonicParsing="false" text="Simple Adder" onAction="#loadSimpleAdderAction" />
+                        <MenuItem mnemonicParsing="false" text="N-th Fibonacci number" onAction="#loadNthFibonacciNum" />
                     </Menu>
                     <MenuItem mnemonicParsing="false" text="Exit" onAction="#exitAction" />
                   </items>

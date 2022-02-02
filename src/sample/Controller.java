@@ -583,6 +583,9 @@ public class Controller {
     public void loadSimpleAdderAction() {
         loadExample(CodeExample.getSimpleAdderExample());
     }
+    public void loadNthFibonacciNum() {
+        loadExample(CodeExample.getNthFibNumberExample());
+    }
 
     private void loadExample(String example) {
         Optional<ButtonType> selectedOption = Optional.of(ButtonType.OK);
