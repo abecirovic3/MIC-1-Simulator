@@ -108,6 +108,8 @@ public class Controller {
 
     private final SimpleBooleanProperty activeExecutionState = new SimpleBooleanProperty(false);
 
+    private Stage aboutStage = new Stage();
+
     @FXML
     public void initialize() {
         initializeSupportedInstructionsTable();
@@ -126,6 +128,24 @@ public class Controller {
         bindImageViews();
         initializeFileChooser();
         initializeExecutionState();
+        initializeAboutStage();
+    }
+
+    private void initializeAboutStage() {
+        AboutController ctrl = new AboutController();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"));
+        loader.setController(ctrl);
+
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        aboutStage.setTitle("About MIC-1 Simulator");
+        aboutStage.setScene(new Scene(root, 500, 500));
+        aboutStage.setResizable(false);
     }
 
     private void initializeExecutionState() {
@@ -601,11 +621,6 @@ public class Controller {
     }
 
     public void openAboutAction(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/about.fxml"));
-        stage.setTitle("About MIC-1 Simulator");
-        stage.setScene(new Scene(root, 500, 500));
-        stage.setResizable(false);
-        stage.show();
+        aboutStage.show();
     }
 }
