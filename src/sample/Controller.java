@@ -5,7 +5,10 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,6 +23,7 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -594,5 +598,14 @@ public class Controller {
 
         if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK)
             codeArea.setText(example);
+    }
+
+    public void openAboutAction(ActionEvent actionEvent) throws IOException {
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/about.fxml"));
+        stage.setTitle("About MIC-1 Simulator");
+        stage.setScene(new Scene(root, 500, 500));
+        stage.setResizable(false);
+        stage.show();
     }
 }

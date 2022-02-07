@@ -51,7 +51,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                    <MenuItem mnemonicParsing="false" text="About" onAction="#openAboutAction" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="Documentation">
@@ -85,7 +85,7 @@
                   <Separator layoutX="244.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnNextSubClock" disable="true" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#runSubClockCycleAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
                      <tooltip>
-                        <Tooltip text="Next sub-clock-cycle" showDelay="250ms" />
+                        <Tooltip text="Next sub-clock cycle" showDelay="250ms" />
                      </tooltip></Button>
                   <Separator layoutX="253.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                 <Button fx:id="btnNextClock" disable="true" layoutX="208.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#runClockCycleAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
