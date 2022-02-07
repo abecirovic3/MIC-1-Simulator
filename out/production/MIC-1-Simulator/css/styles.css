@@ -64,3 +64,7 @@
     -fx-background-color: white;
     -fx-border-color: lightgray;
 }
+
+.hyperlink {
+    -fx-border-color: transparent;
+}

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AboutController">
    <children>
@@ -12,7 +14,25 @@
             <Image url="@../img/aboutFront.png" />
          </image>
       </ImageView>
-      <Button fx:id="frontBtn" layoutY="474.0" mnemonicParsing="false" onAction="#flipToBack" prefHeight="24.0" prefWidth="24.0" styleClass="buttons" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="2.0" />
-      <Button fx:id="backBtn" disable="true" layoutX="141.0" layoutY="198.0" mnemonicParsing="false" onAction="#flipToFront" prefHeight="92.0" prefWidth="229.0" styleClass="buttons" />
+      <Label fx:id="contentLabel" layoutX="40.0" layoutY="100.0" opacity="0.0" text="All icons are downloaded from https://www.flaticon.com/&#10;&#10;Icon authors are listed below:&#10;&#10;- run button, next sub-clock button, next clock button:&#10;  https://www.flaticon.com/authors/pixel-perfect&#10;&#10;- load file button:&#10;  https://www.flaticon.com/authors/iconixar&#10;&#10;- new file button:&#10;  https://www.flaticon.com/authors/smashicons&#10;&#10;- save button:&#10;  https://www.freepik.com" textFill="#ffbd59">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Hyperlink fx:id="backLink" layoutX="388.0" layoutY="370.0" onAction="#backAction" disable="true" opacity="0.0" text="Back" textFill="#ffbd59">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Hyperlink>
+      <Hyperlink fx:id="creditsLink" layoutX="217.0" layoutY="443.0" onAction="#showCreditsAction" text="Credits" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Hyperlink>
+      <Label fx:id="creditsLabel" layoutX="33.0" layoutY="28.0" opacity="0.0" text="Credits" textFill="#ffbd59">
+         <font>
+            <Font size="55.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

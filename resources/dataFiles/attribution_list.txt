@@ -1,6 +1,6 @@
 All icons are downloaded from https://www.flaticon.com/
 Icon authors are listed below:
-- run button, next faze button, next clock cycle button: https://www.flaticon.com/authors/pixel-perfect
-- open file button: "https://www.flaticon.com/authors/iconixar
+- run button, next sub-clock button, next clock button: https://www.flaticon.com/authors/pixel-perfect
+- load file button: "https://www.flaticon.com/authors/iconixar
 - new file button: https://www.flaticon.com/authors/smashicons
 - save button: https://www.freepik.com"
