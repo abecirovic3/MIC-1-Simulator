@@ -21,7 +21,6 @@ To run the pre-release please follow these steps:
 
 ### Features to be implemented:
 - Input validation
-- Other tooltips (partly done)
 - Translation
 - Code examples
 - About etc
@@ -29,4 +28,3 @@ To run the pre-release please follow these steps:
 ### Features to be edited:
 - Register and MemoryLine write validation
 - Table widths
-- Tooltips delay
