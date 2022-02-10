@@ -67,7 +67,7 @@ public class Memory {
 
     public void write(short[] codeData) {
         for (short i = 0; i < codeData.length; i++) {
-            memory.add(i, new MemoryLine(i, codeData[i]));
+            memory.get(i).setValue(codeData[i]);
         }
     }
 
