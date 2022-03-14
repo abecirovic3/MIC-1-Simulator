@@ -140,12 +140,12 @@ public class Controller {
         Parent root = null;
         try {
             root = loader.load();
+            aboutStage.setTitle("About MIC-1 Simulator");
+            aboutStage.setScene(new Scene(root, 500, 500));
+            aboutStage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        aboutStage.setTitle("About MIC-1 Simulator");
-        aboutStage.setScene(new Scene(root, 500, 500));
-        aboutStage.setResizable(false);
     }
 
     private void initializeExecutionState() {
@@ -390,10 +390,6 @@ public class Controller {
     }
 
     private void bindImageViews() {
-        // This code shouldn't throw NPE bcs the resources are present
-        // Warnings are ignored bcs the fix with Objects.requireNonNull method doesn't really do much
-        // except that it throws NPE instead of Image constructor
-        // I'll leave one warning unsuppressed for future reference
         try {
             for (Node img : dataPathPane.getChildren()) {
                 if (img.getId().equals("registersImg")) {
@@ -548,6 +544,7 @@ public class Controller {
             if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
                 codeArea.clear();
                 console.setText("");
+                tabPane.getSelectionModel().select(codeTab);
             }
         } else {
             if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK)
@@ -616,8 +613,10 @@ public class Controller {
         if (!codeArea.getText().isEmpty())
             selectedOption = confirmationAlertShowAndWait();
 
-        if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK)
+        if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
             codeArea.setText(example);
+            tabPane.getSelectionModel().select(codeTab);
+        }
     }
 
     public void openAboutAction(ActionEvent actionEvent) throws IOException {
