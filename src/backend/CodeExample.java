@@ -1,9 +1,9 @@
 package backend;
 
 public class CodeExample {
-    private static String simpleAdderExample = "LOCO 10\nSTOD 2048\nloop:\n  ADDD 2048\nJUMP loop";
+    private static final String simpleAdderExample = "LOCO 10\nSTOD 2048\nloop:\n  ADDD 2048\nJUMP loop";
 
-    private static String nthFibNumberExample = "; n-th Fibonacci number\n" +
+    private static final String nthFibNumberExample = "; n-th Fibonacci number\n" +
             "; first in the memory tab set to n the value at address 25\n" +
             "; run the code\n" +
             "; at the end memory address 30 will hold the n-th Fibonacci number\n" +
@@ -16,19 +16,7 @@ public class CodeExample {
         return simpleAdderExample;
     }
 
-    public void setSimpleAdder(String simpleAdderExample) {
-        this.simpleAdderExample = simpleAdderExample;
-    }
-
-    public static void setSimpleAdderExample(String simpleAdderExample) {
-        CodeExample.simpleAdderExample = simpleAdderExample;
-    }
-
     public static String getNthFibNumberExample() {
         return nthFibNumberExample;
-    }
-
-    public static void setNthFibNumberExample(String nthFibNumberExample) {
-        CodeExample.nthFibNumberExample = nthFibNumberExample;
     }
 }
