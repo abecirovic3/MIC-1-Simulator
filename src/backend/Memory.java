@@ -57,21 +57,35 @@ public class Memory {
         memory.get(address).setValue(value);
     }
 
+    private boolean isValidAddress(short address) {
+        return address >= 0 && address <= 4095;
+    }
+
     public void setAddress(short address) {
+        if (!isValidAddress(address))
+            return;
         this.address = address;
     }
 
     public void write(short address, short value) {
+        if (!isValidAddress(address))
+            return;
         memory.get(address).setValue(value);
     }
 
     public void write(short[] codeData) {
-        for (short i = 0; i < codeData.length; i++) {
+        int length = codeData.length;
+        if (length > 4096) {
+            length = 4096;
+        }
+        for (short i = 0; i < length; i++) {
             memory.get(i).setValue(codeData[i]);
         }
     }
 
     public short read(short address) {
+        if (!isValidAddress(address))
+            return 0;
         return memory.get(address).getValue();
     }
 

@@ -20,11 +20,9 @@ To run the pre-release please follow these steps:
    ```
 
 ### Features to be implemented:
-- Input validation
 - Translation
 - Code examples
 - About etc
 
 ### Features to be edited:
-- Register and MemoryLine write validation
 - Table widths
