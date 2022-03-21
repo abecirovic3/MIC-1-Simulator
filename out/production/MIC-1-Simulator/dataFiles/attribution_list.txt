@@ -4,3 +4,6 @@ Icon authors are listed below:
 - load file button: "https://www.flaticon.com/authors/iconixar
 - new file button: https://www.flaticon.com/authors/smashicons
 - save button: https://www.freepik.com"
+
+Country circles
+- https://www.flaticon.com/packs/countrys-flags

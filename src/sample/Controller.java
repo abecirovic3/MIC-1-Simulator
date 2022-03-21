@@ -1,7 +1,9 @@
 package sample;
 
 import backend.*;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -24,9 +26,7 @@ import javafx.util.Pair;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
 public class Controller {
@@ -38,6 +38,7 @@ public class Controller {
 
     public TableView<Map> controlMemoryTable;
     public TableColumn<Map, String> cmAddressCol;
+    public TableColumn<Map, String> cmValueCol;
     public TableColumn<Map, String> cmAmuxCol;
     public TableColumn<Map, String> cmCondCol;
     public TableColumn<Map, String> cmAluCol;
@@ -100,6 +101,28 @@ public class Controller {
 
     private final CodeParser codeParser = CodeParser.getInstance();
     private final InstructionParser instructionParser = InstructionParser.getInstance();
+    public Menu fileMenu;
+    public MenuItem newMenuitem;
+    public MenuItem openMenuItem;
+    public MenuItem saveMenuItem;
+    public Menu examplesMenu;
+    public MenuItem simpleAdderExampleMenuItem;
+    public MenuItem nthFibNumExampleMenuItem;
+    public MenuItem exitMenuItem;
+    public Menu executeMenu;
+    public Menu helpMenu;
+    public MenuItem aboutMenuItem;
+    public Tooltip newFileTooltip;
+    public Tooltip loadFileTooltip;
+    public Tooltip saveFileTooltip;
+    public Tooltip runCodeTooltip;
+    public Tooltip nextSubClockTooltip;
+    public Tooltip nextClockTooltip;
+    public Tab controlTab;
+    public Label controlMemoryLabel;
+    public Label clockTitleLabel;
+    public Label subClockTitleLabel;
+    public Tab datapathTab;
     private CPU cpu = new CPU();
 
     private final int[][] microCodeLinesLengths = new int[256][2];
@@ -110,8 +133,13 @@ public class Controller {
 
     private Stage aboutStage = new Stage();
 
+    private final ObservableResourceFactory resourceFactory = ObservableResourceFactory.getInstance();
+
+    public Label supportedInstructionsLab;
+
     @FXML
     public void initialize() {
+        initializeInternationalizationBindings();
         initializeSupportedInstructionsTable();
         initializeControlMemoryTable();
         initializeMicrocodeArea();
@@ -129,6 +157,49 @@ public class Controller {
         initializeFileChooser();
         initializeExecutionState();
         initializeAboutStage();
+    }
+
+    private void initializeInternationalizationBindings() {
+        fileMenu.textProperty().bind(resourceFactory.getStringBinding("file"));
+        newMenuitem.textProperty().bind(resourceFactory.getStringBinding("new"));
+        openMenuItem.textProperty().bind(resourceFactory.getStringBinding("load"));
+        saveMenuItem.textProperty().bind(resourceFactory.getStringBinding("save"));
+        examplesMenu.textProperty().bind(resourceFactory.getStringBinding("examples"));
+        simpleAdderExampleMenuItem.textProperty().bind(resourceFactory.getStringBinding("simpleAdder"));
+        nthFibNumExampleMenuItem.textProperty().bind(resourceFactory.getStringBinding("nthFibNum"));
+        exitMenuItem.textProperty().bind(resourceFactory.getStringBinding("exit"));
+        executeMenu.textProperty().bind(resourceFactory.getStringBinding("execute"));
+        menuItemRun.textProperty().bind(resourceFactory.getStringBinding("run"));
+        menuItemNextClk.textProperty().bind(resourceFactory.getStringBinding("nextClk"));
+        menuItemNextSubClk.textProperty().bind(resourceFactory.getStringBinding("nextSubClk"));
+        helpMenu.textProperty().bind(resourceFactory.getStringBinding("help"));
+        aboutMenuItem.textProperty().bind(resourceFactory.getStringBinding("about"));
+        newFileTooltip.textProperty().bind(resourceFactory.getStringBinding("newFile"));
+        loadFileTooltip.textProperty().bind(resourceFactory.getStringBinding("loadFile"));
+        saveFileTooltip.textProperty().bind(resourceFactory.getStringBinding("saveFile"));
+        runCodeTooltip.textProperty().bind(resourceFactory.getStringBinding("runCode"));
+        nextClockTooltip.textProperty().bind(resourceFactory.getStringBinding("nextClk"));
+        nextSubClockTooltip.textProperty().bind(resourceFactory.getStringBinding("nextSubClk"));
+        codeTab.textProperty().bind(resourceFactory.getStringBinding("code"));
+        controlTab.textProperty().bind(resourceFactory.getStringBinding("control"));
+        memoryTab.textProperty().bind(resourceFactory.getStringBinding("memory"));
+        datapathTab.textProperty().bind(resourceFactory.getStringBinding("datapath"));
+        instrMnemonic.textProperty().bind(resourceFactory.getStringBinding("mnemonic"));
+        instrInstruction.textProperty().bind(resourceFactory.getStringBinding("instruction"));
+        instrMeaning.textProperty().bind(resourceFactory.getStringBinding("meaning"));
+        instrBinaryCode.textProperty().bind(resourceFactory.getStringBinding("binaryCode"));
+        console.promptTextProperty().bind(resourceFactory.getStringBinding("console"));
+        supportedInstructionsLab.textProperty().bind(resourceFactory.getStringBinding("supportedInstructions"));
+        controlMemoryLabel.textProperty().bind(resourceFactory.getStringBinding("controlMemory"));
+        cmAddressCol.textProperty().bind(resourceFactory.getStringBinding("address"));
+        cmValueCol.textProperty().bind(resourceFactory.getStringBinding("value"));
+        memAddress.textProperty().bind(resourceFactory.getStringBinding("address"));
+        memValue.textProperty().bind(resourceFactory.getStringBinding("value"));
+        memorySearchField.promptTextProperty().bind(resourceFactory.getStringBinding("searchByAddress"));
+        regName.textProperty().bind(resourceFactory.getStringBinding("register"));
+        regValue.textProperty().bind(resourceFactory.getStringBinding("value"));
+        clockTitleLabel.textProperty().bind(resourceFactory.getStringBinding("clock"));
+        subClockTitleLabel.textProperty().bind(resourceFactory.getStringBinding("subClock"));
     }
 
     private void initializeAboutStage() {
@@ -621,5 +692,13 @@ public class Controller {
 
     public void openAboutAction(ActionEvent actionEvent) throws IOException {
         aboutStage.show();
+    }
+
+    public void setEnglishLanguageAction() {
+        resourceFactory.setResources(ResourceBundle.getBundle("Translation", new Locale("en", "US")));
+    }
+
+    public void setBosnianLanguageAction() {
+        resourceFactory.setResources(ResourceBundle.getBundle("Translation", new Locale("bs", "BA")));
     }
 }

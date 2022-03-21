@@ -30,6 +30,14 @@
     -fx-background-image: url("/img/search.png");
 }
 
+#bsLanBtn {
+    -fx-background-image: url("/img/bs.png");
+}
+
+#enLanBtn {
+    -fx-background-image: url("/img/en.png");
+}
+
 .buttons {
     -fx-background-color: Transparent;
     -fx-cursor: HAND;
