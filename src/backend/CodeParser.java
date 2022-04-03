@@ -6,6 +6,7 @@ import java.util.Map;
 public class CodeParser {
     private static CodeParser instance;
     private InstructionParser instructionParser;
+    private final ObservableResourceFactory resourceFactory = ObservableResourceFactory.getInstance();
 
     public static CodeParser getInstance() {
         if (instance == null) instance = new CodeParser();
@@ -19,7 +20,7 @@ public class CodeParser {
     public short[] parseCode(String code) throws CodeParserException {
         Map<String, Integer> labels = new HashMap<>();
 
-        String errMessage = "Error on line number ";
+        String errMessage = resourceFactory.getResources().getString("line-num-err-message");
         String[] codeLines = code.split("\n");
 
         purifyCode(codeLines, labels); // can throw error for recurring label name
@@ -46,21 +47,20 @@ public class CodeParser {
             String[] instructionElements = line.split(" ");
 
             if (!instructionParser.instructionIsSupported(instructionElements[0]))
-                throw new CodeParserException(errMessage + lineNumber + ", unknown instruction mnemonic");
+                throw new CodeParserException(lineNumber + "=unknown-instr-mnemonic");
 
             argumentBinaryString = "00000000";
 
-
             if (instructionParser.instructionRequiresArgument(instructionElements[0])) {
                 if (instructionElements.length < 2)
-                    throw new CodeParserException(errMessage + lineNumber + ", missing argument");
+                    throw new CodeParserException(lineNumber + "=missing-arg");
                 try {
                     if (instructionParser.instructionIsJump(instructionElements[0])) {
                         try {
                             Integer.parseInt(instructionElements[1]);
                         } catch (NumberFormatException ex) {
                             if (!labels.containsKey(instructionElements[1]))
-                                throw new CodeParserException(errMessage + lineNumber + ", unknown label name");
+                                throw new CodeParserException(lineNumber + "=unknown-label");
                             instructionElements[1] = String.valueOf(labels.get(instructionElements[1]));
                         }
                     }
@@ -70,17 +70,17 @@ public class CodeParser {
                             || instructionElements[0].equalsIgnoreCase("DESP"))
                         boundary = 255;
                     if (paramValue < 0 || paramValue > boundary)
-                        throw new CodeParserException(errMessage + lineNumber + ", argument out of bounds");
+                        throw new CodeParserException(lineNumber + "=arg-out-of-bounds");
 
                     argumentBinaryString = Integer.toBinaryString(paramValue);
 
                 } catch (NumberFormatException ex) {
-                    throw new CodeParserException(errMessage + lineNumber + ", invalid argument");
+                    throw new CodeParserException(lineNumber + "=invalid-arg");
                 }
                 if (instructionElements.length > 2)
-                    throw new CodeParserException(errMessage + lineNumber + ", too many arguments");
+                    throw new CodeParserException(lineNumber + "=too-many-args");
             } else if (instructionElements.length > 1) {
-                throw new CodeParserException(errMessage + lineNumber + ", too many arguments");
+                throw new CodeParserException(lineNumber + "=too-many-args");
             }
 
             opcodeBinaryString = instructionParser.getOpcodeBytesString(instructionElements[0]);
@@ -91,7 +91,7 @@ public class CodeParser {
             memAddress++;
         }
         if (blankLinesCounter == codeLines.length)
-            throw new CodeParserException("Error blank code area");
+            throw new CodeParserException("no-code-err");
         return machineCode;
     }
 
@@ -117,7 +117,7 @@ public class CodeParser {
             if (elements.length >= 1 && elements[0].endsWith(":")) {
                 String newLabel = elements[0].substring(0, elements[0].length()-1);
                 if (labels.containsKey(newLabel))   // recurring label
-                    throw new CodeParserException("Error on line number " + (i + 1) + ", recurring label name");
+                    throw new CodeParserException((i + 1) + "=recurring-label");
 
                 labels.put(newLabel, memoryAddress);
 

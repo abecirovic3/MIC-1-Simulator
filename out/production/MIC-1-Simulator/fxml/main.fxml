@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -69,15 +71,27 @@
                      <tooltip>
                         <Tooltip fx:id="nextClockTooltip" showDelay="250ms" text="%nextClk" />
                      </tooltip></Button>
-                  <Separator layoutX="226.0" layoutY="10.0" opacity="0.0" orientation="VERTICAL" prefHeight="32.0" prefWidth="675.0" />
+                  <Separator layoutX="226.0" layoutY="10.0" opacity="0.0" orientation="VERTICAL" prefHeight="32.0" prefWidth="655.0" />
                   <Label text="Format:">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
+                      <font>
+                          <Font size="15.0" />
+                      </font>
                   </Label>
-                  <ChoiceBox fx:id="radixChoiceBox" prefWidth="100.0" />
+                  <MenuButton fx:id="radixChoiceMenu" mnemonicParsing="false" text="%decimal" prefWidth="120.0">
+                    <items>
+                      <MenuItem fx:id="decimalRadixItem" mnemonicParsing="false" text="%decimal" onAction="#setDecimalRadix" />
+                      <MenuItem fx:id="binaryRadixItem" mnemonicParsing="false" text="%binary" onAction="#setBinaryRadix" />
+                    </items>
+                  </MenuButton>
+<!--                  <ChoiceBox fx:id="radixChoiceBox" prefWidth="100.0">-->
+<!--                      <items>-->
+<!--                          <FXCollections fx:factory="observableArrayList">-->
+<!--                              <String fx:value="%decimal" />-->
+<!--                          </FXCollections>-->
+<!--                      </items>-->
+<!--                  </ChoiceBox>-->
                   <Separator layoutX="181.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="10.0" />
-                  <Label text="Language:">
+                  <Label fx:id="languageLab" text="%language">
                      <font>
                         <Font size="15.0" />
                      </font>

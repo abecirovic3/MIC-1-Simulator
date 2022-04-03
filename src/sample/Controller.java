@@ -10,7 +10,9 @@ import backend.MemoryLine;
 import backend.NumericFactory;
 import backend.ObservableResourceFactory;
 import backend.Register;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -24,6 +26,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -107,8 +110,6 @@ public class Controller {
     public Button btnNextSubClock;
     public Button btnNextClock;
 
-    public ChoiceBox<String> radixChoiceBox;
-
     public TabPane tabPane;
     public Tab codeTab;
     public Tab memoryTab;
@@ -147,6 +148,12 @@ public class Controller {
     public Label clockTitleLabel;
     public Label subClockTitleLabel;
     public Tab datapathTab;
+    public Label languageLab;
+
+    public MenuButton radixChoiceMenu;
+    public MenuItem decimalRadixItem;
+    public MenuItem binaryRadixItem;
+
     private CPU cpu = new CPU();
 
     private final int[][] microCodeLinesLengths = new int[256][2];
@@ -161,6 +168,9 @@ public class Controller {
 
     public Label supportedInstructionsLab;
 
+    private String errorKey = null;
+    private String errorLineNumber = null;
+
     @FXML
     public void initialize() {
         initializeInternationalizationBindings();
@@ -173,7 +183,6 @@ public class Controller {
         initializeClockGrid();
         initializeMPCField();
         initializeMIRField();
-        initializeRadixChoiceBox();
         initializeConsole();
         initializeMemoryTab();
         bindTooltips();
@@ -224,6 +233,9 @@ public class Controller {
         regValue.textProperty().bind(resourceFactory.getStringBinding("value"));
         clockTitleLabel.textProperty().bind(resourceFactory.getStringBinding("clock"));
         subClockTitleLabel.textProperty().bind(resourceFactory.getStringBinding("subClock"));
+        languageLab.textProperty().bind(resourceFactory.getStringBinding("language"));
+        decimalRadixItem.textProperty().bind(resourceFactory.getStringBinding("decimal"));
+        binaryRadixItem.textProperty().bind(resourceFactory.getStringBinding("binary"));
     }
 
     private void initializeAboutStage() {
@@ -278,19 +290,6 @@ public class Controller {
         console.addEventFilter(MouseEvent.ANY, Event::consume);
     }
 
-    private void initializeRadixChoiceBox() {
-        radixChoiceBox.getItems().add("Decimal");
-        radixChoiceBox.getItems().add("Binary");
-        radixChoiceBox.setValue("Decimal");
-        radixChoiceBox.setOnAction((event) -> {
-            String choice = radixChoiceBox.getValue();
-            int radix = 10;
-            if (choice.equals("Binary")) radix = 2;
-            if (radix != NumericFactory.getRadix())
-                changeRadix(radix);
-        });
-    }
-
     private void initializeMIRField() {
         MIRField.setText(NumericFactory.getStringValue32(cpu.MIRProperty().get()));
         cpu.MIRProperty().addListener(
@@ -304,11 +303,12 @@ public class Controller {
             microcodeArea.selectRange(
                     microCodeLinesLengths[newVal.intValue()][0], microCodeLinesLengths[newVal.intValue()][1]);
             if (newVal.intValue() <= 2) {
-                instructionStatusLabel.setText("Fetching instruction...");
+                instructionStatusLabel.textProperty().bind(resourceFactory.getStringBinding("instr-fetch"));
             }
             if (newVal.intValue() == 3) {
+                instructionStatusLabel.textProperty().unbind();
                 instructionStatusLabel.
-                        setText("Fetched instruction: " +
+                        setText(resourceFactory.getResources().getString("instr-exec") + ": " +
                                 instructionParser.getInstructionString((short) cpu.MBRProperty().get()));
             }
         });
@@ -379,18 +379,18 @@ public class Controller {
 
     private void showErrorAlert(String identifier) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Invalid new value!");
-        alert.setContentText(identifier + getBoundaryMsg(identifier));
+        alert.setTitle(resourceFactory.getResources().getString("error"));
+        alert.setHeaderText(resourceFactory.getResources().getString("invalid-new-val"));
+        alert.setContentText((identifier.equals("memory") ? "mem" : identifier) + getBoundaryMsg(identifier));
         alert.showAndWait();
     }
 
     private String getBoundaryMsg(String identifier) {
         if (identifier.equalsIgnoreCase("memory"))
-            return ": valid range is [" + Short.MIN_VALUE + ", " + Short.MAX_VALUE +"].";
+            return ": " + resourceFactory.getResources().getString("valid-range") + " [" + Short.MIN_VALUE + ", " + Short.MAX_VALUE +"].";
         if (isImmutableRegister(identifier))
-            return " register is immutable.";
-        return ": valid range is [" + getRegisterLowerBound(identifier)
+            return " " + resourceFactory.getResources().getString("immutable-reg") + ".";
+        return ": " + resourceFactory.getResources().getString("valid-range") + " [" + getRegisterLowerBound(identifier)
                 + ", " + getRegisterUpperBound(identifier) + "].";
     }
 
@@ -574,7 +574,7 @@ public class Controller {
     public void runCodeAction() {
         try {
             short[] machineCode = codeParser.parseCode(codeArea.getText());
-            console.setText("Code assembled successfully");
+            console.textProperty().bind(resourceFactory.getStringBinding("successful-assemble"));
             cpu.setCPUInitial();
             cpu.getMemory().write(machineCode);
             codeArea.setEditable(false);
@@ -585,7 +585,25 @@ public class Controller {
             updateToolTips();
             updateImgColors();
         } catch (CodeParserException e) {
-            console.setText(e.getMessage());
+            String[] errorInfo = e.getMessage().split("=");
+            if (errorInfo.length > 1) {
+                errorLineNumber = errorInfo[0];
+                errorKey = errorInfo[1];
+            } else {
+                errorLineNumber = null;
+                errorKey = errorInfo[0];
+            }
+            setConsoleErrorText();
+        }
+    }
+
+    private void setConsoleErrorText() {
+        console.textProperty().unbind();
+        if (errorLineNumber != null) {
+            console.setText(resourceFactory.getResources().getString("line-num-err-message")
+                    + errorLineNumber + resourceFactory.getResources().getString(errorKey));
+        } else {
+            console.setText(resourceFactory.getResources().getString(errorKey));
         }
     }
 
@@ -630,7 +648,7 @@ public class Controller {
 
     public void newFileAction() {
         if (codeArea.getText().isEmpty()) {
-            console.setText("");
+            clearConsole();
             return;
         }
 
@@ -638,7 +656,7 @@ public class Controller {
         if (!activeExecutionState.get()) {
             if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
                 codeArea.clear();
-                console.setText("");
+                clearConsole();
                 tabPane.getSelectionModel().select(codeTab);
             }
         } else {
@@ -649,9 +667,9 @@ public class Controller {
 
     private Optional<ButtonType> confirmationAlertShowAndWait() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText("Are you sure you want to create a new code file?");
-        alert.setContentText("Current progress will be lost!");
+        alert.setTitle(resourceFactory.getResources().getString("confirmation"));
+        alert.setHeaderText(resourceFactory.getResources().getString("new-code-file") + "?");
+        alert.setContentText(resourceFactory.getResources().getString("curr-progress") + "!");
         return alert.showAndWait();
     }
 
@@ -662,12 +680,22 @@ public class Controller {
         microcodeArea.setScrollTop(0);
         microcodeArea.selectRange(0, 0);
         microcodeArea.setStyle(null);
-        console.setText("");
+        clearConsole();
         activeExecutionState.set(false);
-        instructionStatusLabel.setText("");
+        clearInstructionStatusLabel();
         updateToolTips();
         updateImgColors();
         tabPane.getSelectionModel().select(codeTab);
+    }
+
+    private void clearInstructionStatusLabel() {
+        instructionStatusLabel.textProperty().unbind();
+        instructionStatusLabel.setText("");
+    }
+
+    private void clearConsole() {
+        console.textProperty().unbind();
+        console.setText("");
     }
 
     public void loadFileAction() {
@@ -697,10 +725,15 @@ public class Controller {
     }
 
     public void loadSimpleAdderAction() {
-        loadExample(CodeExample.getSimpleAdderExample());
+        loadExample(CodeExample.SIMPLE_ADDER_EXAMPLE);
     }
+
     public void loadNthFibonacciNum() {
-        loadExample(CodeExample.getNthFibNumberExample());
+        String comments = CodeExample.NTH_FIB_NUMBER_COMMENTS_EN;
+        if (resourceFactory.getResources().getLocale().getLanguage().equals("bs")) {
+            comments = CodeExample.NTH_FIB_NUMBER_COMMENTS_BS;
+        }
+        loadExample(comments + CodeExample.NTH_FIB_NUMBER_EXAMPLE);
     }
 
     private void loadExample(String example) {
@@ -720,9 +753,50 @@ public class Controller {
 
     public void setEnglishLanguageAction() {
         resourceFactory.setResources(ResourceBundle.getBundle("Translation", new Locale("en", "US")));
+        applyLanguageChange();
     }
 
     public void setBosnianLanguageAction() {
         resourceFactory.setResources(ResourceBundle.getBundle("Translation", new Locale("bs", "BA")));
+        applyLanguageChange();
+    }
+
+    private void applyLanguageChange() {
+        if (!console.getText().isEmpty() && !activeExecutionState.get()) {
+            setConsoleErrorText();
+        }
+        if (!instructionStatusLabel.getText().isEmpty()) {
+            setInstructionStatusLabelTranslatedText();
+        }
+        if (NumericFactory.getRadix() == 2) {
+            radixChoiceMenu.setText(resourceFactory.getResources().getString("binary"));
+        } else {
+            radixChoiceMenu.setText(resourceFactory.getResources().getString("decimal"));
+        }
+    }
+
+    private void setInstructionStatusLabelTranslatedText() {
+        String[] instructionStatusElements = instructionStatusLabel.getText().split(":");
+        if (instructionStatusElements.length > 1) {
+            instructionStatusLabel.textProperty().unbind();
+            instructionStatusLabel.setText(
+                    resourceFactory.getResources().getString("instr-exec") +
+                            ": " + instructionStatusElements[1]
+            );
+        }
+    }
+
+    public void setDecimalRadix() {
+        if (NumericFactory.getRadix() != 10) {
+            changeRadix(10);
+            radixChoiceMenu.setText(resourceFactory.getResources().getString("decimal"));
+        }
+    }
+
+    public void setBinaryRadix() {
+        if (NumericFactory.getRadix() != 2) {
+            changeRadix(2);
+            radixChoiceMenu.setText(resourceFactory.getResources().getString("binary"));
+        }
     }
 }
