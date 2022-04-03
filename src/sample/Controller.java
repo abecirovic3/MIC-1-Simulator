@@ -1,9 +1,16 @@
 package sample;
 
-import backend.*;
-import javafx.beans.binding.StringBinding;
+import backend.CPU;
+import backend.CodeExample;
+import backend.CodeParser;
+import backend.CodeParserException;
+import backend.FileParser;
+import backend.InstructionParser;
+import backend.MemoryLine;
+import backend.NumericFactory;
+import backend.ObservableResourceFactory;
+import backend.Register;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -11,7 +18,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -26,7 +46,11 @@ import javafx.util.Pair;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.function.Function;
 
 public class Controller {
@@ -685,8 +709,8 @@ public class Controller {
             selectedOption = confirmationAlertShowAndWait();
 
         if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
+            reinitialiseAppState();
             codeArea.setText(example);
-            tabPane.getSelectionModel().select(codeTab);
         }
     }
 
