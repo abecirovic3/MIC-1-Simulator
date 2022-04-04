@@ -6,9 +6,11 @@ import javafx.collections.ObservableList;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class FileParser {
+    private static final ObservableResourceFactory resourceFactory = ObservableResourceFactory.getInstance();
 
     public static ObservableList<Map<String, String>> loadSupportedInstructionsTableData() {
         ObservableList<Map<String, String>> items = FXCollections.observableArrayList();
@@ -21,7 +23,7 @@ public class FileParser {
 
                 Map<String, String> rawData = new HashMap<>();
                 rawData.put("mnemonic", data[0]);
-                rawData.put("instruction" , data[1]);
+                rawData.put("instruction" , resourceFactory.getResources().getString(data[0]));
                 rawData.put("meaning", data[2]);
                 rawData.put("binaryCode" , data[3]);
 

@@ -10,9 +10,8 @@ import backend.MemoryLine;
 import backend.NumericFactory;
 import backend.ObservableResourceFactory;
 import backend.Register;
-import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -23,7 +22,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuButton;
@@ -57,7 +55,7 @@ import java.util.ResourceBundle;
 import java.util.function.Function;
 
 public class Controller {
-    public TableView<Map> supportedInstructionsTable;
+    public TableView<Map<String, String>> supportedInstructionsTable;
     public TableColumn<Map, String> instrMnemonic;
     public TableColumn<Map, String> instrInstruction;
     public TableColumn<Map, String> instrMeaning;
@@ -170,6 +168,8 @@ public class Controller {
 
     private String errorKey = null;
     private String errorLineNumber = null;
+
+    ObservableList<Map<String, String>> supportedInstructionsList;
 
     @FXML
     public void initialize() {
@@ -469,7 +469,8 @@ public class Controller {
         instrInstruction.setCellValueFactory(new MapValueFactory<>("instruction"));
         instrMeaning.setCellValueFactory(new MapValueFactory<>("meaning"));
         instrBinaryCode.setCellValueFactory(new MapValueFactory<>("binaryCode"));
-        supportedInstructionsTable.getItems().addAll(FileParser.loadSupportedInstructionsTableData());
+        supportedInstructionsList = FileParser.loadSupportedInstructionsTableData();
+        supportedInstructionsTable.setItems(supportedInstructionsList);
     }
 
     private void bindTooltips() {
@@ -772,6 +773,15 @@ public class Controller {
             radixChoiceMenu.setText(resourceFactory.getResources().getString("binary"));
         } else {
             radixChoiceMenu.setText(resourceFactory.getResources().getString("decimal"));
+        }
+        updateSupportedInstructionsTable();
+    }
+
+    private void updateSupportedInstructionsTable() {
+        for (int i = 0; i < supportedInstructionsList.size(); i++) {
+            Map<String, String> updatedMap = new HashMap<>(supportedInstructionsList.get(i));
+            updatedMap.put("instruction", resourceFactory.getResources().getString(updatedMap.get("mnemonic")));
+            supportedInstructionsList.set(i, updatedMap);
         }
     }
 
