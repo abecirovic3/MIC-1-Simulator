@@ -1,11 +1,9 @@
 package sample;
 
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 public class AboutController {
     public ImageView imageView;
@@ -13,8 +11,7 @@ public class AboutController {
     private final Image frontImg;
     public Hyperlink creditsLink;
     public Hyperlink backLink;
-    public Label contentLabel;
-    public Label creditsLabel;
+    public AnchorPane anchorPaneBack;
 
     public AboutController() {
         backImg = new Image(getClass().getResourceAsStream("/img/aboutBack.png"));
@@ -25,19 +22,17 @@ public class AboutController {
         imageView.setImage(frontImg);
         creditsLink.setOpacity(1);
         creditsLink.setDisable(false);
-        contentLabel.setOpacity(0);
         backLink.setOpacity(0);
         backLink.setDisable(true);
-        creditsLabel.setOpacity(0);
+        anchorPaneBack.setOpacity(0);
     }
 
     public void showCreditsAction() {
         imageView.setImage(backImg);
         creditsLink.setOpacity(0);
         creditsLink.setDisable(true);
-        contentLabel.setOpacity(1);
         backLink.setOpacity(1);
         backLink.setDisable(false);
-        creditsLabel.setOpacity(1);
+        anchorPaneBack.setOpacity(1);
     }
 }

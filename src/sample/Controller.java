@@ -239,20 +239,8 @@ public class Controller {
     }
 
     private void initializeAboutStage() {
-        AboutController ctrl = new AboutController();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"));
-        loader.setController(ctrl);
-
-        Parent root = null;
-        try {
-            root = loader.load();
-            aboutStage.setTitle("About MIC-1 Simulator");
-            aboutStage.setScene(new Scene(root, 500, 500));
-            aboutStage.setResizable(false);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        aboutStage.setTitle("About MIC-1 Simulator");
+        aboutStage.setResizable(false);
     }
 
     private void initializeExecutionState() {
@@ -748,7 +736,19 @@ public class Controller {
         }
     }
 
-    public void openAboutAction(ActionEvent actionEvent) throws IOException {
+    public void openAboutAction() {
+        AboutController ctrl = new AboutController();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"), resourceFactory.getResources());
+        loader.setController(ctrl);
+
+        Parent root;
+        try {
+            root = loader.load();
+            aboutStage.setScene(new Scene(root, 500, 500));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         aboutStage.show();
     }
 
