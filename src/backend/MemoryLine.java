@@ -5,8 +5,8 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class MemoryLine {
     private short value;
-    private SimpleIntegerProperty address;
-    private SimpleStringProperty stringValue;
+    private final SimpleIntegerProperty address;
+    private final SimpleStringProperty stringValue;
 
     public MemoryLine(short address, short value) {
         this.address = new SimpleIntegerProperty(address);

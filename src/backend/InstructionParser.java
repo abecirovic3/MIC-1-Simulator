@@ -15,10 +15,6 @@ public class InstructionParser {
         supportedInstructions = FileParser.getSupportedInstructionsMap();
     }
 
-    public Map<String, String> getSupportedInstructions() {
-        return supportedInstructions;
-    }
-
     public String getInstructionString(short bytes) {
         short opcode, operand;
         if ((bytes & 0xF000) == 0xF000) {
@@ -47,8 +43,9 @@ public class InstructionParser {
     public String getOpcodeBytesString(short opcode) {
         StringBuilder result = new StringBuilder();
         short delimiter = 4;
-        if ((opcode & 0x00F0) == 0x00F0)
+        if ((opcode & 0x00F0) == 0x00F0) {
             delimiter = 8;
+        }
         for (short i = 0; i < delimiter; i++) {
             result.insert(0, opcode & 0x0001);
             opcode >>= 1;

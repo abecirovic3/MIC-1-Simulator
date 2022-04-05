@@ -43,11 +43,6 @@ public class ALU {
 
     @Override
     public String toString() {
-//        return "ALU{" +
-//                "output=" + output +
-//                ", NBit=" + NBit +
-//                ", ZBit=" + ZBit +
-//                '}';
         return  "out: " + output + "\nN: " + NBit + "\nZ: " + ZBit;
     }
 }

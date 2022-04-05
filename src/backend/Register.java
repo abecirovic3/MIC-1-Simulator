@@ -4,8 +4,8 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Register {
     private short value;
-    private SimpleStringProperty name;
-    private SimpleStringProperty stringValue;
+    private final SimpleStringProperty name;
+    private final SimpleStringProperty stringValue;
 
     public Register(String name, short value) {
         this.name = new SimpleStringProperty(name);

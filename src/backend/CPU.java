@@ -5,42 +5,44 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class CPU {
-    private ObservableList<Register> registers;
+    private final ObservableList<Register> registers;
     private short ALatch, BLatch;
-    private Mux aMux, mMux;
-    private ALU alu;
-    private Shifter shifter;
-    private SimpleIntegerProperty MAR, MBR;
-    private SimpleIntegerProperty MPC;
-    private int[] controlMemory;
-    private SimpleIntegerProperty MIR;
+    private final Mux aMux;
+    private final Mux mMux;
+    private final ALU alu;
+    private final Shifter shifter;
+    private final SimpleIntegerProperty MAR;
+    private final SimpleIntegerProperty MBR;
+    private final SimpleIntegerProperty MPC;
+    private final int[] controlMemory;
+    private final SimpleIntegerProperty MIR;
     private byte incrementer;
     private short aDec, bDec, cDec;
-    private MSeqLogic mSeqLogic;
-    private SimpleIntegerProperty clock;
-    private SimpleIntegerProperty clockCounter;
+    private final MSeqLogic mSeqLogic;
+    private final SimpleIntegerProperty clock;
+    private final SimpleIntegerProperty clockCounter;
     private boolean memoryReadDone;
 
-    private Memory memory;
+    private final Memory memory;
 
     public CPU() {
         registers = FXCollections.observableArrayList(
-                new Register("PC", (short)0),
-                new Register("AC", (short)0),
-                new Register("SP", (short)4095),
-                new Register("IR", (short)0),
-                new Register("TIR", (short)0),
-                new Register("0", (short)0),
-                new Register("+1", (short)1),
-                new Register("-1", (short)-1),
-                new Register("AMASK", (short)0x0fff),
-                new Register("SMASK", (short)0x00ff),
-                new Register("A", (short)0),
-                new Register("B", (short)0),
-                new Register("C", (short)0),
-                new Register("D", (short)0),
-                new Register("E", (short)0),
-                new Register("F", (short)0)
+                new Register("PC", (short) 0),
+                new Register("AC", (short) 0),
+                new Register("SP", (short) 4095),
+                new Register("IR", (short) 0),
+                new Register("TIR", (short) 0),
+                new Register("0", (short) 0),
+                new Register("+1", (short) 1),
+                new Register("-1", (short) -1),
+                new Register("AMASK", (short) 0x0fff),
+                new Register("SMASK", (short) 0x00ff),
+                new Register("A", (short) 0),
+                new Register("B", (short) 0),
+                new Register("C", (short) 0),
+                new Register("D", (short) 0),
+                new Register("E", (short) 0),
+                new Register("F", (short) 0)
         );
         aMux = new Mux();
         mMux = new Mux();
@@ -115,42 +117,45 @@ public class CPU {
             memoryReadDone = true;
         }
 
-        if (memory.isWriteReady())
+        if (memory.isWriteReady()) {
             memory.write((short)MBR.get());
+        }
 
         clock.set((clock.get() + 1) % 4);
     }
 
     public void runSecondSubCycle() {
-        aDec = (short)getBytesField(8, 0x0000000F);
-        bDec = (short)getBytesField(12, 0x0000000F);
+        aDec = (short) getBytesField(8, 0x0000000F);
+        bDec = (short) getBytesField(12, 0x0000000F);
         ALatch = registers.get(aDec).getValue();
         BLatch = registers.get(bDec).getValue();
-        incrementer = (byte)(MPC.get() + 1);
+        incrementer = (byte) (MPC.get() + 1);
         clock.set((clock.get() + 1) % 4);
     }
 
     public void runThirdSubCycle() {
         aMux.decideOutput(getBitAt(31), ALatch, (short) MBR.get());
-        alu.calculate((byte)getBytesField(27, 0x00000003), aMux.getOutput(), BLatch);
-        shifter.shift((byte)getBytesField(25, 0x00000003), alu.getOutput());
-        if (getBitAt(23))
+        alu.calculate((byte) getBytesField(27, 0x00000003), aMux.getOutput(), BLatch);
+        shifter.shift((byte) getBytesField(25, 0x00000003), alu.getOutput());
+        if (getBitAt(23)) {
             MAR.set(0x0FFF & BLatch);
+        }
 
         clock.set((clock.get() + 1) % 4);
     }
 
     public void runFourthSubCycle() {
-        if (getBitAt(24))
+        if (getBitAt(24)) {
             MBR.set(shifter.getOutput());
+        }
 
         if (getBitAt(20)) {
-            cDec = (short)getBytesField(16, 0x0000000F);
+            cDec = (short) getBytesField(16, 0x0000000F);
             registers.get(cDec).setValue(shifter.getOutput());
         }
 
-        mSeqLogic.generateOutput((byte)getBytesField(29, 0x00000003), alu.getNBit(), alu.getZBit());
-        mMux.decideOutput(mSeqLogic.isOutput(), incrementer, (short)getBytesField(0, 0x000000FF));
+        mSeqLogic.generateOutput((byte) getBytesField(29, 0x00000003), alu.getNBit(), alu.getZBit());
+        mMux.decideOutput(mSeqLogic.isOutput(), incrementer, (short) getBytesField(0, 0x000000FF));
 
         MPC.set(mMux.getOutput());
 
@@ -291,25 +296,29 @@ public class CPU {
         if (isWholeCycleDone() || clock.get() >= 1) {
             result = "A: " + registers.get(getABytes()).getName() + "\n" +
                     "B: " + registers.get(getBBytes()).getName();
-            if (isWholeCycleDone() || getENCBytes() == 1 && clock.get() >= 3)
-                result +=  "\nC: " + registers.get(getCBytes()).getName();
-            else
+            if (isWholeCycleDone() || getENCBytes() == 1 && clock.get() >= 3) {
+                result += "\nC: " + registers.get(getCBytes()).getName();
+            }
+            else {
                 result += "\nC: /";
+            }
         }
         return result;
     }
 
     public String getALatchToolTip() {
         String result = "data: /";
-        if (isWholeCycleDone() || clock.get() >= 2)
+        if (isWholeCycleDone() || clock.get() >= 2) {
             result = "data: " + NumericFactory.getStringValue16(ALatch);
+        }
         return result;
     }
 
     public String getBLatchToolTip() {
         String result = "data: /";
-        if (isWholeCycleDone() || clock.get() >= 2)
+        if (isWholeCycleDone() || clock.get() >= 2) {
             result = "data: " + NumericFactory.getStringValue16(BLatch);
+        }
         return result;
     }
 
@@ -321,8 +330,9 @@ public class CPU {
             inp0 = "0: " + NumericFactory.getStringValue16(ALatch);
             inp1 = "1: " + NumericFactory.getStringValue16((short) MBR.get());
         }
-        if (isWholeCycleDone() || clock.get() >= 3)
+        if (isWholeCycleDone() || clock.get() >= 3) {
             out = "out: " + NumericFactory.getStringValue16(aMux.getOutput());
+        }
 
         return inp0 + "\n" + inp1 + "\n" + out;
     }
@@ -330,8 +340,9 @@ public class CPU {
     public String getAluToolTip() {
         String a = "A: /";
         String b = "B: /";
-        if (isWholeCycleDone() || clock.get() >= 2)
+        if (isWholeCycleDone() || clock.get() >= 2) {
             b = "B: " + NumericFactory.getStringValue16(BLatch);
+        }
         if (isWholeCycleDone() || clock.get() >= 3) {
             return  "A: " + NumericFactory.getStringValue16(aMux.getOutput()) + "\n" + b
                     + "\nout: " + NumericFactory.getStringValue16(alu.getOutput())
@@ -343,9 +354,10 @@ public class CPU {
 
     public String getShifterToolTip() {
         String result = "in: /\nout: /";
-        if (isWholeCycleDone() || clock.get() >= 3)
+        if (isWholeCycleDone() || clock.get() >= 3) {
             result = "in: " + NumericFactory.getStringValue16(alu.getOutput())
                     + "\nout: " + NumericFactory.getStringValue16(shifter.getOutput());
+        }
         return result;
     }
 
@@ -377,23 +389,28 @@ public class CPU {
             en = "en: " + NumericFactory.getStringValue(getENCBytes(), 1);
             in = "in: " + NumericFactory.getStringValue(getCBytes(), 4);
         }
-        if (isWholeCycleDone() || clock.get() >= 3)
-            if (getENCBytes() == 1)
+        if (isWholeCycleDone() || clock.get() >= 3) {
+            if (getENCBytes() == 1) {
                 out = "out: " + getDecoderOutput(getCBytes());
-            else
+            }
+            else {
                 out = "out: " + "0000000000000000";
+            }
+        }
         return in + "\n" + out + "\n" + en;
     }
 
     private String getDecoderOutput(int position) {
-        if (NumericFactory.getRadix() != 10)
+        if (NumericFactory.getRadix() != 10) {
             return NumericFactory.getStringValue16((short) (1 << position));
+        }
         return String.valueOf(position);
     }
 
     public String getIncrementerToolTip() {
-        if (isWholeCycleDone() || clock.get() >= 2)
+        if (isWholeCycleDone() || clock.get() >= 2) {
             return "value: " + NumericFactory.getStringValue8(incrementer);
+        }
         return "value: /";
     }
 
@@ -401,12 +418,15 @@ public class CPU {
         String inp0 = "0: /";
         String inp1 = "1: /";
         String out = "out: /";
-        if (isWholeCycleDone())
+        if (isWholeCycleDone()) {
             out = "out: " + NumericFactory.getStringValue8(mMux.getOutput());
-        if (isWholeCycleDone() || clock.get() >= 1)
+        }
+        if (isWholeCycleDone() || clock.get() >= 1) {
             inp1 = "1: " + NumericFactory.getStringValue8((short) getAddressBytes());
-        if (isWholeCycleDone() || clock.get() >= 2)
+        }
+        if (isWholeCycleDone() || clock.get() >= 2) {
             inp0 = "0: " + NumericFactory.getStringValue8(incrementer);
+        }
         return inp0 + "\n" + inp1 + "\n" + out;
     }
 
@@ -426,8 +446,9 @@ public class CPU {
             z = "Z: " + NumericFactory.getStringValue(alu.getZBit() ? 1 : 0, 1);
         }
 
-        if (isWholeCycleDone())
+        if (isWholeCycleDone()) {
             out = "out: " + NumericFactory.getStringValue(mSeqLogic.isOutput() ? 1 : 0, 1);
+        }
 
         return l + "\n" + r + "\n" + n + "\n" + z + "\n" + out;
     }
@@ -435,8 +456,8 @@ public class CPU {
     public String getMIRToolTip() {
 
         String result =  "AMUX: /\nCOND: /\nALU: /\nShifter: /\nMBR: /\nMAR: /\nRD: /\nWR: /\nENC: /\nC: /\nB: /\nA: /\nAddress: /";
-        if (isWholeCycleDone() || clock.get() >= 1)
-            result =  "AMUX: " + NumericFactory.getStringValue(getAMuxBytes(), 1) +
+        if (isWholeCycleDone() || clock.get() >= 1) {
+            result = "AMUX: " + NumericFactory.getStringValue(getAMuxBytes(), 1) +
                     "\nCOND: " + NumericFactory.getStringValue(getCONDBytes(), 2) +
                     "\nALU: " + NumericFactory.getStringValue(getALUBytes(), 2) +
                     "\nShifter: " + NumericFactory.getStringValue(getShifterBytes(), 2) +
@@ -449,6 +470,7 @@ public class CPU {
                     "\nB: " + NumericFactory.getStringValue(getBBytes(), 4) +
                     "\nA: " + NumericFactory.getStringValue(getABytes(), 4) +
                     "\nAddress: " + NumericFactory.getStringValue(getAddressBytes(), 8);
+        }
         return result;
     }
 

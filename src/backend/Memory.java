@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Memory {
-    private ObservableList<MemoryLine> memory;
+    private final ObservableList<MemoryLine> memory;
     private short address;
     private byte readCounter, writeCounter;
 

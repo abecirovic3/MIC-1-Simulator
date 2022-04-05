@@ -12,7 +12,6 @@ import backend.ObservableResourceFactory;
 import backend.Register;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,7 +60,7 @@ public class Controller {
     public TableColumn<Map, String> instrMeaning;
     public TableColumn<Map, String> instrBinaryCode;
 
-    public TableView<Map> controlMemoryTable;
+    public TableView<Map<String, String>> controlMemoryTable;
     public TableColumn<Map, String> cmAddressCol;
     public TableColumn<Map, String> cmValueCol;
     public TableColumn<Map, String> cmAmuxCol;
@@ -111,7 +110,20 @@ public class Controller {
     public TabPane tabPane;
     public Tab codeTab;
     public Tab memoryTab;
+    public Tab controlTab;
+    public Tab datapathTab;
 
+    public Menu fileMenu;
+    public Menu examplesMenu;
+    public Menu executeMenu;
+    public Menu helpMenu;
+    public MenuItem newMenuitem;
+    public MenuItem openMenuItem;
+    public MenuItem saveMenuItem;
+    public MenuItem simpleAdderExampleMenuItem;
+    public MenuItem nthFibNumExampleMenuItem;
+    public MenuItem exitMenuItem;
+    public MenuItem aboutMenuItem;
     public MenuItem menuItemRun;
     public MenuItem menuItemNextSubClk;
     public MenuItem menuItemNextClk;
@@ -124,35 +136,27 @@ public class Controller {
 
     private final CodeParser codeParser = CodeParser.getInstance();
     private final InstructionParser instructionParser = InstructionParser.getInstance();
-    public Menu fileMenu;
-    public MenuItem newMenuitem;
-    public MenuItem openMenuItem;
-    public MenuItem saveMenuItem;
-    public Menu examplesMenu;
-    public MenuItem simpleAdderExampleMenuItem;
-    public MenuItem nthFibNumExampleMenuItem;
-    public MenuItem exitMenuItem;
-    public Menu executeMenu;
-    public Menu helpMenu;
-    public MenuItem aboutMenuItem;
+
+
     public Tooltip newFileTooltip;
     public Tooltip loadFileTooltip;
     public Tooltip saveFileTooltip;
     public Tooltip runCodeTooltip;
     public Tooltip nextSubClockTooltip;
     public Tooltip nextClockTooltip;
-    public Tab controlTab;
+
+
     public Label controlMemoryLabel;
     public Label clockTitleLabel;
     public Label subClockTitleLabel;
-    public Tab datapathTab;
     public Label languageLab;
+    public Label supportedInstructionsLab;
 
     public MenuButton radixChoiceMenu;
     public MenuItem decimalRadixItem;
     public MenuItem binaryRadixItem;
 
-    private CPU cpu = new CPU();
+    private final CPU cpu = new CPU();
 
     private final int[][] microCodeLinesLengths = new int[256][2];
 
@@ -160,11 +164,9 @@ public class Controller {
 
     private final SimpleBooleanProperty activeExecutionState = new SimpleBooleanProperty(false);
 
-    private Stage aboutStage = new Stage();
+    private final Stage aboutStage = new Stage();
 
     private final ObservableResourceFactory resourceFactory = ObservableResourceFactory.getInstance();
-
-    public Label supportedInstructionsLab;
 
     private String errorKey = null;
     private String errorLineNumber = null;
@@ -324,17 +326,16 @@ public class Controller {
         memAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         memValue.setCellValueFactory(new PropertyValueFactory<>("stringValue"));
         memValue.setCellFactory(TextFieldTableCell.forTableColumn());
-        memValue.setOnEditCommit(event -> {
-            changeMemoryLineValue(event.getRowValue(), event.getNewValue());
-        });
+        memValue.setOnEditCommit(event -> changeMemoryLineValue(event.getRowValue(), event.getNewValue()));
         memoryTable.setItems(cpu.getMemory().getMemory());
     }
 
     private void changeMemoryLineValue(MemoryLine memLine, String newValue) {
         try {
             int value = Integer.parseInt(newValue);
-            if (value < Short.MIN_VALUE || value > Short.MAX_VALUE)
+            if (value < Short.MIN_VALUE || value > Short.MAX_VALUE) {
                 throw new NumberFormatException();
+            }
             memLine.setValue((short) value);
             memoryTable.refresh();
         } catch (NumberFormatException e) {
@@ -347,9 +348,7 @@ public class Controller {
         regName.setCellValueFactory(new PropertyValueFactory<>("name"));
         regValue.setCellValueFactory(new PropertyValueFactory<>("stringValue"));
         regValue.setCellFactory(TextFieldTableCell.forTableColumn());
-        regValue.setOnEditCommit(event -> {
-            changeRegisterValue(event.getRowValue(), event.getNewValue());
-        });
+        regValue.setOnEditCommit(event -> changeRegisterValue(event.getRowValue(), event.getNewValue()));
         registersTable.setItems(cpu.getRegisters());
     }
 
@@ -374,36 +373,43 @@ public class Controller {
     }
 
     private String getBoundaryMsg(String identifier) {
-        if (identifier.equalsIgnoreCase("memory"))
-            return ": " + resourceFactory.getResources().getString("valid-range") + " [" + Short.MIN_VALUE + ", " + Short.MAX_VALUE +"].";
-        if (isImmutableRegister(identifier))
+        if (identifier.equalsIgnoreCase("memory")) {
+            return ": " + resourceFactory.getResources().getString("valid-range")
+                    + " [" + Short.MIN_VALUE + ", " + Short.MAX_VALUE + "].";
+        }
+        if (isImmutableRegister(identifier)) {
             return " " + resourceFactory.getResources().getString("immutable-reg") + ".";
-        return ": " + resourceFactory.getResources().getString("valid-range") + " [" + getRegisterLowerBound(identifier)
-                + ", " + getRegisterUpperBound(identifier) + "].";
+        }
+        return ": " + resourceFactory.getResources().getString("valid-range")
+                + " [" + getRegisterLowerBound(identifier) + ", " + getRegisterUpperBound(identifier) + "].";
     }
 
     private void validateValue(String regName, int value) {
-        if (isImmutableRegister(regName))
+        if (isImmutableRegister(regName)) {
             throw new NumberFormatException();
+        }
 
         int lower = getRegisterLowerBound(regName);
         int upper = getRegisterUpperBound(regName);
 
-        if (value < lower || value > upper)
+        if (value < lower || value > upper) {
             throw new NumberFormatException();
+        }
     }
 
     private int getRegisterUpperBound(String regName) {
         int res = Short.MAX_VALUE;
-        if (regName.equalsIgnoreCase("PC") || regName.equalsIgnoreCase("SP"))
+        if (regName.equalsIgnoreCase("PC") || regName.equalsIgnoreCase("SP")) {
             res = 4095;
+        }
         return res;
     }
 
     private int getRegisterLowerBound(String regName) {
         int res = Short.MIN_VALUE;
-        if (regName.equalsIgnoreCase("PC") || regName.equalsIgnoreCase("SP"))
+        if (regName.equalsIgnoreCase("PC") || regName.equalsIgnoreCase("SP")) {
             res = 0;
+        }
         return res;
     }
 
@@ -548,16 +554,19 @@ public class Controller {
         MARField.setText(NumericFactory.getStringValue16(cpu.MARProperty().getValue().shortValue()));
         MBRField.setText(NumericFactory.getStringValue16(cpu.MBRProperty().getValue().shortValue()));
         String memValue = searchedAddressValueField.getText();
-        if (!memValue.isEmpty())
+        if (!memValue.isEmpty()) {
             searchedAddressValueField.setText(
                     NumericFactory.getStringValue16(NumericFactory.getShortValue(memValue, oldRadix)));
+        }
     }
 
     private void changeRadixInTables() {
-        for (Register r : cpu.getRegisters())
+        for (Register r : cpu.getRegisters()) {
             r.setValue(r.getValue());
-        for (MemoryLine m : cpu.getMemory().getMemory())
+        }
+        for (MemoryLine m : cpu.getMemory().getMemory()) {
             m.setValue(m.getValue());
+        }
     }
 
     public void runCodeAction() {
@@ -704,8 +713,9 @@ public class Controller {
 
     public void saveFileAction() {
         File selectedFile = fileChooser.showSaveDialog(btnRun.getScene().getWindow());
-        if (selectedFile != null)
+        if (selectedFile != null) {
             FileParser.writeFile(selectedFile, codeArea.getText());
+        }
     }
 
     public void exitAction() {

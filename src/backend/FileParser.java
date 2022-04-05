@@ -3,11 +3,15 @@ package backend;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Scanner;
 
 public class FileParser {
     private static final ObservableResourceFactory resourceFactory = ObservableResourceFactory.getInstance();
@@ -145,23 +149,6 @@ public class FileParser {
         assert inputStream != null;
         return new BufferedReader(new InputStreamReader(inputStream));
     }
-
-//    public static String readLocalFile(String fileName) {
-//        StringBuilder result = new StringBuilder();
-//        try {
-//            BufferedReader bufferedReader = getBufferedReader("/dataFiles/" + fileName);
-//            String row;
-//            while ((row = bufferedReader.readLine()) != null) {
-//                result.append(row).append("\n");
-//            }
-//            bufferedReader.close();
-//            return result.toString();
-//        } catch (IOException e) {
-//            System.out.println("Problems with reading controlMemoryINT.txt!");
-//            e.printStackTrace();
-//        }
-//        return "";
-//    }
 
     public static String readFile(File file) {
         try {

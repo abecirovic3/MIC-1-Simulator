@@ -5,8 +5,7 @@ import java.util.Map;
 
 public class CodeParser {
     private static CodeParser instance;
-    private InstructionParser instructionParser;
-    private final ObservableResourceFactory resourceFactory = ObservableResourceFactory.getInstance();
+    private final InstructionParser instructionParser;
 
     public static CodeParser getInstance() {
         if (instance == null) instance = new CodeParser();
@@ -20,7 +19,6 @@ public class CodeParser {
     public short[] parseCode(String code) throws CodeParserException {
         Map<String, Integer> labels = new HashMap<>();
 
-        String errMessage = resourceFactory.getResources().getString("line-num-err-message");
         String[] codeLines = code.split("\n");
 
         purifyCode(codeLines, labels); // can throw error for recurring label name
@@ -108,7 +106,7 @@ public class CodeParser {
         int memoryAddress = 0;
         for (int i = 0; i < codeLines.length; i++) {
             codeLines[i] = codeLines[i].replaceAll(";.*", ""); // remove comments
-            codeLines[i] = codeLines[i].trim(); // get rid of all leading and trailing blanks
+            codeLines[i] = codeLines[i].trim(); // remove all leading and trailing blanks
             codeLines[i] = codeLines[i].replaceAll(" +", " "); // replace multiple blanks with one
 
             if (codeLines[i].equals("")) continue;
@@ -121,7 +119,7 @@ public class CodeParser {
 
                 labels.put(newLabel, memoryAddress);
 
-                // get rid of label
+                // remove label
                 // we don't increment the mem address, bcs this line is only a label
                 if (elements.length > 1) {
                     codeLines[i] = codeLines[i].replace(newLabel + ": ", "");
