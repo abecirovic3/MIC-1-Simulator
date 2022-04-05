@@ -10,6 +10,14 @@
     -fx-background-image: url("/img/btnNextClock.png");
 }
 
+#btnEndProgram {
+    -fx-background-image: url("/img/btnEnd.png");
+}
+
+#btnJumpToEnd {
+    -fx-background-image: url("/img/btnJumpToEnd.png");
+}
+
 #btnNewFile {
     -fx-background-image: url("/img/btnNewFile.png");
 }

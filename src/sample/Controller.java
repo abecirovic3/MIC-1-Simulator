@@ -12,6 +12,7 @@ import backend.ObservableResourceFactory;
 import backend.Register;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -106,6 +107,8 @@ public class Controller {
     public Button btnRun;
     public Button btnNextSubClock;
     public Button btnNextClock;
+    public Button btnJumpToEnd;
+    public Button btnEndProgram;
 
     public TabPane tabPane;
     public Tab codeTab;
@@ -137,14 +140,14 @@ public class Controller {
     private final CodeParser codeParser = CodeParser.getInstance();
     private final InstructionParser instructionParser = InstructionParser.getInstance();
 
-
     public Tooltip newFileTooltip;
     public Tooltip loadFileTooltip;
     public Tooltip saveFileTooltip;
     public Tooltip runCodeTooltip;
     public Tooltip nextSubClockTooltip;
     public Tooltip nextClockTooltip;
-
+    public Tooltip jumpToEndTooltip;
+    public Tooltip endProgramTooltip;
 
     public Label controlMemoryLabel;
     public Label clockTitleLabel;
@@ -215,6 +218,8 @@ public class Controller {
         runCodeTooltip.textProperty().bind(resourceFactory.getStringBinding("runCode"));
         nextClockTooltip.textProperty().bind(resourceFactory.getStringBinding("nextClk"));
         nextSubClockTooltip.textProperty().bind(resourceFactory.getStringBinding("nextSubClk"));
+        jumpToEndTooltip.textProperty().bind(resourceFactory.getStringBinding("jumpToEnd"));
+        endProgramTooltip.textProperty().bind(resourceFactory.getStringBinding("endProgram"));
         codeTab.textProperty().bind(resourceFactory.getStringBinding("code"));
         controlTab.textProperty().bind(resourceFactory.getStringBinding("control"));
         memoryTab.textProperty().bind(resourceFactory.getStringBinding("memory"));
@@ -254,6 +259,8 @@ public class Controller {
                 btnRun.setDisable(true);
                 btnNextSubClock.setDisable(false);
                 btnNextClock.setDisable(false);
+                btnJumpToEnd.setDisable(false);
+                btnEndProgram.setDisable(false);
             } else {
                 menuItemRun.setDisable(false);
                 menuItemNextSubClk.setDisable(true);
@@ -261,6 +268,8 @@ public class Controller {
                 btnRun.setDisable(false);
                 btnNextSubClock.setDisable(true);
                 btnNextClock.setDisable(true);
+                btnJumpToEnd.setDisable(true);
+                btnEndProgram.setDisable(true);
             }
         });
     }
@@ -650,7 +659,10 @@ public class Controller {
             return;
         }
 
-        Optional<ButtonType> selectedOption = confirmationAlertShowAndWait();
+        Optional<ButtonType> selectedOption = confirmationAlertShowAndWait(
+                resourceFactory.getResources().getString("new-code-file"),
+                resourceFactory.getResources().getString("curr-progress")
+        );
         if (!activeExecutionState.get()) {
             if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
                 codeArea.clear();
@@ -663,11 +675,11 @@ public class Controller {
         }
     }
 
-    private Optional<ButtonType> confirmationAlertShowAndWait() {
+    private Optional<ButtonType> confirmationAlertShowAndWait(String headerText, String contentText) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(resourceFactory.getResources().getString("confirmation"));
-        alert.setHeaderText(resourceFactory.getResources().getString("new-code-file") + "?");
-        alert.setContentText(resourceFactory.getResources().getString("curr-progress") + "!");
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
         return alert.showAndWait();
     }
 
@@ -701,7 +713,10 @@ public class Controller {
         if (selectedFile != null) {
             Optional<ButtonType> selectedOption = Optional.of(ButtonType.OK);
             if (!codeArea.getText().isEmpty()) {
-                selectedOption = confirmationAlertShowAndWait();
+                selectedOption = confirmationAlertShowAndWait(
+                        resourceFactory.getResources().getString("load-code-file") + "?",
+                        resourceFactory.getResources().getString("curr-progress") + "!"
+                );
             }
             if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
                 reinitialiseAppState();
@@ -737,8 +752,12 @@ public class Controller {
 
     private void loadExample(String example) {
         Optional<ButtonType> selectedOption = Optional.of(ButtonType.OK);
-        if (!codeArea.getText().isEmpty())
-            selectedOption = confirmationAlertShowAndWait();
+        if (!codeArea.getText().isEmpty()) {
+            selectedOption = confirmationAlertShowAndWait(
+                    resourceFactory.getResources().getString("load-code-example") + "?",
+                    resourceFactory.getResources().getString("curr-progress") + "!"
+            );
+        }
 
         if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
             reinitialiseAppState();
@@ -817,6 +836,26 @@ public class Controller {
         if (NumericFactory.getRadix() != 2) {
             changeRadix(2);
             radixChoiceMenu.setText(resourceFactory.getResources().getString("binary"));
+        }
+    }
+
+    public void endProgramExecutionAction() {
+        Optional<ButtonType> selectedOption = confirmationAlertShowAndWait(
+                resourceFactory.getResources().getString("end-program-exec-warn"),
+                resourceFactory.getResources().getString("curr-progress")
+        );
+        if (!activeExecutionState.get()) {
+            if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
+                console.textProperty().bind(resourceFactory.getStringBinding("program-exec-stop"));
+                tabPane.getSelectionModel().select(codeTab);
+            }
+        } else {
+            if (selectedOption.isPresent() && selectedOption.get() == ButtonType.OK) {
+                String currentCode = codeArea.getText();
+                reinitialiseAppState();
+                codeArea.setText(currentCode);
+                console.textProperty().bind(resourceFactory.getStringBinding("program-exec-stop"));
+            }
         }
     }
 }

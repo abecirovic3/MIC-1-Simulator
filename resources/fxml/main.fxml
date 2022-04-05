@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -42,21 +40,21 @@
             </MenuBar>
             <ToolBar prefHeight="40.0" prefWidth="200.0" styleClass="toolbar">
               <items>
-                <Button fx:id="btnNewFile" alignment="CENTER" contentDisplay="CENTER" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#newFileAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
+                <Button fx:id="btnNewFile" alignment="CENTER" contentDisplay="CENTER" maxHeight="32.0" maxWidth="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#newFileAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
                      <tooltip>
                         <Tooltip fx:id="newFileTooltip" showDelay="250ms" text="%newFile" />
                      </tooltip></Button>
                   <Separator minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
-                <Button fx:id="btnLoadFile" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#loadFileAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
+                <Button fx:id="btnLoadFile" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#loadFileAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
                      <tooltip>
                         <Tooltip fx:id="loadFileTooltip" showDelay="250ms" text="%loadFile" />
                      </tooltip></Button>
                   <Separator minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
-                <Button fx:id="btnSaveFile" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#saveFileAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
+                <Button fx:id="btnSaveFile" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#saveFileAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
                      <tooltip>
                         <Tooltip fx:id="saveFileTooltip" showDelay="250ms" text="%saveFile" />
                      </tooltip></Button>
-                  <Separator layoutX="235.0" layoutY="10.0" minWidth="5.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
+                  <Separator layoutX="235.0" layoutY="10.0" minWidth="5.0" orientation="VERTICAL" prefHeight="32.0" prefWidth="100.0" />
                 <Button fx:id="btnRun" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#runCodeAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
                      <tooltip>
                         <Tooltip fx:id="runCodeTooltip" showDelay="250ms" text="%runCode" />
@@ -71,27 +69,33 @@
                      <tooltip>
                         <Tooltip fx:id="nextClockTooltip" showDelay="250ms" text="%nextClk" />
                      </tooltip></Button>
-                  <Separator layoutX="226.0" layoutY="10.0" opacity="0.0" orientation="VERTICAL" prefHeight="32.0" prefWidth="655.0" />
+                  <Separator layoutX="226.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
+                  <Button fx:id="btnJumpToEnd" disable="true" layoutX="235.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#runClockCycleAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
+                     <tooltip>
+                        <Tooltip fx:id="jumpToEndTooltip" showDelay="250ms" text="%jumpToEnd" />
+                     </tooltip>
+                  </Button>
+                  <Separator layoutX="271.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
+                  <Button fx:id="btnEndProgram" disable="true" layoutX="280.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#endProgramExecutionAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
+                     <tooltip>
+                        <Tooltip fx:id="endProgramTooltip" showDelay="250ms" text="%endProgram" />
+                     </tooltip>
+                  </Button>
+                  <Separator layoutX="226.0" layoutY="10.0" orientation="VERTICAL" prefHeight="32.0" prefWidth="100.0" />
+                  <Separator layoutX="456.0" layoutY="10.0" opacity="0.0" orientation="VERTICAL" prefHeight="32.0" prefWidth="350.0" />
                   <Label text="Format:">
                       <font>
                           <Font size="15.0" />
                       </font>
                   </Label>
-                  <MenuButton fx:id="radixChoiceMenu" mnemonicParsing="false" text="%decimal" prefWidth="120.0">
+                  <MenuButton fx:id="radixChoiceMenu" mnemonicParsing="false" prefWidth="120.0" text="%decimal">
                     <items>
-                      <MenuItem fx:id="decimalRadixItem" mnemonicParsing="false" text="%decimal" onAction="#setDecimalRadix" />
-                      <MenuItem fx:id="binaryRadixItem" mnemonicParsing="false" text="%binary" onAction="#setBinaryRadix" />
+                      <MenuItem fx:id="decimalRadixItem" mnemonicParsing="false" onAction="#setDecimalRadix" text="%decimal" />
+                      <MenuItem fx:id="binaryRadixItem" mnemonicParsing="false" onAction="#setBinaryRadix" text="%binary" />
                     </items>
                   </MenuButton>
-<!--                  <ChoiceBox fx:id="radixChoiceBox" prefWidth="100.0">-->
-<!--                      <items>-->
-<!--                          <FXCollections fx:factory="observableArrayList">-->
-<!--                              <String fx:value="%decimal" />-->
-<!--                          </FXCollections>-->
-<!--                      </items>-->
-<!--                  </ChoiceBox>-->
                   <Separator layoutX="181.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="10.0" />
-                  <Label fx:id="languageLab" text="%language">
+                  <Label fx:id="languageLab" prefWidth="100.0" text="%language">
                      <font>
                         <Font size="15.0" />
                      </font>
