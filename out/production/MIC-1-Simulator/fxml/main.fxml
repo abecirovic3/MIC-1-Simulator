@@ -20,6 +20,7 @@
                     <Menu fx:id="examplesMenu" mnemonicParsing="false" text="%examples">
                         <MenuItem fx:id="simpleAdderExampleMenuItem" mnemonicParsing="false" onAction="#loadSimpleAdderAction" text="%simpleAdder" />
                         <MenuItem fx:id="nthFibNumExampleMenuItem" mnemonicParsing="false" onAction="#loadNthFibonacciNum" text="%nthFibNum" />
+                        <MenuItem fx:id="firstNToStackMenuItem" mnemonicParsing="false" onAction="#loadFirstNToStack" text="%firstNToStack" />
                     </Menu>
                     <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#exitAction" text="%exit" />
                   </items>

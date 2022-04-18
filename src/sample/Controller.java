@@ -125,6 +125,7 @@ public class Controller {
     public MenuItem saveMenuItem;
     public MenuItem simpleAdderExampleMenuItem;
     public MenuItem nthFibNumExampleMenuItem;
+    public MenuItem firstNToStackMenuItem;
     public MenuItem exitMenuItem;
     public MenuItem aboutMenuItem;
     public MenuItem menuItemRun;
@@ -205,6 +206,7 @@ public class Controller {
         examplesMenu.textProperty().bind(resourceFactory.getStringBinding("examples"));
         simpleAdderExampleMenuItem.textProperty().bind(resourceFactory.getStringBinding("simpleAdder"));
         nthFibNumExampleMenuItem.textProperty().bind(resourceFactory.getStringBinding("nthFibNum"));
+        firstNToStackMenuItem.textProperty().bind(resourceFactory.getStringBinding("firstNToStack"));
         exitMenuItem.textProperty().bind(resourceFactory.getStringBinding("exit"));
         executeMenu.textProperty().bind(resourceFactory.getStringBinding("execute"));
         menuItemRun.textProperty().bind(resourceFactory.getStringBinding("run"));
@@ -748,6 +750,14 @@ public class Controller {
             comments = CodeExample.NTH_FIB_NUMBER_COMMENTS_BS;
         }
         loadExample(comments + CodeExample.NTH_FIB_NUMBER_EXAMPLE);
+    }
+
+    public void loadFirstNToStack() {
+        String code = CodeExample.FIRST_N_TO_STACK_EN;
+        if (resourceFactory.getResources().getLocale().getLanguage().equals("bs")) {
+            code = CodeExample.FIRST_N_TO_STACK_BS;
+        }
+        loadExample(code);
     }
 
     private void loadExample(String example) {
