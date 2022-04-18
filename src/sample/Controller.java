@@ -306,7 +306,7 @@ public class Controller {
             if (newVal.intValue() <= 2) {
                 instructionStatusLabel.textProperty().bind(resourceFactory.getStringBinding("instr-fetch"));
             }
-            if (newVal.intValue() == 3) {
+            if (newVal.intValue() >= 3) {
                 instructionStatusLabel.textProperty().unbind();
                 instructionStatusLabel.
                         setText(resourceFactory.getResources().getString("instr-exec") + ": " +
