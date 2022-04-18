@@ -3,10 +3,11 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
+<?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="960.0" maxWidth="1280.0" minHeight="960.0" minWidth="1280.0" prefHeight="960.0" prefWidth="1280.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<BorderPane maxHeight="960.0" maxWidth="1280.0" minHeight="960.0" minWidth="1280.0" onKeyPressed="#onKeyPressedAction" prefHeight="960.0" prefWidth="1280.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -14,13 +15,25 @@
               <menus>
                 <Menu fx:id="fileMenu" mnemonicParsing="false" text="%file">
                   <items>
-                    <MenuItem fx:id="newMenuitem" mnemonicParsing="false" onAction="#newFileAction" text="%new" />
-                    <MenuItem fx:id="openMenuItem" mnemonicParsing="false" onAction="#loadFileAction" text="%load" />
-                    <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#saveFileAction" text="%save" />
+                    <MenuItem fx:id="newMenuitem" mnemonicParsing="false" onAction="#newFileAction" text="%new">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                    <MenuItem fx:id="openMenuItem" mnemonicParsing="false" onAction="#loadFileAction" text="%load">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                    <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#saveFileAction" text="%save">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
                     <Menu fx:id="examplesMenu" mnemonicParsing="false" text="%examples">
                         <MenuItem fx:id="simpleAdderExampleMenuItem" mnemonicParsing="false" onAction="#loadSimpleAdderAction" text="%simpleAdder" />
                         <MenuItem fx:id="nthFibNumExampleMenuItem" mnemonicParsing="false" onAction="#loadNthFibonacciNum" text="%nthFibNum" />
                         <MenuItem fx:id="firstNToStackMenuItem" mnemonicParsing="false" onAction="#loadFirstNToStack" text="%firstNToStack" />
+                           <accelerator>
+                              <KeyCodeCombination alt="DOWN" code="E" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
                     </Menu>
                     <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#exitAction" text="%exit" />
                   </items>
@@ -30,6 +43,7 @@
                         <MenuItem fx:id="menuItemRun" mnemonicParsing="false" onAction="#runCodeAction" text="%run" />
                         <MenuItem fx:id="menuItemNextSubClk" disable="true" mnemonicParsing="false" onAction="#runSubClockCycleAction" text="%nextSubClk" />
                         <MenuItem fx:id="menuItemNextClk" disable="true" mnemonicParsing="false" onAction="#runClockCycleAction" text="%nextClk" />
+                        <MenuItem fx:id="menuItemEndProgram" disable="true" mnemonicParsing="false" onAction="#endProgramExecutionAction" text="%endProgram" />
                     </items>
                 </Menu>
                 <Menu fx:id="helpMenu" mnemonicParsing="false" text="%help">

@@ -38,6 +38,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -131,6 +133,7 @@ public class Controller {
     public MenuItem menuItemRun;
     public MenuItem menuItemNextSubClk;
     public MenuItem menuItemNextClk;
+    public MenuItem menuItemEndProgram;
 
     public AnchorPane dataPathPane;
     public ImageView registersImg;
@@ -212,6 +215,7 @@ public class Controller {
         menuItemRun.textProperty().bind(resourceFactory.getStringBinding("run"));
         menuItemNextClk.textProperty().bind(resourceFactory.getStringBinding("nextClk"));
         menuItemNextSubClk.textProperty().bind(resourceFactory.getStringBinding("nextSubClk"));
+        menuItemEndProgram.textProperty().bind(resourceFactory.getStringBinding("endProgram"));
         helpMenu.textProperty().bind(resourceFactory.getStringBinding("help"));
         aboutMenuItem.textProperty().bind(resourceFactory.getStringBinding("about"));
         newFileTooltip.textProperty().bind(resourceFactory.getStringBinding("newFile"));
@@ -258,6 +262,7 @@ public class Controller {
                 menuItemRun.setDisable(true);
                 menuItemNextSubClk.setDisable(false);
                 menuItemNextClk.setDisable(false);
+                menuItemEndProgram.setDisable(false);
                 btnRun.setDisable(true);
                 btnNextSubClock.setDisable(false);
                 btnNextClock.setDisable(false);
@@ -267,6 +272,7 @@ public class Controller {
                 menuItemRun.setDisable(false);
                 menuItemNextSubClk.setDisable(true);
                 menuItemNextClk.setDisable(true);
+                menuItemEndProgram.setDisable(true);
                 btnRun.setDisable(false);
                 btnNextSubClock.setDisable(true);
                 btnNextClock.setDisable(true);
@@ -650,6 +656,7 @@ public class Controller {
                 throw new NumberFormatException("out of bounds");
             searchedAddressValueField.setText(NumericFactory.getStringValue16(cpu.getMemory().read((short) address)));
             memorySearchField.setStyle(null);
+            memoryTable.scrollTo(cpu.getMemory().getMemory().get(address));
         } catch (NumberFormatException e) {
             memorySearchField.setStyle("-fx-border-color: red;");
         }
@@ -865,6 +872,27 @@ public class Controller {
                 reinitialiseAppState();
                 codeArea.setText(currentCode);
                 console.textProperty().bind(resourceFactory.getStringBinding("program-exec-stop"));
+            }
+        }
+    }
+
+    public void onKeyPressedAction(KeyEvent keyEvent) {
+        String key = keyEvent.getCode().getName();
+        if (!activeExecutionState.get()) {
+            if (key.equals("F1")) {
+                runCodeAction();
+            }
+        } else {
+            switch (key) {
+                case "F2":
+                    runSubClockCycleAction();
+                    break;
+                case "F3":
+                    runClockCycleAction();
+                    break;
+                case "F4":
+                    endProgramExecutionAction();
+                    break;
             }
         }
     }
