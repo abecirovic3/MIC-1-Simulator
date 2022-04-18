@@ -215,9 +215,9 @@
                            <children>
                               <HBox spacing="5.0">
                                  <children>
-                                    <TextField fx:id="memorySearchField" prefHeight="26.0" prefWidth="251.0" promptText="%searchByAddress" />
+                                    <TextField fx:id="memorySearchField" onKeyPressed="#searchKeyPressedAction" prefHeight="26.0" prefWidth="251.0" promptText="%searchByAddress" />
                                     <Button fx:id="btnSearchMemory" mnemonicParsing="false" onAction="#searchMemoryAction" prefHeight="24.0" prefWidth="24.0" styleClass="buttons" />
-                                    <TextField fx:id="searchedAddressValueField" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="251.0" />
+                                    <TextField fx:id="searchedAddressValueField" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="251.0" editable="false" />
                                  </children>
                               </HBox>
                                   <TableView fx:id="memoryTable" editable="true" fixedCellSize="24.0" prefHeight="819.0" prefWidth="1270.0">

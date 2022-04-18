@@ -896,4 +896,10 @@ public class Controller {
             }
         }
     }
+
+    public void searchKeyPressedAction(KeyEvent keyEvent) {
+        if (keyEvent.getCode().getName().equalsIgnoreCase("enter")) {
+            searchMemoryAction();
+        }
+    }
 }
