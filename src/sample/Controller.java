@@ -12,7 +12,6 @@ import backend.ObservableResourceFactory;
 import backend.Register;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,7 +37,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -290,6 +288,7 @@ public class Controller {
         memoryTab.setOnSelectionChanged(event -> {
             memorySearchField.setText("");
             searchedAddressValueField.setText("");
+            memorySearchField.setStyle(null);
         });
     }
 
@@ -657,6 +656,7 @@ public class Controller {
             searchedAddressValueField.setText(NumericFactory.getStringValue16(cpu.getMemory().read((short) address)));
             memorySearchField.setStyle(null);
             memoryTable.scrollTo(cpu.getMemory().getMemory().get(address));
+            memoryTable.getSelectionModel().select(cpu.getMemory().getMemory().get(address));
         } catch (NumberFormatException e) {
             memorySearchField.setStyle("-fx-border-color: red;");
         }
