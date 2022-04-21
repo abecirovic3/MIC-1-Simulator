@@ -20,8 +20,6 @@ To run the pre-release please follow these steps:
    ```
 
 ### Features to be implemented:
-- Translation
-- Code examples (implemented 2)
 
 ### Features to be edited:
 - Table widths
