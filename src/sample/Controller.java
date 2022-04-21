@@ -41,6 +41,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -50,9 +51,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Function;
+
+import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 public class Controller {
     public TableView<Map<String, String>> supportedInstructionsTable;
@@ -127,6 +131,7 @@ public class Controller {
     public MenuItem firstNToStackMenuItem;
     public MenuItem exitMenuItem;
     public MenuItem aboutMenuItem;
+    public MenuItem helpMenuItem;
     public MenuItem menuItemRun;
     public MenuItem menuItemNextSubClk;
     public MenuItem menuItemNextClk;
@@ -168,6 +173,7 @@ public class Controller {
     private final SimpleBooleanProperty activeExecutionState = new SimpleBooleanProperty(false);
 
     private final Stage aboutStage = new Stage();
+    private final Stage helpStage = new Stage();
 
     private final ObservableResourceFactory resourceFactory = ObservableResourceFactory.getInstance();
 
@@ -195,6 +201,7 @@ public class Controller {
         initializeFileChooser();
         initializeExecutionState();
         initializeAboutStage();
+        initializeHelpStage();
     }
 
     private void initializeInternationalizationBindings() {
@@ -214,6 +221,7 @@ public class Controller {
         menuItemEndProgram.textProperty().bind(resourceFactory.getStringBinding("endProgram"));
         helpMenu.textProperty().bind(resourceFactory.getStringBinding("help"));
         aboutMenuItem.textProperty().bind(resourceFactory.getStringBinding("about"));
+        helpMenuItem.textProperty().bind(resourceFactory.getStringBinding("help"));
         newFileTooltip.textProperty().bind(resourceFactory.getStringBinding("newFile"));
         loadFileTooltip.textProperty().bind(resourceFactory.getStringBinding("loadFile"));
         saveFileTooltip.textProperty().bind(resourceFactory.getStringBinding("saveFile"));
@@ -249,6 +257,13 @@ public class Controller {
     private void initializeAboutStage() {
         aboutStage.setTitle("About MIC-1 Simulator");
         aboutStage.setResizable(false);
+        aboutStage.initModality(Modality.APPLICATION_MODAL);
+    }
+
+    private void initializeHelpStage() {
+        helpStage.setTitle("Help MIC-1 Simulator");
+        helpStage.setResizable(false);
+        helpStage.initModality(Modality.APPLICATION_MODAL);
     }
 
     private void initializeExecutionState() {
@@ -778,19 +793,29 @@ public class Controller {
     }
 
     public void openAboutAction() {
-        AboutController ctrl = new AboutController();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"), resourceFactory.getResources());
-        loader.setController(ctrl);
-
-        Parent root;
         try {
-            root = loader.load();
-            aboutStage.setScene(new Scene(root, 500, 500));
-        } catch (IOException e) {
-            e.printStackTrace();
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/about.fxml")), resourceFactory.getResources());
+            aboutStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            aboutStage.show();
+        } catch (IOException | NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ooops");
+            alert.setHeaderText("Something went wrong, could not open About");
+            alert.showAndWait();
         }
-        aboutStage.show();
+    }
+
+    public void openHelpAction() {
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/help.fxml")), resourceFactory.getResources());
+            helpStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            helpStage.show();
+        } catch (IOException | NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ooops");
+            alert.setHeaderText("Something went wrong, could not open Help");
+            alert.showAndWait();
+        }
     }
 
     public void setEnglishLanguageAction() {

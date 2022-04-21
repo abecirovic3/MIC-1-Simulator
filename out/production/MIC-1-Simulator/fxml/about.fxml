@@ -1,104 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AboutController">
    <children>
       <ImageView fx:id="imageView" fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/aboutFront.png" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="anchorPaneBack" opacity="0.0" prefHeight="500.0" prefWidth="500.0">
-         <children>
-            <Label fx:id="creditsLabel" opacity="0.89" text="%credits" textFill="#ffbd59" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Label>
-            <HBox AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0">
-               <children>
-                  <Label text="%icons-download" textFill="#ffbd59">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label text=": https://www.flaticon.com/" textFill="#ffbd59">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <Label text="%icon-authors" textFill="#ffbd59" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="130.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="%run-button" textFill="#ffbd59" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="160.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="  https://www.flaticon.com/authors/pixel-perfect" textFill="#ffbd59" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="180.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="%load-file-button" textFill="#ffbd59" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="210.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="  https://www.flaticon.com/authors/iconixar" textFill="#ffbd59" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="230.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="%new-file-button" textFill="#ffbd59" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="260.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="  https://www.flaticon.com/authors/smashicons" textFill="#ffbd59" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="280.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="%save-button" textFill="#ffbd59" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="310.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="  https://www.freepik.com" textFill="#ffbd59" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="330.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="%language-circles" textFill="#ffbd59" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="360.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label text="  https://www.flaticon.com/packs/countrys-flags" textFill="#ffbd59" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="380.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Hyperlink fx:id="backLink" alignment="CENTER" disable="true" onAction="#backAction" prefWidth="100.0" text="%back" textAlignment="CENTER" textFill="#ffbd59" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="430.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Hyperlink>
-         </children>
-      </AnchorPane>
-      <Hyperlink fx:id="creditsLink" alignment="CENTER" layoutX="217.0" layoutY="443.0" onAction="#showCreditsAction" prefWidth="100.0" text="%credits" textFill="WHITE" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="430.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Hyperlink>
    </children>
 </AnchorPane>
