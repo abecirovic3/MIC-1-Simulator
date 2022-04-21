@@ -107,7 +107,6 @@ public class Controller {
     public Button btnRun;
     public Button btnNextSubClock;
     public Button btnNextClock;
-    public Button btnJumpToEnd;
     public Button btnEndProgram;
 
     public TabPane tabPane;
@@ -148,7 +147,6 @@ public class Controller {
     public Tooltip runCodeTooltip;
     public Tooltip nextSubClockTooltip;
     public Tooltip nextClockTooltip;
-    public Tooltip jumpToEndTooltip;
     public Tooltip endProgramTooltip;
 
     public Label controlMemoryLabel;
@@ -222,7 +220,6 @@ public class Controller {
         runCodeTooltip.textProperty().bind(resourceFactory.getStringBinding("runCode"));
         nextClockTooltip.textProperty().bind(resourceFactory.getStringBinding("nextClk"));
         nextSubClockTooltip.textProperty().bind(resourceFactory.getStringBinding("nextSubClk"));
-        jumpToEndTooltip.textProperty().bind(resourceFactory.getStringBinding("jumpToEnd"));
         endProgramTooltip.textProperty().bind(resourceFactory.getStringBinding("endProgram"));
         codeTab.textProperty().bind(resourceFactory.getStringBinding("code"));
         controlTab.textProperty().bind(resourceFactory.getStringBinding("control"));
@@ -264,7 +261,6 @@ public class Controller {
                 btnRun.setDisable(true);
                 btnNextSubClock.setDisable(false);
                 btnNextClock.setDisable(false);
-                btnJumpToEnd.setDisable(false);
                 btnEndProgram.setDisable(false);
             } else {
                 menuItemRun.setDisable(false);
@@ -274,7 +270,6 @@ public class Controller {
                 btnRun.setDisable(false);
                 btnNextSubClock.setDisable(true);
                 btnNextClock.setDisable(true);
-                btnJumpToEnd.setDisable(true);
                 btnEndProgram.setDisable(true);
             }
         });

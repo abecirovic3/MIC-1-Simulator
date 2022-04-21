@@ -85,19 +85,13 @@
                         <Tooltip fx:id="nextClockTooltip" showDelay="250ms" text="%nextClk" />
                      </tooltip></Button>
                   <Separator layoutX="226.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
-                  <Button fx:id="btnJumpToEnd" disable="true" layoutX="235.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#runClockCycleAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
-                     <tooltip>
-                        <Tooltip fx:id="jumpToEndTooltip" showDelay="250ms" text="%jumpToEnd" />
-                     </tooltip>
-                  </Button>
-                  <Separator layoutX="271.0" layoutY="10.0" minWidth="5.0" opacity="0.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="5.0" />
                   <Button fx:id="btnEndProgram" disable="true" layoutX="280.0" layoutY="10.0" maxHeight="32.0" maxWidth="32.0" mnemonicParsing="false" onAction="#endProgramExecutionAction" prefHeight="32.0" prefWidth="32.0" styleClass="buttons">
                      <tooltip>
                         <Tooltip fx:id="endProgramTooltip" showDelay="250ms" text="%endProgram" />
                      </tooltip>
                   </Button>
                   <Separator layoutX="226.0" layoutY="10.0" orientation="VERTICAL" prefHeight="32.0" prefWidth="100.0" />
-                  <Separator layoutX="456.0" layoutY="10.0" opacity="0.0" orientation="VERTICAL" prefHeight="32.0" prefWidth="350.0" />
+                  <Separator layoutX="456.0" layoutY="10.0" opacity="0.0" orientation="VERTICAL" prefHeight="32.0" prefWidth="387.0" />
                   <Label text="Format:">
                       <font>
                           <Font size="15.0" />
@@ -217,7 +211,7 @@
                                  <children>
                                     <TextField fx:id="memorySearchField" onKeyPressed="#searchKeyPressedAction" prefHeight="26.0" prefWidth="251.0" promptText="%searchByAddress" />
                                     <Button fx:id="btnSearchMemory" mnemonicParsing="false" onAction="#searchMemoryAction" prefHeight="24.0" prefWidth="24.0" styleClass="buttons" />
-                                    <TextField fx:id="searchedAddressValueField" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="251.0" editable="false" />
+                                    <TextField fx:id="searchedAddressValueField" editable="false" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="251.0" />
                                  </children>
                               </HBox>
                                   <TableView fx:id="memoryTable" editable="true" fixedCellSize="24.0" prefHeight="819.0" prefWidth="1270.0">

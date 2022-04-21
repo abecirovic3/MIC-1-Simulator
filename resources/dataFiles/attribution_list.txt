@@ -1,15 +1,24 @@
 All icons are downloaded from https://www.flaticon.com/
+
 Icon authors are listed below:
-- run button, next sub-clock button, next clock button: https://www.flaticon.com/authors/pixel-perfect
-- load file button: "https://www.flaticon.com/authors/iconixar
-- new file button: https://www.flaticon.com/authors/smashicons
-- save button: https://www.freepik.com"
 
-Country circles
-- https://www.flaticon.com/packs/countrys-flags
+Run button, Next sub-clock button, Next clock button
+- https://www.flaticon.com/authors/pixel-perfect
 
-Assemble icon
-- https://www.flaticon.com/packs/e-learning-technology
+Load file button
+- https://www.flaticon.com/authors/iconixar
+
+New file button
+- https://www.flaticon.com/authors/smashicons
+
+End program execution:
+- https://www.flaticon.com/authors/alfredo-hernandez
+
+Country circles, Save file button
+- https://www.flaticon.com/authors/freepik
 
 End Program
-- https://www.flaticon.com/packs/creative-process-10
+- https://www.flaticon.com/authors/alfredo-hernandez
+
+Application icon
+- https://www.flaticon.com/authors/chattapat
