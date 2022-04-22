@@ -292,6 +292,11 @@ public class Controller {
 
     private void initializeFileChooser() {
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Supported", "*.txt", "*.mic1"),
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+                new FileChooser.ExtensionFilter("MIC-1 Specific", "*.mic1")
+        );
     }
 
     private void initializeMemoryTab() {
