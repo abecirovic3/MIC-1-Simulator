@@ -65,7 +65,7 @@
             </font></TextArea>
         <ButtonBar prefHeight="40.0" prefWidth="200.0">
             <buttons>
-                <Button mnemonicParsing="false" onAction="#closeAction" text="Close" />
+                <Button mnemonicParsing="false" onAction="#closeAction" text="%close" />
             </buttons>
         </ButtonBar>
     </children>

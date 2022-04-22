@@ -2,7 +2,9 @@ package sample;
 
 import backend.ObservableResourceFactory;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 public class HelpController {
 
@@ -15,7 +17,9 @@ public class HelpController {
     }
 
     public void closeAction(ActionEvent actionEvent) {
-        System.out.println("Close");
+        Node node = (Node) actionEvent.getSource();
+        Stage currStage = (Stage) node.getScene().getWindow();
+        currStage.close();
     }
 
     public void setIconsCreditsTextAction() {
