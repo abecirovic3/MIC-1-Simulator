@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="5.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HelpController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HelpController">
     <children>
         <Label text="MIC-1 Simulator">
             <font>
@@ -14,50 +14,66 @@
         </Label>
         <Label prefWidth="590.0" text="%app-description" textAlignment="JUSTIFY" wrapText="true" />
         <Separator layoutX="15.0" layoutY="209.0" prefWidth="200.0" />
-        <Label text="%how-to">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Label>
-        <HBox spacing="5.0">
-            <children>
-                <Hyperlink fx:id="appUseLink" onAction="#setTextAreaAction" text="%app-use" />
-            </children>
-        </HBox>
-        <Separator prefWidth="200.0" />
-        <Label layoutX="15.0" layoutY="15.0" text="%useful-tips">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Label>
-        <HBox layoutX="15.0" layoutY="41.0" spacing="5.0">
-            <children>
-                <Hyperlink fx:id="shortcutsLink" onAction="#setShortcutsTextAction" text="%key-shortcuts" />
-            </children>
-        </HBox>
-        <Separator layoutX="15.0" layoutY="41.0" prefWidth="200.0" />
-      <Label layoutX="15.0" layoutY="231.0" text="%credits">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <HBox layoutX="15.0" layoutY="196.0" spacing="5.0">
+      <VBox spacing="5.0">
          <children>
-            <Hyperlink fx:id="iconsLink" onAction="#setIconsCreditsTextAction" text="%icons" />
+              <Label text="%how-to">
+                  <font>
+                      <Font size="18.0" />
+                  </font>
+              </Label>
+              <HBox spacing="5.0">
+                  <children>
+                      <Hyperlink fx:id="appUseLink" onAction="#setTextAreaAction" text="%app-use" />
+                  </children>
+              </HBox>
          </children>
-      </HBox>
+      </VBox>
+        <Separator prefWidth="200.0" />
+      <VBox spacing="5.0">
+         <children>
+              <Label text="%useful-tips">
+                  <font>
+                      <Font size="18.0" />
+                  </font>
+              </Label>
+              <HBox spacing="5.0">
+                  <children>
+                      <Hyperlink fx:id="shortcutsLink" onAction="#setShortcutsTextAction" text="%key-shortcuts" />
+                  </children>
+              </HBox>
+         </children>
+      </VBox>
+        <Separator layoutX="15.0" layoutY="41.0" prefWidth="200.0" />
+      <VBox spacing="5.0">
+         <children>
+            <Label text="%credits">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <HBox spacing="5.0">
+               <children>
+                  <Hyperlink fx:id="iconsLink" onAction="#setIconsCreditsTextAction" text="%icons" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
       <Separator prefWidth="200.0" />
-        <Label layoutX="15.0" layoutY="86.0" text="%get-involved">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Label>
-        <HBox layoutX="15.0" layoutY="104.0" spacing="5.0">
-            <children>
-                <Hyperlink fx:id="reportBugsLink" onAction="#setReportBugsTextAction" text="%report-bugs" />
-                <Hyperlink fx:id="helpDevelopLink" layoutX="10.0" layoutY="10.0" onAction="#setHelpDevelopTextAction" text="%help-development" />
-            </children>
-        </HBox>
+      <VBox spacing="5.0">
+         <children>
+              <Label text="%get-involved">
+                  <font>
+                      <Font size="18.0" />
+                  </font>
+              </Label>
+              <HBox spacing="5.0">
+                  <children>
+                      <Hyperlink fx:id="reportBugsLink" onAction="#setReportBugsTextAction" text="%report-bugs" />
+                      <Hyperlink fx:id="helpDevelopLink" layoutX="10.0" layoutY="10.0" onAction="#setHelpDevelopTextAction" text="%help-development" />
+                  </children>
+              </HBox>
+         </children>
+      </VBox>
         <Separator layoutX="15.0" layoutY="133.0" prefWidth="200.0" />
         <TextArea fx:id="textArea" editable="false" prefHeight="233.0" prefWidth="590.0" wrapText="true">
             <font>
@@ -70,6 +86,6 @@
         </ButtonBar>
     </children>
     <padding>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
     </padding>
 </VBox>

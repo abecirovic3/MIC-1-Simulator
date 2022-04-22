@@ -2,7 +2,7 @@ All icons are downloaded from https://www.flaticon.com/
 
 Icon authors are listed below:
 
-Run button, Next sub-clock button, Next clock button
+Run button, Next sub-clock button, Next clock button, **Gmail**
 - https://www.flaticon.com/authors/pixel-perfect
 
 Load file button
@@ -14,8 +14,11 @@ New file button
 End program execution:
 - https://www.flaticon.com/authors/alfredo-hernandez
 
-Country circles, Save file button
+Country circles, Save file button, **Facebook icon**, **GitHub**
 - https://www.flaticon.com/authors/freepik
 
 Application icon
 - https://www.flaticon.com/authors/chattapat
+
+Linked in
+- https://www.flaticon.com/authors/riajulislam

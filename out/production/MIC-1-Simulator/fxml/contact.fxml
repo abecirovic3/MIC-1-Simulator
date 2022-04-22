@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ContactController">
+   <children>
+      <Label text="%contact-me">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </Label>
+      <Separator prefWidth="200.0" />
+      <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="145.0">
+         <children>
+            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/gmail.png" />
+               </image>
+            </ImageView>
+            <TextField editable="false" prefHeight="24.0" prefWidth="176.0" styleClass="transparent-label" text="abecirovic3@gmail.com" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT">
+         <children>
+            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/github.png" />
+               </image>
+            </ImageView>
+            <Hyperlink onAction="#openGitHubLinkAction" text="abecirovic3">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Hyperlink>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="41.0">
+         <children>
+            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/linkedin.png" />
+               </image>
+            </ImageView>
+            <Hyperlink onAction="#openLinkedInLinkAction" text="Ajdin Becirovic">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Hyperlink>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="93.0">
+         <children>
+            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/facebook.png" />
+               </image>
+            </ImageView>
+            <Hyperlink onAction="#openFacebookLinkAction" text="Ajdin Becirovic">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Hyperlink>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <Separator prefWidth="200.0" />
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

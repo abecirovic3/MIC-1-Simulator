@@ -13,6 +13,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Host h = Host.getInstance();
+        h.setHostServices(getHostServices());
+
         primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/img/app_icon.png")));
         ObservableResourceFactory resourceFactory = ObservableResourceFactory.getInstance();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"), resourceFactory.getResources());

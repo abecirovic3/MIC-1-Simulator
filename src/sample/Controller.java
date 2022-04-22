@@ -12,6 +12,7 @@ import backend.ObservableResourceFactory;
 import backend.Register;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -132,6 +133,7 @@ public class Controller {
     public MenuItem exitMenuItem;
     public MenuItem aboutMenuItem;
     public MenuItem helpMenuItem;
+    public MenuItem contactMenuItem;
     public MenuItem menuItemRun;
     public MenuItem menuItemNextSubClk;
     public MenuItem menuItemNextClk;
@@ -174,6 +176,7 @@ public class Controller {
 
     private final Stage aboutStage = new Stage();
     private final Stage helpStage = new Stage();
+    private final Stage contactStage = new Stage();
 
     private final ObservableResourceFactory resourceFactory = ObservableResourceFactory.getInstance();
 
@@ -202,6 +205,7 @@ public class Controller {
         initializeExecutionState();
         initializeAboutStage();
         initializeHelpStage();
+        initializeContactStage();
     }
 
     private void initializeInternationalizationBindings() {
@@ -222,6 +226,7 @@ public class Controller {
         helpMenu.textProperty().bind(resourceFactory.getStringBinding("help"));
         aboutMenuItem.textProperty().bind(resourceFactory.getStringBinding("about"));
         helpMenuItem.textProperty().bind(resourceFactory.getStringBinding("help"));
+        contactMenuItem.textProperty().bind(resourceFactory.getStringBinding("contact"));
         newFileTooltip.textProperty().bind(resourceFactory.getStringBinding("newFile"));
         loadFileTooltip.textProperty().bind(resourceFactory.getStringBinding("loadFile"));
         saveFileTooltip.textProperty().bind(resourceFactory.getStringBinding("saveFile"));
@@ -255,15 +260,21 @@ public class Controller {
     }
 
     private void initializeAboutStage() {
-        aboutStage.setTitle("About MIC-1 Simulator");
+        aboutStage.setTitle("About");
         aboutStage.setResizable(false);
         aboutStage.initModality(Modality.APPLICATION_MODAL);
     }
 
     private void initializeHelpStage() {
-        helpStage.setTitle("Help MIC-1 Simulator");
+        helpStage.setTitle("Help");
         helpStage.setResizable(false);
         helpStage.initModality(Modality.APPLICATION_MODAL);
+    }
+
+    private void initializeContactStage() {
+        contactStage.setTitle("Contact");
+        contactStage.setResizable(false);
+        contactStage.initModality(Modality.APPLICATION_MODAL);
     }
 
     private void initializeExecutionState() {
@@ -925,6 +936,19 @@ public class Controller {
     public void searchKeyPressedAction(KeyEvent keyEvent) {
         if (keyEvent.getCode().getName().equalsIgnoreCase("enter")) {
             searchMemoryAction();
+        }
+    }
+
+    public void openContactAction() {
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/contact.fxml")), resourceFactory.getResources());
+            contactStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            contactStage.show();
+        } catch (IOException | NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ooops");
+            alert.setHeaderText("Something went wrong, could not open Contact");
+            alert.showAndWait();
         }
     }
 }
