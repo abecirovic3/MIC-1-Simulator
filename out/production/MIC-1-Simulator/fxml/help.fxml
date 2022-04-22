@@ -32,7 +32,7 @@
         </Label>
         <HBox layoutX="15.0" layoutY="41.0" spacing="5.0">
             <children>
-                <Hyperlink fx:id="shortcutsLink" onAction="#setTextAreaAction" text="%key-shortcuts" />
+                <Hyperlink fx:id="shortcutsLink" onAction="#setShortcutsTextAction" text="%key-shortcuts" />
             </children>
         </HBox>
         <Separator layoutX="15.0" layoutY="41.0" prefWidth="200.0" />
@@ -43,7 +43,7 @@
       </Label>
       <HBox layoutX="15.0" layoutY="196.0" spacing="5.0">
          <children>
-            <Hyperlink fx:id="iconsLink" onAction="#setTextAreaAction" text="%icons" />
+            <Hyperlink fx:id="iconsLink" onAction="#setIconsCreditsTextAction" text="%icons" />
          </children>
       </HBox>
       <Separator prefWidth="200.0" />
@@ -54,8 +54,8 @@
         </Label>
         <HBox layoutX="15.0" layoutY="104.0" spacing="5.0">
             <children>
-                <Hyperlink fx:id="reportBugsLink" onAction="#setTextAreaAction" text="%report-bugs" />
-                <Hyperlink fx:id="helpDevelopLink" layoutX="10.0" layoutY="10.0" onAction="#setTextAreaAction" text="%help-development" />
+                <Hyperlink fx:id="reportBugsLink" onAction="#setReportBugsTextAction" text="%report-bugs" />
+                <Hyperlink fx:id="helpDevelopLink" layoutX="10.0" layoutY="10.0" onAction="#setHelpDevelopTextAction" text="%help-development" />
             </children>
         </HBox>
         <Separator layoutX="15.0" layoutY="133.0" prefWidth="200.0" />

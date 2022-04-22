@@ -17,8 +17,5 @@ End program execution:
 Country circles, Save file button
 - https://www.flaticon.com/authors/freepik
 
-End Program
-- https://www.flaticon.com/authors/alfredo-hernandez
-
 Application icon
 - https://www.flaticon.com/authors/chattapat
