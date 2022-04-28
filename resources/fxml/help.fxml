@@ -14,71 +14,71 @@
         </Label>
         <Label prefWidth="590.0" text="%app-description" textAlignment="JUSTIFY" wrapText="true" />
         <Separator layoutX="15.0" layoutY="209.0" prefWidth="200.0" />
-      <VBox spacing="5.0">
-         <children>
-              <Label text="%how-to">
-                  <font>
-                      <Font size="18.0" />
-                  </font>
-              </Label>
-              <HBox spacing="5.0">
-                  <children>
-                      <Hyperlink fx:id="appUseLink" onAction="#setTextAreaAction" text="%app-use" />
-                  </children>
-              </HBox>
-         </children>
-      </VBox>
+        <VBox spacing="5.0">
+            <children>
+                <Label text="%how-to">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <HBox spacing="5.0">
+                    <children>
+                        <Hyperlink fx:id="appUseLink" onAction="#setHowToUseAppTextAction" text="%app-use" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
         <Separator prefWidth="200.0" />
-      <VBox spacing="5.0">
-         <children>
-              <Label text="%useful-tips">
-                  <font>
-                      <Font size="18.0" />
-                  </font>
-              </Label>
-              <HBox spacing="5.0">
-                  <children>
-                      <Hyperlink fx:id="shortcutsLink" onAction="#setShortcutsTextAction" text="%key-shortcuts" />
-                  </children>
-              </HBox>
-         </children>
-      </VBox>
+        <VBox spacing="5.0">
+            <children>
+                <Label text="%useful-tips">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <HBox spacing="5.0">
+                    <children>
+                        <Hyperlink fx:id="shortcutsLink" onAction="#setShortcutsTextAction" text="%key-shortcuts" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
         <Separator layoutX="15.0" layoutY="41.0" prefWidth="200.0" />
-      <VBox spacing="5.0">
-         <children>
-            <Label text="%credits">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <HBox spacing="5.0">
-               <children>
-                  <Hyperlink fx:id="iconsLink" onAction="#setIconsCreditsTextAction" text="%icons" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-      <Separator prefWidth="200.0" />
-      <VBox spacing="5.0">
-         <children>
-              <Label text="%get-involved">
-                  <font>
-                      <Font size="18.0" />
-                  </font>
-              </Label>
-              <HBox spacing="5.0">
-                  <children>
-                      <Hyperlink fx:id="reportBugsLink" onAction="#setReportBugsTextAction" text="%report-bugs" />
-                      <Hyperlink fx:id="helpDevelopLink" layoutX="10.0" layoutY="10.0" onAction="#setHelpDevelopTextAction" text="%help-development" />
-                  </children>
-              </HBox>
-         </children>
-      </VBox>
+        <VBox spacing="5.0">
+            <children>
+                <Label text="%credits">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <HBox spacing="5.0">
+                    <children>
+                        <Hyperlink fx:id="iconsLink" onAction="#setIconsCreditsTextAction" text="%icons" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+        <Separator prefWidth="200.0" />
+        <VBox spacing="5.0">
+            <children>
+                <Label text="%get-involved">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <HBox spacing="5.0">
+                    <children>
+                        <Hyperlink fx:id="reportBugsLink" onAction="#setReportBugsTextAction" text="%report-bugs" />
+                        <Hyperlink fx:id="helpDevelopLink" layoutX="10.0" layoutY="10.0" onAction="#setHelpDevelopTextAction" text="%help-development" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
         <Separator layoutX="15.0" layoutY="133.0" prefWidth="200.0" />
-        <TextArea fx:id="textArea" editable="false" prefHeight="233.0" prefWidth="590.0" wrapText="true">
-            <font>
-                <Font size="15.0" />
-            </font></TextArea>
+        <TextArea fx:id="textArea" editable="false" prefColumnCount="1000" prefHeight="300.0" prefRowCount="1000" prefWidth="590.0" wrapText="true">
+         <font>
+            <Font size="16.0" />
+         </font></TextArea>
         <ButtonBar prefHeight="40.0" prefWidth="200.0">
             <buttons>
                 <Button mnemonicParsing="false" onAction="#closeAction" text="%close" />

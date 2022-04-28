@@ -80,3 +80,7 @@
 .hyperlink {
     -fx-border-color: transparent;
 }
+
+.text-area .text {
+    -fx-line-spacing: 5px;
+}
