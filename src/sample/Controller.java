@@ -335,12 +335,16 @@ public class Controller {
                     microCodeLinesLengths[newVal.intValue()][0], microCodeLinesLengths[newVal.intValue()][1]);
             if (newVal.intValue() <= 2) {
                 instructionStatusLabel.textProperty().bind(resourceFactory.getStringBinding("instr-fetch"));
-            }
-            if (newVal.intValue() >= 3) {
+            } else if (newVal.intValue() == 3) {
                 instructionStatusLabel.textProperty().unbind();
                 instructionStatusLabel.
                         setText(resourceFactory.getResources().getString("instr-exec") + ": " +
                                 instructionParser.getInstructionString((short) cpu.MBRProperty().get()));
+            } else {
+                instructionStatusLabel.textProperty().unbind();
+                instructionStatusLabel.
+                        setText(resourceFactory.getResources().getString("instr-exec") + ": " +
+                                instructionParser.getInstructionString(cpu.getRegisters().get(3).getValue()));
             }
         });
     }
